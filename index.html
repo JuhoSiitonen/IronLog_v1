@@ -410,6 +410,254 @@ const BLOCKS=[
 ];
 
 // ═══════════════════════════════════════════════════════════════════
+// TRANSLATIONS
+// ═══════════════════════════════════════════════════════════════════
+const TRANS={
+  en:{
+    // Nav
+    nav_home:'Home',nav_log:'Log',nav_program:'Program',nav_settings:'Settings',
+    // Home
+    ready:'Ready to',build:'build?',
+    sub:'3 days. Full body. 12 weeks of variation.',
+    stat_sessions:'Sessions',stat_week:'This week',stat_swap:'Swap in',
+    up_next:'UP NEXT',rest_between:'REST 1 DAY BETWEEN',
+    start_workout:'START WORKOUT →',
+    all_days:'All days',
+    swap_alert:'🔄 BLOCK SWAP IN',swap_sessions:'SESSION',swap_sessions_pl:'SESSIONS',
+    coming_up:'Coming up:',
+    swap_in:'Swap in',session_s:'session',sessions_s:'sessions',
+    // Workout
+    sets_done:'SETS DONE',finish_workout:'✓ FINISH WORKOUT',
+    complete_all:'Complete all sets to finish',
+    quitter_btn:'Push here if you want to give up without completing all the sets',
+    quitter_confirm:'Are you sure you want to be a pussy ass quitter?',
+    cancel_confirm:'Cancel? Progress will be lost.',
+    rest_label:'REST',skip:'SKIP',
+    sets:'sets',reps:'reps',
+    last:'Last',try:'try',
+    double_tap:'Double-tap 💪🏻 to edit a set',
+    swap_btn:'⇄ Swap',load_badge:'↑ LOAD',
+    sets_col:'Reps ↕',
+    // Swap modal
+    swap_exercise:'Swap Exercise',muscle_label:'Muscle:',
+    current:'current',in_use:'in use',
+    // Complete
+    done:'DONE!',duration:'Duration',exercises:'Exercises',vol:'kg Vol.',
+    up_next_label:'Up next',back_home:'← BACK TO HOME',
+    block_switch:'🔄 Block Switch!',now_starting:'Now starting',
+    // History
+    history:'History',no_sessions:'No sessions yet. Start today! 💪',
+    ex_label:'ex',vol_label:'kg vol.',
+    // Program
+    the_program:'The Program',
+    program_desc:'12 weeks of unique training before anything repeats. Blocks swap after 2 full completions (6 sessions). Tap ⇄ Swap during any workout to replace an unavailable exercise.',
+    sessions_until:'sessions until',session_until:'session until',
+    active_now:'· Active now',
+    full_body:'FULL BODY · 3×/WEEK · 6 BLOCKS · 12 WEEKS',
+    // Settings
+    settings:'Settings',
+    rest_timer:'Rest Timer',
+    enable_rest:'Enable rest timer',
+    rest_auto:'Auto-starts after each completed set',
+    duration:'Duration',custom_sec:'Custom (sec)',
+    language:'Language',
+    how_to:'How to use',
+    app_guide:'App guide',
+    app_guide_sub:'How workouts, blocks, swaps and more work',
+    guide_title:'How to use',
+    logging_title:'Logging a workout',
+    blocks_title:'Training blocks',
+    swap_title:'Swapping exercises',
+    overload_title:'Progressive overload',
+    data_title:'Your data',
+    guide_step1_title:'Set your reps',
+    guide_step1:'Tap the reps button to cycle through the rep range, from top down. The target range is shown as a placeholder.',
+    guide_step2_title:'Enter weight',
+    guide_step2:'Type kg into the first set — all remaining sets fill automatically. Changing any set cascades forward to undone sets.',
+    guide_step3_title:'Mark set done',
+    guide_step3:'Tap ✓ to lock in the set. The rest timer starts and the progress bar updates.',
+    guide_step4_title:'Edit a done set',
+    guide_step4:'Double-tap the 💪🏻 emoji on a completed set to reopen it and change reps or weight.',
+    guide_step5_title:'Finish',
+    guide_step5:'When all sets are done, FINISH WORKOUT lights up. To end early, use the quit link at the bottom — your partial session is still saved.',
+    guide_blocks_desc:'There are <span style="color:#f2f0ea;font-weight:700">6 blocks</span>, each with a different training style. The block advances after <span style="color:#e8ff47;font-weight:700">2 full passes</span> through Days A, B and C — 6 sessions total. The Home screen shows how many sessions remain until the next swap.',
+    guide_swap_desc:'Don\'t have the equipment? Tap <span style="color:#e8ff47;font-weight:700">⇄ Swap</span> on any uncompleted exercise to open a list of alternatives for the same muscle group. Only the current session is affected — the program block stays unchanged.',
+    guide_overload_desc:'If you hit the top of the rep range on every set last session, the app shows a <span style="color:#e8ff47;font-weight:700">↑ LOAD</span> badge and pre-fills a 2.5% heavier weight. Hit it consistently to keep progressing.',
+    guide_data_desc:'Everything is saved locally on your device. Weights, history, settings and block progress all persist between visits. Clearing your browser data will reset the app.',
+    // Block themes
+    theme1:'Barbell Compounds',theme2:'Dumbbell & Machine',theme3:'Power & Strength Bias',
+    theme4:'Isolation & Volume',theme5:'Cable & Unilateral',theme6:'Hybrid Strength–Hypertrophy',
+    // Day labels/focus
+    day_a_label:'Full Body A',day_b_label:'Full Body B',day_c_label:'Full Body C',
+    focus_a:'Squat · Push · Pull',focus_b:'Hinge · Vertical Push/Pull · Triceps',focus_c:'Unilateral Legs · Arms · Glutes',
+    // Muscles
+    m_quads:'Quads',m_hamstrings:'Hamstrings',m_glutes:'Glutes',m_calves:'Calves',
+    m_chest:'Chest',m_back:'Back',m_shoulders:'Shoulders',m_biceps:'Biceps',m_triceps:'Triceps',
+    // Exercise names
+    'Squat':'Squat','Hack Squat':'Hack Squat','Leg Press':'Leg Press',
+    'Leg Press (narrow)':'Leg Press (narrow)','Leg Extension':'Leg Extension',
+    'Bulgarian Split Squat':'Bulgarian Split Squat','Walking Lunge':'Walking Lunge',
+    'Goblet Squat':'Goblet Squat','Step-Up':'Step-Up',
+    'Deadlift':'Deadlift','Romanian Deadlift':'Romanian Deadlift',
+    'Trap Bar Deadlift':'Trap Bar Deadlift','Sumo Deadlift':'Sumo Deadlift',
+    'Lying Leg Curl':'Lying Leg Curl','Seated Leg Curl':'Seated Leg Curl',
+    'Nordic Curl':'Nordic Curl','Good Morning':'Good Morning',
+    'Hip Thrust':'Hip Thrust','Barbell Glute Bridge':'Barbell Glute Bridge',
+    'Cable Kickback':'Cable Kickback','Hip Abduction Machine':'Hip Abduction Machine',
+    'Standing Calf Raise':'Standing Calf Raise','Seated Calf Raise':'Seated Calf Raise',
+    'Leg Press Calf Raise':'Leg Press Calf Raise',
+    'Bench Press':'Bench Press','Incline DB Press':'Incline DB Press',
+    'DB Bench Press':'DB Bench Press','Cable Fly':'Cable Fly','Pec Deck':'Pec Deck',
+    'DB Pullover':'DB Pullover','Dips (chest focus)':'Dips (chest focus)',
+    'Weighted Push-Up':'Weighted Push-Up','Low-to-High Cable Fly':'Low-to-High Cable Fly',
+    'Cable Row':'Cable Row','DB Row':'DB Row','Chest-Supported Row':'Chest-Supported Row',
+    'Lat Pulldown':'Lat Pulldown','Pull-Up / Chin-Up':'Pull-Up / Chin-Up',
+    'Single-Arm Cable Row':'Single-Arm Cable Row',
+    'Cable Straight-Arm Pullover':'Cable Straight-Arm Pullover',
+    'Barbell Row':'Barbell Row','T-Bar Row':'T-Bar Row',
+    'Overhead Press':'Overhead Press','DB Shoulder Press':'DB Shoulder Press',
+    'Lateral Raise':'Lateral Raise','Cable Lateral Raise':'Cable Lateral Raise',
+    'Face Pull':'Face Pull','Rear Delt Fly':'Rear Delt Fly',
+    'Upright Row':'Upright Row','Arnold Press':'Arnold Press',
+    'Barbell Curl':'Barbell Curl','Hammer Curl':'Hammer Curl',
+    'Incline DB Curl':'Incline DB Curl','Spider Curl':'Spider Curl',
+    'Cable Curl':'Cable Curl','Concentration Curl':'Concentration Curl',
+    'Reverse Curl':'Reverse Curl',
+    'Skullcrusher':'Skullcrusher','Cable Pushdown':'Cable Pushdown',
+    'Overhead Tricep Extension':'Overhead Tricep Extension','Tricep Dips':'Tricep Dips',
+    'DB Kickback':'DB Kickback','Close-Grip Bench Press':'Close-Grip Bench Press',
+    // Block-specific exercise name variants
+    'Weighted Dips':'Weighted Dips','Weighted Pull-Up':'Weighted Pull-Up',
+    'Dips':'Dips','Pull-Up':'Pull-Up',
+    'Close-Grip Bench':'Close-Grip Bench',
+    'Leg Extension (1.5 rep)':'Leg Extension (1.5 rep)',
+  },
+  fi:{
+    // Nav
+    nav_home:'Koti',nav_log:'Loki',nav_program:'Ohjelma',nav_settings:'Asetukset',
+    // Home
+    ready:'Valmis',build:'treenaamaan?',
+    sub:'3 päivää. Koko keho. 12 viikkoa vaihtelua.',
+    stat_sessions:'Treenit',stat_week:'Tällä viikolla',stat_swap:'Vaihto',
+    up_next:'SEURAAVAKSI',rest_between:'PIDÄ 1 PV LEPOA VÄLISSÄ',
+    start_workout:'ALOITA TREENI →',
+    all_days:'Kaikki päivät',
+    swap_alert:'🔄 LOHKONVAIHTO',swap_sessions:'TREENIN PÄÄSTÄ',swap_sessions_pl:'TREENIN PÄÄSTÄ',
+    coming_up:'Tulossa:',
+    swap_in:'Vaihto',session_s:'treenin päästä',sessions_s:'treenin päästä',
+    // Workout
+    sets_done:'SARJAA TEHTY',finish_workout:'✓ TREENI VALMIS',
+    complete_all:'Tee kaikki sarjat lopettaaksesi',
+    quitter_btn:'Paina tästä jos haluat luovuttaa kesken treenin',
+    quitter_confirm:'Oletko varma että haluat olla luuseri ja lopettaa?',
+    cancel_confirm:'Perutaanko? Edistyminen menetetään.',
+    rest_label:'LEPO',skip:'OHITA',
+    sets:'sarjaa',reps:'toistoa',
+    last:'Edellinen',try:'kokeile',
+    double_tap:'Tuplapaina 💪🏻 muokataksesi sarjaa',
+    swap_btn:'⇄ Vaihda',load_badge:'↑ LISÄÄ',
+    sets_col:'Toistot ↕',
+    // Swap modal
+    swap_exercise:'Vaihda liike',muscle_label:'Lihasryhmä:',
+    current:'nykyinen',in_use:'käytössä',
+    // Complete
+    done:'VALMIS!',duration:'Kesto',exercises:'Liikkeet',vol:'kg Vol.',
+    up_next_label:'Seuraavaksi',back_home:'← TAKAISIN KOTIIN',
+    block_switch:'🔄 Lohkonvaihto!',now_starting:'Aloitetaan nyt',
+    // History
+    history:'Historia',no_sessions:'Ei treeniä vielä. Aloita tänään! 💪',
+    ex_label:'liikettä',vol_label:'kg vol.',
+    // Program
+    the_program:'Ohjelma',
+    program_desc:'12 viikkoa ainutlaatuista treeniä ennen kuin mikään toistuu. Lohkot vaihtuvat 2 täyden kierroksen jälkeen (6 treeniä). Paina ⇄ Vaihda treenin aikana korvataksesi liikkeen.',
+    sessions_until:'treenin päästä lohkoon',session_until:'treenin päästä lohkoon',
+    active_now:'· Aktiivinen nyt',
+    full_body:'KOKO KEHO · 3×/VIIKKO · 6 LOHKOA · 12 VIIKKOA',
+    // Settings
+    settings:'Asetukset',
+    rest_timer:'Lepotimer',
+    enable_rest:'Ota lepotimer käyttöön',
+    rest_auto:'Käynnistyy automaattisesti jokaisen sarjan jälkeen',
+    duration:'Kesto',custom_sec:'Mukautettu (sek)',
+    language:'Kieli',
+    how_to:'Käyttöohjeet',
+    app_guide:'Sovelluksen opas',
+    app_guide_sub:'Miten treenit, lohkot, vaihdot ja muut toimivat',
+    guide_title:'Käyttöohjeet',
+    logging_title:'Treenin kirjaaminen',
+    blocks_title:'Treeniohjelma',
+    swap_title:'Liikkeen vaihtaminen',
+    overload_title:'Progressiivinen ylikuormitus',
+    data_title:'Tietosi',
+    guide_step1_title:'Aseta toistot',
+    guide_step1:'Napauta toistonappia syklataksesi rep-alueen läpi ylhäältä alas. Tavoitealue näytetään oletuksena.',
+    guide_step2_title:'Syötä paino',
+    guide_step2:'Kirjoita kg ensimmäiseen sarjaan — kaikki jäljellä olevat sarjat täyttyvät automaattisesti. Jonkin sarjan muuttaminen päivittää kaikki sen jälkeiset tekemättömät sarjat.',
+    guide_step3_title:'Merkitse sarja tehdyksi',
+    guide_step3:'Napauta ✓ lukkiaksesi sarjan. Lepotimer käynnistyy ja edistymispalkki päivittyy.',
+    guide_step4_title:'Muokkaa tehtyä sarjaa',
+    guide_step4:'Tuplanaputa 💪🏻 emojia valmiissa sarjassa avataksesi sen uudelleen muokkausta varten.',
+    guide_step5_title:'Lopetus',
+    guide_step5:'Kun kaikki sarjat on tehty, TREENI VALMIS -nappi aktivoituu. Voit myös lopettaa aikaisemmin alla olevasta linkistä — osittainen treeni tallentuu silti.',
+    guide_blocks_desc:'Ohjelmassa on <span style="color:#f2f0ea;font-weight:700">6 lohkoa</span>, joissa kullakin on erilainen treenityyli. Lohko vaihtuu kun olet suorittanut <span style="color:#e8ff47;font-weight:700">2 täyttä kierrosta</span> A, B ja C päivien läpi — 6 treeniä yhteensä. Kotinäytöllä näkyy montako treeniä seuraavaan vaihtoon on jäljellä.',
+    guide_swap_desc:'Eikö laitetta löydy? Napauta <span style="color:#e8ff47;font-weight:700">⇄ Vaihda</span> missä tahansa keskeneräisessä liikkeessä nähdäksesi vaihtoehdot samalle lihasryhmälle. Vain nykyinen treeni muuttuu — ohjelma pysyy ennallaan.',
+    guide_overload_desc:'Jos osuit viime treenissä rep-alueen ylärajaan jokaisessa sarjassa, sovellus näyttää <span style="color:#e8ff47;font-weight:700">↑ LISÄÄ</span> -merkinnän ja ehdottaa 2,5% raskaampaa painoa. Jatka johdonmukaisesti eteenpäin.',
+    guide_data_desc:'Kaikki tallennetaan laitteellesi. Painot, historia, asetukset ja lohkon edistyminen säilyvät käyntien välillä. Selaimen tietojen tyhjentäminen nollaa sovelluksen.',
+    // Block themes
+    theme1:'Tangot & Perusliikkeet',theme2:'Käsipainot & Laitteet',theme3:'Voima & Teho',
+    theme4:'Eristysliikkeet & Volyymi',theme5:'Taljatyöskentely & Unilateraali',theme6:'Hybridi: Voima–Hypertrofia',
+    // Day labels/focus
+    day_a_label:'Koko keho A',day_b_label:'Koko keho B',day_c_label:'Koko keho C',
+    focus_a:'Kyykky · Työntö · Veto',focus_b:'Vipu · Pystypunnerrus/Ylätalja · Ojentajat',focus_c:'Unilat. jalat · Kädet · Pakarat',
+    // Muscles
+    m_quads:'Etureisi',m_hamstrings:'Takareidet',m_glutes:'Pakarat',m_calves:'Pohkeet',
+    m_chest:'Rintalihas',m_back:'Selkä',m_shoulders:'Hartiat',m_biceps:'Hauikset',m_triceps:'Ojentajat',
+    // Exercise names
+    'Squat':'Kyykky','Hack Squat':'Hack-kyykky','Leg Press':'Jalkaprässi',
+    'Leg Press (narrow)':'Jalkaprässi (kapea)','Leg Extension':'Jalan ojennus',
+    'Bulgarian Split Squat':'Bulgarian split-kyykky','Walking Lunge':'Askelkyykky',
+    'Goblet Squat':'Goblet-kyykky','Step-Up':'Step-Up',
+    'Deadlift':'Maastaveto','Romanian Deadlift':'Romanialainen maastaveto',
+    'Trap Bar Deadlift':'Trap bar -maastaveto','Sumo Deadlift':'Sumo-maastaveto',
+    'Lying Leg Curl':'Polven koukistus maaten','Seated Leg Curl':'Polven koukistus istuen',
+    'Nordic Curl':'Nordic Curl','Good Morning':'Good Morning',
+    'Hip Thrust':'Hip Thrust','Barbell Glute Bridge':'Lantionnosto levytangolla',
+    'Cable Kickback':'Kaapeli-potku taakse','Hip Abduction Machine':'Lonkan loitonnus -laite',
+    'Standing Calf Raise':'Seisova pohjenoste','Seated Calf Raise':'Istuva pohjenoste',
+    'Leg Press Calf Raise':'Pohjenoste jalkaprässissä',
+    'Bench Press':'Penkkipunnerrus','Incline DB Press':'Vinopenkkipunnerrus käsipainoilla',
+    'DB Bench Press':'Penkkipunnerrus käsipainoilla','Cable Fly':'Rintarutistus taljassa',
+    'Pec Deck':'Pec Deck','DB Pullover':'Käsipainopullover',
+    'Dips (chest focus)':'Dippi (rintapainotteinen)','Weighted Push-Up':'Punnerrus lisäpainolla',
+    'Low-to-High Cable Fly':'Rintarutistus taljassa alhaalta ylös',
+    'Cable Row':'Alatalja','DB Row':'Käsipainosoutu',
+    'Chest-Supported Row':'Rintapenkkisoutu','Lat Pulldown':'Ylätalja',
+    'Pull-Up / Chin-Up':'Leuanveto','Single-Arm Cable Row':'Yksikätinen alatalja',
+    'Cable Straight-Arm Pullover':'Kaapeli-pullover suorin käsin',
+    'Barbell Row':'Kulmasoutu levytangolla','T-Bar Row':'Kulmasoutu T-tangolla',
+    'Overhead Press':'Pystypunnerrus','DB Shoulder Press':'Pystypunnerrus käsipainoilla',
+    'Lateral Raise':'Vipunosto sivulle','Cable Lateral Raise':'Vipunosto sivulle taljassa',
+    'Face Pull':'Face Pull','Rear Delt Fly':'Vipunosto taakse',
+    'Upright Row':'Pystysoutu','Arnold Press':'Arnold-prässi',
+    'Barbell Curl':'Hauiskääntö tangolla','Hammer Curl':'Hammer Curl',
+    'Incline DB Curl':'Hauiskääntö vinopenkissä käsipainoilla',
+    'Spider Curl':'Spider Curl','Cable Curl':'Hauiskääntö taljassa',
+    'Concentration Curl':'Keskitetty hauiskääntö (Concentration Curl)',
+    'Reverse Curl':'Hauiskääntö myötäotteella',
+    'Skullcrusher':'Skullcrusher','Cable Pushdown':'Ojentajapunnerrus taljassa',
+    'Overhead Tricep Extension':'Ojentajan ojennus pään yli',
+    'Tricep Dips':'Dippi (ojentajapainotteinen)',
+    'DB Kickback':'Kickback käsipainoilla (ojentaja)',
+    'Close-Grip Bench Press':'Kapea penkkipunnerrus',
+    // Block-specific variants
+    'Weighted Dips':'Dippi lisäpainolla','Weighted Pull-Up':'Leuanveto lisäpainolla',
+    'Dips':'Dippi','Pull-Up':'Leuanveto',
+    'Close-Grip Bench':'Kapea penkkipunnerrus',
+    'Leg Extension (1.5 rep)':'Jalan ojennus (1,5 toisto)',
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
 // STORAGE
 // ═══════════════════════════════════════════════════════════════════
 const SK={weights:"il_weights",history:"il_history",nextDay:"il_nextDay",blockCompletions:"il_blockCompletions",settings:"il_settings"};
@@ -417,8 +665,10 @@ const ls={
   get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 };
-function getSettings(){return Object.assign({restEnabled:true,restSecs:90},ls.get(SK.settings)||{});}
+function getSettings(){return Object.assign({restEnabled:true,restSecs:90,lang:'en'},ls.get(SK.settings)||{});}
 function saveSettings(s){ls.set(SK.settings,s);}
+function getLang(){return getSettings().lang;}
+function t(key){const l=getLang();return(TRANS[l]&&TRANS[l][key])||TRANS.en[key]||key;}
 // blockCompletions = total number of full-block completions ever.
 function getTotalBlockCompletions(){return ls.get(SK.blockCompletions)||0;}
 function initAndGetBlockIdx(){
@@ -468,9 +718,11 @@ function isThisISOWeek(dateStr){
   mon.setHours(0,0,0,0);
   return d>=mon;
 }
+function exName(name){return t(name)||name;}
+function muscleName(m){const k='m_'+m.toLowerCase();return t(k)||m;}
 function fmtTime(s){return`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;}
-function fmtDate(iso){return new Date(iso).toLocaleDateString("en-GB",{day:"numeric",month:"short"});}
-function today(){return new Date().toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});}
+function fmtDate(iso){const loc=getLang()==='fi'?'fi-FI':'en-GB';return new Date(iso).toLocaleDateString(loc,{day:"numeric",month:"short"});}
+function today(){const loc=getLang()==='fi'?'fi-FI':'en-GB';return new Date().toLocaleDateString(loc,{weekday:"short",day:"numeric",month:"short"});}
 
 // ═══════════════════════════════════════════════════════════════════
 // APP STATE  (single mutable object — we call render() after changes)
@@ -503,7 +755,7 @@ function startElapsed(){
   A._elapsedInterval=setInterval(()=>{
     A.elapsed=Math.floor((Date.now()-A.sessionStart)/1000);
     const el=document.getElementById('elapsed-txt');
-    if(el)el.textContent=`${BLOCKS[A.blockIdx].label} · Day ${A.activeDayId} · ${fmtTime(A.elapsed)}`;
+    if(el)el.textContent=`${BLOCKS[A.blockIdx].label} · ${t('nav_log')} ${A.activeDayId} · ${fmtTime(A.elapsed)}`;
   },1000);
 }
 function stopElapsed(){clearInterval(A._elapsedInterval);A.elapsed=0;}
@@ -537,8 +789,8 @@ function refreshRestBar(){
   if(!bar)return;
   if(A.restTimer!==null&&A.restTimer>0){
     bar.classList.add('visible');
-    const t=bar.querySelector('#rest-time');
-    if(t)t.textContent=`REST · ${fmtTime(A.restTimer)}`;
+    const timeEl=bar.querySelector('#rest-time');
+    if(timeEl)timeEl.textContent=`${getLang()==='fi'?'LEPO':'REST'} · ${fmtTime(A.restTimer)}`;
   }else{
     bar.classList.remove('visible');
   }
@@ -719,12 +971,12 @@ function updateFinishBtn(){
   const done=doneSets(),total=totalSets();
   if(allDone()){
     btn.disabled=false;
-    btn.textContent='✓ FINISH WORKOUT';
+    btn.textContent=t('finish_workout');
     const hint=document.getElementById('quitter-area');
     if(hint)hint.style.display='none';
   }else{
     btn.disabled=true;
-    btn.textContent=`${done} / ${total} SETS DONE`;
+    btn.textContent=`${done} / ${total} ${t('sets_done')}`;
   }
 }
 
@@ -779,14 +1031,6 @@ function buildSetRowHTML(ex,si,set){
   return`${numCell}${repsCell}${kgCell}${actionCell}`;
 }
 
-function bindSetRowEvents(ex,idx){
-  // kg input — bind imperatively since we can't use oninput with escaped IDs safely
-  const kgEl=document.getElementById(`kg-inp-${ex.id}-${idx}`);
-  if(kgEl){
-    kgEl.oninput=function(){updateKg(ex.id,idx,this.value);};
-  }
-}
-
 // Double-tap detection for emoji button
 const _tapTimers={};
 function handleEmojiTap(exId,idx){
@@ -810,11 +1054,11 @@ function buildExerciseCard(ex,ei){
   const lastW=wts.length?Math.max(...wts):0;
   const lastR=lastS?Math.round(lastS.sets.reduce((a,s)=>a+(parseInt(s.reps)||0),0)/lastS.sets.length):0;
 
-  const bumpBadge=bump&&!exDone?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">↑ LOAD</span>`:'';
-  const swapBtn=exDone?'':`<button class="btn-swap" onclick="openSwap('${ex.id}','${ex.muscle}')">⇄ Swap</button>`;
+  const bumpBadge=bump&&!exDone?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">${t('load_badge')}</span>`:'';
+  const swapBtn=exDone?'':`<button class="btn-swap" onclick="openSwap('${ex.id}','${ex.muscle}')">${t('swap_btn')}</button>`;
   const doneIcon=exDone?'<span style="color:#e8ff47">✓ </span>':'';
   const lastInfo=lastW>0
-    ?`<div class="last-info">Last: <span style="color:#f2f0ea;font-weight:600">${lastW}kg × ~${lastR} reps</span>${bump?` <span style="color:#e8ff47;font-weight:700">→ try ${Math.round(lastW*1.025*2)/2}kg</span>`:''}</div>`
+    ?`<div class="last-info">${t('last')}: <span style="color:#f2f0ea;font-weight:600">${lastW}kg × ~${lastR} ${t('reps')}</span>${bump?` <span style="color:#e8ff47;font-weight:700">→ ${t('try')} ${Math.round(lastW*1.025*2)/2}kg</span>`:''}</div>`
     :'';
 
   let setsHTML='';
@@ -826,15 +1070,15 @@ function buildExerciseCard(ex,ei){
   <div class="card ex-card" style="animation-delay:${ei*0.04}s;opacity:${exDone?0.45:1}" id="ex-card-${ex.id}">
     <div class="ex-header">
       <div class="ex-title-area">
-        <div class="ex-title">${doneIcon}${esc(ex.name)}<span class="mtag">${esc(ex.muscle)}</span></div>
-        <div class="ex-meta">${ex.sets} sets · ${ex.repRange[0]}–${ex.repRange[1]} reps</div>
+        <div class="ex-title">${doneIcon}${esc(exName(ex.name))}<span class="mtag">${esc(muscleName(ex.muscle))}</span></div>
+        <div class="ex-meta">${ex.sets} ${t('sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('reps')}</div>
       </div>
       <div class="ex-actions">${bumpBadge}${swapBtn}</div>
     </div>
     <div class="cue-box">💡 ${esc(ex.cues)}</div>
     ${lastInfo}
-    <div class="set-col-hdr"><span>#</span><span>Reps ↕</span><span>kg</span><span></span></div>
-    <div class="hint-text">Double-tap 💪🏻 to edit a set</div>
+    <div class="set-col-hdr"><span>#</span><span>${t('sets_col')}</span><span>kg</span><span></span></div>
+    <div class="hint-text">${t('double_tap')}</div>
     ${setsHTML}
   </div>`;
 }
@@ -853,14 +1097,14 @@ function openSwap(exId,muscle){
     const lw=getLastWeight(alt.id);
     const cls='swap-item'+(isActive?' active':inUse?' in-use':' available');
     const click=inUse||isActive?'':`onclick="swapExercise('${exId}',LIBRARY['${muscle}'].find(x=>x.id==='${alt.id}'))"`;
-    const label=isActive?`✓ ${esc(alt.name)}`:esc(alt.name);
-    const status=isActive?'<div style="font-size:10px;color:#4a4a6a">current</div>':inUse?'<div style="font-size:10px;color:#4a4a6a">in use</div>':'';
+    const label=isActive?`✓ ${esc(exName(alt.name))}`:esc(exName(alt.name));
+    const status=isActive?`<div style="font-size:10px;color:#4a4a6a">${t('current')}</div>`:inUse?`<div style="font-size:10px;color:#4a4a6a">${t('in_use')}</div>`:'';
     const cueRow=(!inUse&&!isActive)?`<div class="swap-cue">💡 ${esc(alt.cues)}</div>`:'';
     items+=`<div class="${cls}" ${click}>
       <div class="swap-row">
         <div>
           <div style="font-weight:700;font-size:14px;color:${isActive?'#e8ff47':'#f2f0ea'}">${label}</div>
-          <div style="font-size:11px;color:#4a4a6a;margin-top:2px">${alt.sets} sets · ${alt.repRange[0]}–${alt.repRange[1]} reps</div>
+          <div style="font-size:11px;color:#4a4a6a;margin-top:2px">${alt.sets} ${t('sets')} · ${alt.repRange[0]}–${alt.repRange[1]} ${t('reps')}</div>
         </div>
         <div style="text-align:right">${lw?`<div style="font-size:12px;font-weight:700;color:#e8ff47">${lw}kg</div>`:''}${status}</div>
       </div>${cueRow}
@@ -873,8 +1117,8 @@ function openSwap(exId,muscle){
     <div class="modal-sheet">
       <div class="modal-hdr">
         <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">Swap Exercise</div>
-          <div style="font-size:12px;color:#4a4a6a;margin-top:2px">Muscle: <span style="color:#e8ff47;font-weight:700">${esc(muscle)}</span></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${t('swap_exercise')}</div>
+          <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${t('muscle_label')} <span style="color:#e8ff47;font-weight:700">${esc(muscleName(muscle))}</span></div>
         </div>
         <button class="btn-back" onclick="closeSwap()">✕</button>
       </div>
@@ -902,22 +1146,22 @@ function viewHome(){
   const pillsHTML=nextDay.exercises.map(ex=>{
     const lw=getLastWeight(ex.id);
     const bump=shouldIncrease(ex.id,ex.repRange[1]);
-    return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(ex.name)}</span>${lw?`<span style="font-size:12px;font-weight:700;color:${bump?'#e8ff47':'#4a4a6a'}">${bump?'↑':''}${lw}kg</span>`:''}</span>`;
+    return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(exName(ex.name))}</span>${lw?`<span style="font-size:12px;font-weight:700;color:${bump?'#e8ff47':'#4a4a6a'}">${bump?'↑':''}${lw}kg</span>`:''}</span>`;
   }).join('');
 
   const swapAlert=stu<=2?`
     <div class="scard" style="margin-top:4px">
-      <div style="font-size:11px;color:#47ffe8;font-weight:700;letter-spacing:.08em;margin-bottom:3px">🔄 BLOCK SWAP IN ${stu} SESSION${stu===1?'':'S'}</div>
-      <div style="font-size:13px;color:#f2f0ea">Coming up: <strong>${esc(nextB.label)} — ${esc(nextB.theme)}</strong></div>
+      <div style="font-size:11px;color:#47ffe8;font-weight:700;letter-spacing:.08em;margin-bottom:3px">${t('swap_alert')} ${stu} ${stu===1?t('swap_sessions'):t('swap_sessions_pl')}</div>
+      <div style="font-size:13px;color:#f2f0ea">${t('coming_up')} <strong>${esc(nextB.label)} — ${esc(t(nextB.themeKey||nextB.theme))}</strong></div>
     </div>`:'';
 
   const dayListHTML=block.days.map(day=>{
     const isNext=day.id===A.activeDayId;
-    const badge=isNext?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">NEXT</span>`:'';
+    const badge=isNext?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">${getLang()==='fi'?'SEURAAVA':'NEXT'}</span>`:'';
     return`<div class="card day-card" onclick="startWorkout('${day.id}')">
       <div>
-        <div style="font-weight:700;font-size:15px">${day.emoji} ${esc(day.label)}</div>
-        <div style="font-size:12px;color:#4a4a6a">${esc(day.focus)}</div>
+        <div style="font-weight:700;font-size:15px">${day.emoji} ${esc(t('day_'+day.id.toLowerCase()+'_label'))}</div>
+        <div style="font-size:12px;color:#4a4a6a">${esc(t('focus_'+day.id.toLowerCase()))}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">${badge}<span class="day-arrow">›</span></div>
     </div>`;
@@ -928,28 +1172,28 @@ function viewHome(){
     <div><div class="logo">IRONLOG</div><div class="hdr-sub">${today()}</div></div>
     <div style="text-align:right">
       <div style="font-size:10px;color:#47ffe8;font-weight:700;letter-spacing:.06em">${esc(block.label)}</div>
-      <div style="font-size:10px;color:#4a4a6a;margin-top:1px">Swap in ${stu} session${stu===1?'':'s'}</div>
+      <div style="font-size:10px;color:#4a4a6a;margin-top:1px">${t('swap_in')} ${stu} ${stu===1?t('session_s'):t('sessions_s')}</div>
     </div>
   </div>
   <div class="page">
-    <div class="h1">Ready to<br>build?</div>
-    <div class="sub">3 days. Full body. 12 weeks of variation.</div>
+    <div class="h1">${t('ready')}<br>${t('build')}</div>
+    <div class="sub">${t('sub')}</div>
     <div class="stats-row">
-      <div class="stat-box"><div class="stat-val">${totalS}</div><div class="stat-lbl">Sessions</div></div>
-      <div class="stat-box"><div class="stat-val">${weekS}<span>/3</span></div><div class="stat-lbl">This week</div></div>
-      <div class="stat-box"><div class="stat-val">${stu}</div><div class="stat-lbl">Swap in</div></div>
+      <div class="stat-box"><div class="stat-val">${totalS}</div><div class="stat-lbl">${t('stat_sessions')}</div></div>
+      <div class="stat-box"><div class="stat-val">${weekS}<span>/3</span></div><div class="stat-lbl">${t('stat_week')}</div></div>
+      <div class="stat-box"><div class="stat-val">${stu}</div><div class="stat-lbl">${t('stat_swap')}</div></div>
     </div>
     <div class="acard">
       <div style="font-size:11px;color:#e8ff47;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
-        UP NEXT · ${esc(block.label)} · DAY ${nextDay.id} · REST 1 DAY BETWEEN
+        ${t('up_next')} · ${esc(block.label)} · ${getLang()==='fi'?'PÄIVÄ':'DAY'} ${nextDay.id} · ${t('rest_between')}
       </div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:2px">${nextDay.emoji} ${esc(nextDay.label)}</div>
-      <div style="font-size:13px;color:#4a4a6a;margin-bottom:14px">${esc(nextDay.focus)}</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:2px">${nextDay.emoji} ${esc(t('day_'+nextDay.id.toLowerCase()+'_label'))}</div>
+      <div style="font-size:13px;color:#4a4a6a;margin-bottom:14px">${esc(t('focus_'+nextDay.id.toLowerCase()))}</div>
       <div style="display:flex;flex-wrap:wrap;margin-bottom:16px">${pillsHTML}</div>
-      <button class="btn-primary" onclick="startWorkout('${A.activeDayId}')">START WORKOUT →</button>
+      <button class="btn-primary" onclick="startWorkout('${A.activeDayId}')">${t('start_workout')}</button>
     </div>
     ${swapAlert}
-    <div class="sec-title" style="margin-top:20px">All days — ${esc(block.label)}</div>
+    <div class="sec-title" style="margin-top:20px">${t('all_days')} — ${esc(block.label)}</div>
     ${dayListHTML}
   </div>
   ${navHTML("home")}`;
@@ -962,13 +1206,13 @@ function viewWorkout(){
   const isDone=allDone();
   return`
   <div id="rest-bar" class="rest-bar">
-    <div id="rest-time" class="rest-pulse" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#e8ff47">REST · 1:30</div>
-    <button class="btn-tiny" style="color:#e8ff47;border-color:#e8ff47" onclick="skipRest()">SKIP</button>
+    <div id="rest-time" class="rest-pulse" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#e8ff47">${getLang()==='fi'?'LEPO':'REST'} · 1:30</div>
+    <button class="btn-tiny" style="color:#e8ff47;border-color:#e8ff47" onclick="skipRest()">${t('skip')}</button>
   </div>
   <div id="workout-hdr" class="hdr" style="padding-top:48px">
     <div>
       <div class="logo">IRONLOG</div>
-      <div id="elapsed-txt" class="hdr-sub">${BLOCKS[A.blockIdx].label} · Day ${A.activeDayId} · ${fmtTime(A.elapsed)}</div>
+      <div id="elapsed-txt" class="hdr-sub">${BLOCKS[A.blockIdx].label} · ${t('nav_log')} ${A.activeDayId} · ${fmtTime(A.elapsed)}</div>
     </div>
     <button class="btn-back" onclick="cancelWorkout()" style="
       width:40px;height:40px;border-radius:12px;background:#1c1c2e;border:1px solid #2a2a40;
@@ -979,13 +1223,13 @@ function viewWorkout(){
     ${exercisesHTML}
     <div style="height:12px"></div>
     <button id="finish-btn" class="btn-primary" onclick="finishWorkout()" ${isDone?'':'disabled'}>
-      ${isDone?'✓ FINISH WORKOUT':`${done} / ${total} SETS DONE`}
+      ${isDone?t('finish_workout'):`${done} / ${total} ${t('sets_done')}`}
     </button>
     ${isDone?'':`
-    <div style="text-align:center;font-size:12px;color:#4a4a6a;margin-top:8px">Complete all sets to finish</div>
+    <div style="text-align:center;font-size:12px;color:#4a4a6a;margin-top:8px">${t('complete_all')}</div>
     <div id="quitter-area" style="text-align:center;margin-top:28px">
-      <button onclick="quitterWorkout()" style="background:none;border:none;color:#2a2a3a;font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px 8px">
-        Push here if you want to give up without completing all the sets
+      <button onclick="quitterWorkout()" style="background:none;border:none;color:#4a4a6a;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px 8px">
+        ${t('quitter_btn')}
       </button>
     </div>`}
   </div>`;
@@ -999,28 +1243,28 @@ function viewComplete(){
   const blockSwapped=BLOCKS[A.blockIdx].id!==s.blockId;
   const swapNote=blockSwapped?`
     <div class="scard" style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:#47ffe8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em">🔄 Block Switch!</div>
-      <div style="font-size:14px;color:#f2f0ea">Now starting <strong>${esc(BLOCKS[A.blockIdx].label)} — ${esc(BLOCKS[A.blockIdx].theme)}</strong>.</div>
+      <div style="font-size:12px;font-weight:700;color:#47ffe8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em">${t('block_switch')}</div>
+      <div style="font-size:14px;color:#f2f0ea">${t('now_starting')} <strong>${esc(BLOCKS[A.blockIdx].label)} — ${esc(t('theme'+BLOCKS[A.blockIdx].id))}</strong>.</div>
     </div>`:'';
   return`
   <div class="page">
     <div class="complete-center">
       <div class="pop-in" style="font-size:72px">🏆</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:#e8ff47;margin-top:12px">DONE!</div>
-      <div style="color:#4a4a6a;font-size:14px;margin-top:4px">${esc(s.dayLabel)} · ${s.duration} min</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:#e8ff47;margin-top:12px">${t('done')}</div>
+      <div style="color:#4a4a6a;font-size:14px;margin-top:4px">${esc(t('day_'+(s.dayId||'a').toLowerCase()+'_label'))} · ${s.duration} min</div>
     </div>
     <div class="stats-row">
-      <div class="stat-box"><div class="stat-val">${s.duration}m</div><div class="stat-lbl">Duration</div></div>
-      <div class="stat-box"><div class="stat-val">${s.exercises.length}</div><div class="stat-lbl">Exercises</div></div>
-      <div class="stat-box"><div class="stat-val">${vol>0?Math.round(vol/100)/10+'k':'—'}</div><div class="stat-lbl">kg Vol.</div></div>
+      <div class="stat-box"><div class="stat-val">${s.duration}m</div><div class="stat-lbl">${t('duration')}</div></div>
+      <div class="stat-box"><div class="stat-val">${s.exercises.length}</div><div class="stat-lbl">${t('exercises')}</div></div>
+      <div class="stat-box"><div class="stat-val">${vol>0?Math.round(vol/100)/10+'k':'—'}</div><div class="stat-lbl">${t('vol')}</div></div>
     </div>
     ${swapNote}
     <div class="card" style="margin-bottom:16px">
-      <div style="font-size:12px;color:#4a4a6a;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">Up next</div>
-      <div style="font-weight:700;font-size:16px">${nd?nd.emoji+' '+esc(nd.label):''}</div>
-      <div style="font-size:13px;color:#4a4a6a;margin-top:2px">${nd?esc(nd.focus):''}</div>
+      <div style="font-size:12px;color:#4a4a6a;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">${t('up_next_label')}</div>
+      <div style="font-weight:700;font-size:16px">${nd?nd.emoji+' '+esc(t('day_'+nd.id.toLowerCase()+'_label')):''}</div>
+      <div style="font-size:13px;color:#4a4a6a;margin-top:2px">${nd?esc(t('focus_'+nd.id.toLowerCase())):''}</div>
     </div>
-    <button class="btn-primary" onclick="navigate('home')">← BACK TO HOME</button>
+    <button class="btn-primary" onclick="navigate('home')">${t('back_home')}</button>
   </div>`;
 }
 
@@ -1028,7 +1272,7 @@ function viewHistory(){
   const hist=[...A.history].reverse();
   let content='';
   if(!hist.length){
-    content=`<div style="color:#4a4a6a;text-align:center;padding-top:40px">No sessions yet. Start today! 💪</div>`;
+    content=`<div style="color:#4a4a6a;text-align:center;padding-top:40px">${t('no_sessions')}</div>`;
   }else{
     hist.forEach(session=>{
       const vol=(session.exercises||[]).reduce((a,e)=>a+(e.sets||[]).reduce((b,st)=>b+(parseFloat(st.weight)||0)*(parseFloat(st.reps)||0),0),0);
@@ -1038,13 +1282,14 @@ function viewHistory(){
         const wts=(ex.sets||[]).map(st=>parseFloat(st.weight)||0).filter(w=>w>0);
         const maxW=wts.length?Math.max(...wts):0;
         if(maxW>0)exRows+=`<div style="display:flex;justify-content:space-between;padding-top:5px;border-top:1px solid #1c1c2e;margin-top:5px">
-          <div style="font-size:13px;color:#4a4a6a">${esc(ex.name)}</div>
+          <div style="font-size:13px;color:#4a4a6a">${esc(exName(ex.name))}</div>
           <div style="font-size:13px;font-weight:700">${maxW}kg</div>
         </div>`;
       });
+      const sessionDayLabel=session.dayId?t('day_'+session.dayId.toLowerCase()+'_label'):esc(session.dayLabel||'');
       content+=`<div class="card">
         <div class="row">
-          <div style="font-weight:700;font-size:15px">${esc(session.dayLabel||'')}</div>
+          <div style="font-weight:700;font-size:15px">${sessionDayLabel}</div>
           <div style="text-align:right">
             <div style="font-size:11px;color:#e8ff47;font-weight:700">${ds}</div>
             ${session.blockLabel?`<div style="font-size:10px;color:#4a4a6a;margin-top:1px">${esc(session.blockLabel)}</div>`:''}
@@ -1052,8 +1297,8 @@ function viewHistory(){
         </div>
         <div style="font-size:12px;color:#4a4a6a;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
           <span class="tag">${session.duration}min</span>
-          <span class="tag">${(session.exercises||[]).length} ex</span>
-          ${vol>0?`<span class="tag">${Math.round(vol)}kg vol.</span>`:''}
+          <span class="tag">${(session.exercises||[]).length} ${t('ex_label')}</span>
+          ${vol>0?`<span class="tag">${Math.round(vol)}${t('vol_label')}</span>`:''}
         </div>
         <div>${exRows}</div>
       </div>`;
@@ -1062,7 +1307,7 @@ function viewHistory(){
   return`
   <div class="hdr"><div class="logo">IRONLOG</div></div>
   <div class="page">
-    <div class="h2">History</div>
+    <div class="h2">${t('history')}</div>
     ${content}
   </div>
   ${navHTML("history")}`;
@@ -1088,8 +1333,8 @@ function viewProgram(){
       const lw=getLastWeight(ex.id);
       exRows+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid #1c1c2e">
         <div>
-          <div style="font-size:13px;font-weight:600">${esc(ex.name)}<span class="mtag">${esc(ex.muscle)}</span></div>
-          <div style="font-size:11px;color:#4a4a6a">${ex.sets} sets · ${ex.repRange[0]}–${ex.repRange[1]} reps</div>
+          <div style="font-size:13px;font-weight:600">${esc(exName(ex.name))}<span class="mtag">${esc(muscleName(ex.muscle))}</span></div>
+          <div style="font-size:11px;color:#4a4a6a">${ex.sets} ${t('sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('reps')}</div>
         </div>
         ${lw?`<div style="font-size:13px;font-weight:700;color:#e8ff47">${lw}kg</div>`:''}
       </div>`;
@@ -1097,8 +1342,8 @@ function viewProgram(){
     return`<div class="card" style="margin-bottom:10px">
       <div class="row" style="margin-bottom:10px">
         <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${day.emoji} ${esc(day.label)}</div>
-          <div style="font-size:11px;color:#4a4a6a">${esc(day.focus)}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${day.emoji} ${esc(t('day_'+day.id.toLowerCase()+'_label'))}</div>
+          <div style="font-size:11px;color:#4a4a6a">${esc(t('focus_'+day.id.toLowerCase()))}</div>
         </div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#1c1c2e">${day.id}</div>
       </div>
@@ -1109,24 +1354,21 @@ function viewProgram(){
   return`
   <div class="hdr"><div class="logo">IRONLOG</div></div>
   <div class="page">
-    <div class="h2">The Program</div>
+    <div class="h2">${t('the_program')}</div>
     <div class="acard" style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:#e8ff47;letter-spacing:.1em;margin-bottom:6px">FULL BODY · 3×/WEEK · 6 BLOCKS · 12 WEEKS</div>
-      <div style="font-size:13px;color:#4a4a6a;line-height:1.6">
-        12 weeks of unique training before anything repeats. Blocks swap after 2 full completions (6 sessions).
-        Tap ⇄ Swap during any workout to replace an unavailable exercise.
-      </div>
+      <div style="font-size:12px;font-weight:700;color:#e8ff47;letter-spacing:.1em;margin-bottom:6px">${t('full_body')}</div>
+      <div style="font-size:13px;color:#4a4a6a;line-height:1.6">${t('program_desc')}</div>
     </div>
     <div class="scard" style="margin-bottom:16px;display:flex;align-items:center;gap:14px">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:#47ffe8;line-height:1">${stu}</div>
       <div>
-        <div style="font-size:13px;font-weight:700;color:#47ffe8">session${stu===1?'':'s'} until ${esc(nextB.label)}</div>
-        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${esc(nextB.theme)}</div>
+        <div style="font-size:13px;font-weight:700;color:#47ffe8">${stu===1?t('session_until'):t('sessions_until')} ${esc(nextB.label)}</div>
+        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${esc(t('theme'+nextB.id))}</div>
       </div>
     </div>
     <div class="block-grid">${tabsHTML}</div>
     <div style="font-size:12px;color:#47ffe8;font-weight:700;margin-bottom:12px">
-      ${esc(pb.theme)}${A.blockIdx===A.previewBlockIdx?' · Active now':''}
+      ${esc(t('theme'+pb.id))}${A.blockIdx===A.previewBlockIdx?' '+t('active_now'):''}
     </div>
     ${daysHTML}
   </div>
@@ -1145,17 +1387,30 @@ function viewSettings(){
       cursor:pointer">${s<60?s+'s':Math.floor(s/60)+(s%60?':'+String(s%60).padStart(2,'0'):'')+'m'}</button>`;
   }).join('');
 
+  const isFi=cfg.lang==='fi';
   return`
   <div class="hdr"><div class="logo">IRONLOG</div></div>
   <div class="page">
-    <div class="h2">Settings</div>
+    <div class="h2">${t('settings')}</div>
 
-    <div class="sec-title">Rest Timer</div>
+    <div class="sec-title">${t('language')}</div>
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;gap:8px">
+        <button onclick="setLang('en')" style="flex:1;padding:14px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;
+          border:2px solid ${!isFi?'#e8ff47':'#1c1c2e'};background:${!isFi?'#e8ff4718':'#10101a'};
+          color:${!isFi?'#e8ff47':'#4a4a6a'}">🇬🇧 English</button>
+        <button onclick="setLang('fi')" style="flex:1;padding:14px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;
+          border:2px solid ${isFi?'#e8ff47':'#1c1c2e'};background:${isFi?'#e8ff4718':'#10101a'};
+          color:${isFi?'#e8ff47':'#4a4a6a'}">🇫🇮 Suomi</button>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:16px">${t('rest_timer')}</div>
     <div class="card" style="margin-bottom:10px">
       <div class="row" style="margin-bottom:${cfg.restEnabled?'18px':'0'}">
         <div>
-          <div style="font-weight:700;font-size:15px">Enable rest timer</div>
-          <div style="font-size:12px;color:#4a4a6a;margin-top:2px">Auto-starts after each completed set</div>
+          <div style="font-weight:700;font-size:15px">${t('enable_rest')}</div>
+          <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${t('rest_auto')}</div>
         </div>
         <button onclick="toggleRest()" style="
           width:48px;height:28px;border-radius:99px;border:none;cursor:pointer;
@@ -1169,10 +1424,10 @@ function viewSettings(){
       </div>
       ${cfg.restEnabled?`
       <div style="border-top:1px solid #1c1c2e;padding-top:16px">
-        <div style="font-size:12px;color:#4a4a6a;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Duration</div>
+        <div style="font-size:12px;color:#4a4a6a;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:700">${t('duration')}</div>
         <div style="display:flex;gap:6px;margin-bottom:14px">${presetsHTML}</div>
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="font-size:12px;color:#4a4a6a;white-space:nowrap">Custom (sec)</div>
+          <div style="font-size:12px;color:#4a4a6a;white-space:nowrap">${t('custom_sec')}</div>
           <input type="number" value="${cfg.restSecs}" min="10" max="600"
             oninput="setRestSecs(parseInt(this.value)||90)"
             style="flex:1;background:#080810;border:1px solid #1c1c2e;border-radius:10px;
@@ -1184,11 +1439,11 @@ function viewSettings(){
       </div>`:''}
     </div>
 
-    <div class="sec-title" style="margin-top:24px">How to use</div>
+    <div class="sec-title" style="margin-top:24px">${t('how_to')}</div>
     <button onclick="openGuide()" class="card" style="width:100%;text-align:left;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div>
-        <div style="font-weight:700;font-size:15px">App guide</div>
-        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">How workouts, blocks, swaps and more work</div>
+        <div style="font-weight:700;font-size:15px">${t('app_guide')}</div>
+        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${t('app_guide_sub')}</div>
       </div>
       <div style="color:#e8ff47;font-size:20px;margin-left:12px">›</div>
     </button>
@@ -1199,19 +1454,19 @@ function viewSettings(){
   <div id="guide-modal" style="display:none;position:fixed;inset:0;z-index:500;background:#080810;overflow-y:auto;-webkit-overflow-scrolling:touch">
     <div style="max-width:430px;margin:0 auto;padding:0 0 40px">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:52px 20px 20px;position:sticky;top:0;background:#080810;border-bottom:1px solid #1c1c2e;z-index:10">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900">How to use</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900">${t('guide_title')}</div>
         <button onclick="closeGuide()" style="width:40px;height:40px;border-radius:12px;background:#1c1c2e;border:1px solid #2a2a40;font-size:18px;color:#f2f0ea;cursor:pointer">✕</button>
       </div>
       <div style="padding:20px">
 
-        <div class="sec-title">Logging a workout</div>
+        <div class="sec-title">${t('logging_title')}</div>
         <div class="card" style="margin-bottom:16px">
           ${[
-            ['1','Set your reps','Tap the reps button to cycle through the rep range, from top down. The target range is shown as a placeholder.'],
-            ['2','Enter weight','Type kg into the first set — all remaining sets fill automatically. Changing any set cascades forward to undone sets.'],
-            ['3','Mark set done','Tap ✓ to lock in the set. The rest timer starts and the progress bar updates.'],
-            ['4','Edit a done set','Double-tap the 💪🏻 emoji on a completed set to reopen it and change reps or weight.'],
-            ['5','Finish','When all sets are done, FINISH WORKOUT lights up. To end early, use the quit link at the bottom — your partial session is still saved.'],
+            ['1',t('guide_step1_title'),t('guide_step1')],
+            ['2',t('guide_step2_title'),t('guide_step2')],
+            ['3',t('guide_step3_title'),t('guide_step3')],
+            ['4',t('guide_step4_title'),t('guide_step4')],
+            ['5',t('guide_step5_title'),t('guide_step5')],
           ].map(([n,title,desc])=>`
           <div style="display:flex;gap:14px;padding:10px 0;border-top:1px solid #1c1c2e;align-items:flex-start">
             <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#e8ff47;line-height:1;flex-shrink:0;width:22px">${n}</div>
@@ -1222,44 +1477,29 @@ function viewSettings(){
           </div>`).join('')}
         </div>
 
-        <div class="sec-title">Training blocks</div>
+        <div class="sec-title">${t('blocks_title')}</div>
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:13px;color:#4a4a6a;line-height:1.6;margin-bottom:10px">
-            There are <span style="color:#f2f0ea;font-weight:700">6 blocks</span>, each with a different training style. The block advances after <span style="color:#e8ff47;font-weight:700">2 full passes</span> through Days A, B and C — 6 sessions total. The Home screen shows how many sessions remain until the next swap.
-          </div>
-          ${[
-            ['Block 1','Barbell Compounds'],
-            ['Block 2','Dumbbell & Machine'],
-            ['Block 3','Power & Strength'],
-            ['Block 4','Isolation & Volume'],
-            ['Block 5','Cable & Unilateral'],
-            ['Block 6','Peak'],
-          ].map(([b,t])=>`
+          <div style="font-size:13px;color:#4a4a6a;line-height:1.6;margin-bottom:10px">${t('guide_blocks_desc')}</div>
+          ${[1,2,3,4,5,6].map(n=>`
           <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid #1c1c2e">
-            <div style="font-size:13px;color:#4a4a6a">${b}</div>
-            <div style="font-size:13px;font-weight:600;color:#f2f0ea">${t}</div>
+            <div style="font-size:13px;color:#4a4a6a">${isFi?'Lohko':'Block'} ${n}</div>
+            <div style="font-size:13px;font-weight:600;color:#f2f0ea">${t('theme'+n)}</div>
           </div>`).join('')}
         </div>
 
-        <div class="sec-title">Swapping exercises</div>
+        <div class="sec-title">${t('swap_title')}</div>
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">
-            Don't have the equipment? Tap <span style="color:#e8ff47;font-weight:700">⇄ Swap</span> on any uncompleted exercise to open a list of alternatives for the same muscle group. Only the current session is affected — the program block stays unchanged.
-          </div>
+          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">${t('guide_swap_desc')}</div>
         </div>
 
-        <div class="sec-title">Progressive overload</div>
+        <div class="sec-title">${t('overload_title')}</div>
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">
-            If you hit the top of the rep range on every set last session, the app shows a <span style="color:#e8ff47;font-weight:700">↑ LOAD</span> badge and pre-fills a 2.5% heavier weight. Hit it consistently to keep progressing.
-          </div>
+          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">${t('guide_overload_desc')}</div>
         </div>
 
-        <div class="sec-title">Your data</div>
+        <div class="sec-title">${t('data_title')}</div>
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">
-            Everything is saved locally on your device. Weights, history, settings and block progress all persist between visits. Clearing your browser data will reset the app.
-          </div>
+          <div style="font-size:13px;color:#4a4a6a;line-height:1.6">${t('guide_data_desc')}</div>
         </div>
 
       </div>
@@ -1290,12 +1530,19 @@ function setRestSecs(v){
   render();
 }
 
+function setLang(lang){
+  const cfg=getSettings();
+  cfg.lang=lang;
+  saveSettings(cfg);
+  render();
+}
+
 function navHTML(active){
   const items=[
-    {id:"home",icon:"🏠",label:"Home"},
-    {id:"history",icon:"📋",label:"Log"},
-    {id:"program",icon:"📅",label:"Program"},
-    {id:"settings",icon:"⚙️",label:"Settings"},
+    {id:"home",icon:"🏠",label:t('nav_home')},
+    {id:"history",icon:"📋",label:t('nav_log')},
+    {id:"program",icon:"📅",label:t('nav_program')},
+    {id:"settings",icon:"⚙️",label:t('nav_settings')},
   ];
   return`<nav class="nav">${items.map(it=>`
     <button class="nav-btn${active===it.id?' active':''}" onclick="navigate('${it.id}')">
@@ -1318,12 +1565,12 @@ function setPreviewBlock(idx){
 }
 
 function quitterWorkout(){
-  if(!confirm("Are you sure you want to be a pussy ass quitter?"))return;
+  if(!confirm(t('quitter_confirm')))return;
   finishWorkout(true);
 }
 
 function cancelWorkout(){
-  if(!confirm("Cancel? Progress will be lost."))return;
+  if(!confirm(t('cancel_confirm')))return;
   stopElapsed();
   clearTimeout(A._restInterval);
   A.restTimer=null;
