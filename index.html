@@ -33,48 +33,54 @@ button{font-family:'DM Sans',sans-serif;cursor:pointer}
 .page{padding:24px 20px 110px}
 .hdr{padding:48px 20px 0;display:flex;justify-content:space-between;align-items:flex-start}
 /* Typography */
-.logo{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:.15em;color:#e8ff47}
-.hdr-sub{font-size:12px;color:#4a4a6a;margin-top:2px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:.15em;color:#d4a846}
+.hdr-sub{font-size:12px;color:#9090b0;margin-top:2px}
 .h1{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;line-height:1;margin-bottom:4px}
 .h2{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;line-height:1;margin-bottom:12px}
-.sub{font-size:13px;color:#4a4a6a;margin-bottom:24px}
-.sec-title{font-size:12px;color:#4a4a6a;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:10px}
+.sub{font-size:13px;color:#9090b0;margin-bottom:24px}
+.sec-title{font-size:12px;color:#9090b0;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:10px}
 /* Cards */
 .card{background:#10101a;border:1px solid #1c1c2e;border-radius:16px;padding:16px 18px;margin-bottom:10px}
-.acard{background:#141420;border:1px solid #e8ff4733;border-radius:16px;padding:16px 18px;margin-bottom:10px}
-.scard{background:#0e1a1a;border:1px solid #47ffe833;border-radius:16px;padding:14px 18px;margin-bottom:10px}
+.acard{background:#141420;border:1px solid #d4a84633;border-radius:16px;padding:16px 18px;margin-bottom:10px}
+.scard{background:#1a1810;border:1px solid #e8c55a33;border-radius:16px;padding:14px 18px;margin-bottom:10px}
 /* Stats */
 .stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px}
 .stat-box{background:#10101a;border:1px solid #1c1c2e;border-radius:14px;padding:14px 10px;text-align:center}
-.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:#e8ff47;line-height:1}
-.stat-val span{font-size:16px;color:#4a4a6a}
-.stat-lbl{font-size:10px;color:#4a4a6a;margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:#d4a846;line-height:1}
+.stat-val span{font-size:16px;color:#9090b0}
+.stat-lbl{font-size:10px;color:#9090b0;margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
 /* Buttons */
-.btn-primary{background:#e8ff47;color:#080810;border:none;border-radius:14px;padding:17px 24px;
+.btn-primary{background:#d4a846;color:#080810;border:none;border-radius:14px;padding:17px 24px;
   font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;letter-spacing:.06em;width:100%}
 .btn-primary:disabled{opacity:.35;cursor:default}
 .btn-ghost{background:transparent;color:#f2f0ea;border:1px solid #1c1c2e;border-radius:14px;
   padding:13px 24px;font-weight:600;font-size:14px;width:100%}
-.btn-back{background:none;border:none;color:#e8ff47;font-weight:700;font-size:13px;padding:0}
-.btn-tiny{background:transparent;color:#4a4a6a;border:1px solid #1c1c2e;border-radius:8px;padding:6px 12px;font-size:12px}
+.btn-back{background:none;border:none;color:#d4a846;font-weight:700;font-size:13px;padding:0}
+.btn-tiny{background:transparent;color:#9090b0;border:1px solid #1c1c2e;border-radius:8px;padding:6px 12px;font-size:12px}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle .slider{position:absolute;inset:0;background:#1c1c2e;border-radius:12px;cursor:pointer;transition:.2s}
+.toggle .slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#9090b0;border-radius:50%;transition:.2s}
+.toggle input:checked+.slider{background:#d4a846}
+.toggle input:checked+.slider::before{transform:translateX(20px);background:#0a0a14}
 .btn-swap{background:#1c1c30;border:1px solid #1c1c2e;border-radius:8px;padding:4px 10px;
-  color:#4a4a6a;font-size:11px;font-weight:600;white-space:nowrap}
+  color:#9090b0;font-size:11px;font-weight:600;white-space:nowrap}
 /* Nav */
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;
   background:#0c0c18;border-top:1px solid #1c1c2e;display:flex;
   padding:10px 0 max(22px,env(safe-area-inset-bottom,22px));z-index:100}
-.nav-btn{flex:1;background:none;border:none;font-size:10px;font-weight:500;color:#4a4a6a;
+.nav-btn{flex:1;background:none;border:none;font-size:10px;font-weight:500;color:#9090b0;
   display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;
   letter-spacing:.04em;text-transform:uppercase}
-.nav-btn.active{color:#e8ff47;font-weight:700}
+.nav-btn.active{color:#d4a846;font-weight:700}
 /* Tags */
-.tag{display:inline-block;background:#1c1c30;border-radius:6px;padding:2px 8px;font-size:11px;color:#4a4a6a;margin-right:4px}
+.tag{display:inline-block;background:#1c1c30;border-radius:6px;padding:2px 8px;font-size:11px;color:#9090b0;margin-right:4px}
 .mtag{display:inline-block;background:#1a1a2e;border-radius:4px;padding:1px 7px;font-size:10px;
-  color:#5a5a9a;margin-left:6px;font-weight:600;letter-spacing:.04em;vertical-align:middle}
+  color:#a0a0c0;margin-left:6px;font-weight:600;letter-spacing:.04em;vertical-align:middle}
 .badge{display:inline-block;border-radius:99px;padding:2px 10px;font-size:11px;font-weight:700}
 /* Progress */
 .progress-track{background:#10101a;border-radius:99px;height:5px;margin-bottom:20px;overflow:hidden}
-.progress-fill{background:#e8ff47;height:100%;border-radius:99px;transition:width .4s ease}
+.progress-fill{background:#d4a846;height:100%;border-radius:99px;transition:width .4s ease}
 /* Rest bar */
 .rest-bar{position:fixed;bottom:calc(52px + max(22px,env(safe-area-inset-bottom,22px)));left:50%;transform:translateX(-50%);width:100%;max-width:430px;
   background:#0a0a18ee;backdrop-filter:blur(10px);z-index:200;padding:14px 20px;
@@ -84,33 +90,33 @@ button{font-family:'DM Sans',sans-serif;cursor:pointer}
 .ex-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .ex-title-area{flex:1}
 .ex-title{font-weight:700;font-size:16px;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
-.ex-meta{font-size:11px;color:#4a4a6a;margin-top:2px}
+.ex-meta{font-size:11px;color:#9090b0;margin-top:2px}
 .ex-actions{display:flex;gap:6px;align-items:center;margin-left:8px;flex-shrink:0}
 .cue-box{background:#0a0a18;border-radius:8px;padding:7px 10px;margin-bottom:10px;
-  font-size:11px;color:#5555aa;border-left:2px solid #e8ff4744}
-.last-info{font-size:11px;color:#4a4a6a;margin-bottom:10px}
+  font-size:11px;color:#5555aa;border-left:2px solid #d4a84644}
+.last-info{font-size:11px;color:#9090b0;margin-bottom:10px}
 /* Set grid */
 .set-grid{display:grid;grid-template-columns:28px 1fr 1fr 52px;gap:6px;align-items:center;margin-bottom:6px}
 .set-col-hdr{display:grid;grid-template-columns:28px 1fr 1fr 52px;gap:6px;margin-bottom:6px}
-.set-col-hdr span{font-size:10px;color:#4a4a6a;text-align:center;text-transform:uppercase;letter-spacing:.05em}
-.set-num{text-align:center;font-size:12px;font-weight:700;color:#4a4a6a}
-.set-num.done{color:#e8ff47}
+.set-col-hdr span{font-size:10px;color:#9090b0;text-align:center;text-transform:uppercase;letter-spacing:.05em}
+.set-num{text-align:center;font-size:12px;font-weight:700;color:#9090b0}
+.set-num.done{color:#d4a846}
 /* Reps button */
 .rep-btn{background:#080810;border:1px solid #1c1c2e;border-radius:10px;padding:11px 8px;
-  color:#4a4a6a;font-size:15px;width:100%;text-align:center;font-weight:400}
+  color:#9090b0;font-size:15px;width:100%;text-align:center;font-weight:400}
 .rep-btn.has-val{color:#f2f0ea;font-weight:700}
 .rep-btn.editing{border-color:#ee8877}
-.rep-display{background:#e8ff4718;border:1px solid #e8ff4755;border-radius:10px;padding:11px 8px;
-  color:#e8ff47;font-weight:700;font-size:15px;text-align:center}
+.rep-display{background:#d4a84618;border:1px solid #d4a84655;border-radius:10px;padding:11px 8px;
+  color:#d4a846;font-weight:700;font-size:15px;text-align:center}
 /* KG input */
 .kg-inp{background:#080810;border:1px solid #1c1c2e;border-radius:10px;padding:11px 12px;
   color:#f2f0ea;font-size:15px;text-align:center;width:100%}
-.kg-inp:focus{border-color:#e8ff47;outline:none}
+.kg-inp:focus{border-color:#d4a846;outline:none}
 .kg-inp.editing{border-color:#ee8877}
-.kg-display{background:#e8ff4718;border:1px solid #e8ff4755;border-radius:10px;padding:11px 8px;
-  color:#e8ff47;font-weight:700;font-size:15px;text-align:center}
+.kg-display{background:#d4a84618;border:1px solid #d4a84655;border-radius:10px;padding:11px 8px;
+  color:#d4a846;font-weight:700;font-size:15px;text-align:center}
 /* Action buttons */
-.btn-check{background:#e8ff47;border:none;border-radius:10px;padding:11px 0;
+.btn-check{background:#d4a846;border:none;border-radius:10px;padding:11px 0;
   color:#080810;font-weight:800;font-size:13px;width:100%}
 .btn-check.dim{opacity:.4;cursor:default}
 .btn-emoji{background:none;border:none;font-size:22px;width:100%;text-align:center;padding:4px 0}
@@ -123,46 +129,46 @@ button{font-family:'DM Sans',sans-serif;cursor:pointer}
   display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .modal-body{overflow-y:auto;padding:12px 16px 24px;-webkit-overflow-scrolling:touch}
 .swap-item{padding:12px 14px;border-radius:12px;margin-bottom:8px;cursor:pointer;border:1px solid #1c1c2e}
-.swap-item.active{background:#1c1c10;border-color:#e8ff47}
+.swap-item.active{background:#1a1810;border-color:#d4a846}
 .swap-item.in-use{background:#14141e;opacity:.4;cursor:default}
 .swap-item.available{background:#16161e}
 .swap-row{display:flex;justify-content:space-between;align-items:center}
-.swap-cue{font-size:11px;color:#4a4a7a;margin-top:4px}
+.swap-cue{font-size:11px;color:#9090b0;margin-top:4px}
 /* Block selector */
 .block-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px}
 .block-tab{padding:8px 4px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;
   border-radius:10px;letter-spacing:.02em;line-height:1.2;border:2px solid transparent}
 /* Day list */
 .day-card{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-.day-arrow{color:#4a4a6a;font-size:18px}
+.day-arrow{color:#9090b0;font-size:18px}
 /* Complete */
 .complete-center{text-align:center;padding-top:56px;padding-bottom:28px}
 /* Misc */
 .row{display:flex;justify-content:space-between;align-items:center}
 .ex-pill{background:#0a0a18;border-radius:8px;padding:5px 10px;
   display:inline-flex;align-items:center;gap:6px;margin:3px;font-size:12px}
-.hint-text{font-size:10px;color:#4a4a6a;text-align:right;margin-bottom:8px;letter-spacing:.03em}
+.hint-text{font-size:10px;color:#9090b0;text-align:right;margin-bottom:8px;letter-spacing:.03em}
 /* Onboarding */
 .ob-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
-.ob-title{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#e8ff47;margin-bottom:4px;line-height:1}
-.ob-sub{font-size:14px;color:#4a4a6a;margin-bottom:36px;line-height:1.5}
+.ob-title{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#d4a846;margin-bottom:4px;line-height:1}
+.ob-sub{font-size:14px;color:#9090b0;margin-bottom:36px;line-height:1.5}
 .ob-section{width:100%;max-width:360px;margin-bottom:28px;text-align:left}
-.ob-label{font-size:11px;color:#4a4a6a;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:10px}
+.ob-label{font-size:11px;color:#9090b0;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:10px}
 .ob-options{display:flex;gap:8px;flex-wrap:wrap}
 .ob-opt{flex:1;min-width:0;background:#10101a;border:2px solid #1c1c2e;border-radius:14px;padding:14px 8px;
-  text-align:center;cursor:pointer;transition:all .15s ease;font-size:14px;font-weight:600;color:#4a4a6a}
-.ob-opt:hover{border-color:#4a4a6a}
-.ob-opt.selected{border-color:#e8ff47;color:#e8ff47;background:#1c1c10}
+  text-align:center;cursor:pointer;transition:all .15s ease;font-size:14px;font-weight:600;color:#9090b0}
+.ob-opt:hover{border-color:#9090b0}
+.ob-opt.selected{border-color:#d4a846;color:#d4a846;background:#1a1810}
 .ob-opt .ob-opt-big{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;line-height:1;margin-bottom:2px}
-.ob-opt .ob-opt-sm{font-size:10px;color:#4a4a6a;margin-top:2px}
-.ob-opt.selected .ob-opt-sm{color:#e8ff47aa}
+.ob-opt .ob-opt-sm{font-size:10px;color:#9090b0;margin-top:2px}
+.ob-opt.selected .ob-opt-sm{color:#d4a846aa}
 .ob-sex{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ob-sex .ob-opt{padding:18px 12px}
 .ob-sex .ob-opt .ob-emoji{font-size:28px;margin-bottom:4px}
 .ob-start{margin-top:12px;width:100%;max-width:360px}
 .ob-profile-row{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px}
-.ob-profile-tag{background:#1c1c30;border-radius:8px;padding:4px 12px;font-size:12px;color:#4a4a6a;cursor:pointer}
-.ob-profile-tag:hover{color:#e8ff47;border-color:#e8ff47}
+.ob-profile-tag{background:#1c1c30;border-radius:8px;padding:4px 12px;font-size:12px;color:#9090b0;cursor:pointer}
+.ob-profile-tag:hover{color:#d4a846;border-color:#d4a846}
 </style>
 </head>
 <body>
@@ -1694,12 +1700,12 @@ function buildExerciseCard(ex,ei){
   const lastW=wts.length?Math.max(...wts):0;
   const lastR=lastS&&lastS.sets.length?Math.round(lastS.sets.reduce((a,s)=>a+(parseInt(s.reps)||0),0)/lastS.sets.length):0;
 
-  const bumpBadge=bump&&!exDone?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">${t('workout_load')}</span>`:'';
+  const bumpBadge=bump&&!exDone?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('workout_load')}</span>`:'';
   const swapBtn=exDone?'':`<button class="btn-swap" onclick="openSwap('${ex.id}','${ex.muscle}')">${t('workout_swap')}</button>`;
-  const doneIcon=exDone?'<span style="color:#e8ff47">✓ </span>':'';
+  const doneIcon=exDone?'<span style="color:#d4a846">✓ </span>':'';
   const cueText=t('cue_'+(ex.libId||''))||esc(ex.cues);
   const lastInfo=lastW>0
-    ?`<div class="last-info">${t('workout_last')} <span style="color:#f2f0ea;font-weight:600">${lastW}kg × ~${lastR} ${t('workout_reps')}</span>${bump?` <span style="color:#e8ff47;font-weight:700">${t('workout_try')} ${Math.round(lastW*1.025*2)/2}kg</span>`:''}</div>`
+    ?`<div class="last-info">${t('workout_last')} <span style="color:#f2f0ea;font-weight:600">${lastW}kg × ~${lastR} ${t('workout_reps')}</span>${bump?` <span style="color:#d4a846;font-weight:700">${t('workout_try')} ${Math.round(lastW*1.025*2)/2}kg</span>`:''}</div>`
     :'';
 
   let setsHTML='';
@@ -1743,16 +1749,16 @@ function openSwap(exId,muscle){
     const click=inUse||isActive?'':`onclick="doSwap('${esc(exId)}','${esc(muscle)}','${esc(alt.id)}')"`;
     const altName=t(alt.id)||esc(alt.name);
     const label=isActive?`✓ ${altName}`:altName;
-    const status=isActive?`<div style="font-size:10px;color:#4a4a6a">${t('workout_current')}</div>`:inUse?`<div style="font-size:10px;color:#4a4a6a">${t('workout_in_use')}</div>`:'';
+    const status=isActive?`<div style="font-size:10px;color:#9090b0">${t('workout_current')}</div>`:inUse?`<div style="font-size:10px;color:#9090b0">${t('workout_in_use')}</div>`:'';
     const altCue=t('cue_'+alt.id)||esc(alt.cues);
     const cueRow=(!inUse&&!isActive)?`<div class="swap-cue">💡 ${altCue}</div>`:'';
     items+=`<div class="${cls}" ${click}>
       <div class="swap-row">
         <div>
-          <div style="font-weight:700;font-size:14px;color:${isActive?'#e8ff47':'#f2f0ea'}">${label}</div>
-          <div style="font-size:11px;color:#4a4a6a;margin-top:2px">${alt.sets} ${t('workout_sets')} · ${alt.repRange[0]}–${alt.repRange[1]} ${t('workout_reps')}</div>
+          <div style="font-weight:700;font-size:14px;color:${isActive?'#d4a846':'#f2f0ea'}">${label}</div>
+          <div style="font-size:11px;color:#9090b0;margin-top:2px">${alt.sets} ${t('workout_sets')} · ${alt.repRange[0]}–${alt.repRange[1]} ${t('workout_reps')}</div>
         </div>
-        <div style="text-align:right">${lw?`<div style="font-size:12px;font-weight:700;color:#e8ff47">${lw}kg</div>`:''}${status}</div>
+        <div style="text-align:right">${lw?`<div style="font-size:12px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}${status}</div>
       </div>${cueRow}
     </div>`;
   });
@@ -1764,7 +1770,7 @@ function openSwap(exId,muscle){
       <div class="modal-hdr">
         <div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${t('workout_swap_title')}</div>
-          <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${t('workout_muscle')} <span style="color:#e8ff47;font-weight:700">${esc(t('muscle_'+muscle))}</span></div>
+          <div style="font-size:12px;color:#9090b0;margin-top:2px">${t('workout_muscle')} <span style="color:#d4a846;font-weight:700">${esc(t('muscle_'+muscle))}</span></div>
         </div>
         <button class="btn-back" style="width:44px;height:44px;font-size:20px;display:flex;align-items:center;justify-content:center" onclick="closeSwap()">✕</button>
       </div>
@@ -1813,22 +1819,22 @@ function viewHome(){
   const pillsHTML=nextDay.exercises.map(ex=>{
     const lw=getLastWeight(ex.libId)??getLastWeight(ex.id);
     const bump=shouldIncrease(ex.id,ex.repRange[1],ex.libId);
-    return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span>${lw?`<span style="font-size:12px;font-weight:700;color:${bump?'#e8ff47':'#4a4a6a'}">${bump?'↑':''}${lw}kg</span>`:''}</span>`;
+    return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span>${lw?`<span style="font-size:12px;font-weight:700;color:${bump?'#d4a846':'#9090b0'}">${bump?'↑':''}${lw}kg</span>`:''}</span>`;
   }).join('');
 
   const swapAlert=stu<=2?`
     <div class="scard" style="margin-top:4px">
-      <div style="font-size:11px;color:#47ffe8;font-weight:700;letter-spacing:.08em;margin-bottom:3px">🔄 ${t('home_block_swap_in')} ${stu} ${stu!==1?t('home_sessions'):t('home_session')}</div>
+      <div style="font-size:11px;color:#e8c55a;font-weight:700;letter-spacing:.08em;margin-bottom:3px">🔄 ${t('home_block_swap_in')} ${stu} ${stu!==1?t('home_sessions'):t('home_session')}</div>
       <div style="font-size:13px;color:#f2f0ea">${t('home_coming_up')} <strong>${t('block_label')} ${nextB.id} — ${t('theme_'+nextB.theme)}</strong></div>
     </div>`:'';
 
   const dayListHTML=block.days.map(day=>{
     const isNext=day.id===A.activeDayId;
-    const badge=isNext?`<span class="badge" style="background:#e8ff4722;color:#e8ff47">${t('home_next')}</span>`:'';
+    const badge=isNext?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('home_next')}</span>`:'';
     return`<div class="card day-card" onclick="startWorkout('${day.id}')">
       <div>
         <div style="font-weight:700;font-size:15px">${day.emoji} ${esc(t('day_'+day.label))}</div>
-        <div style="font-size:12px;color:#4a4a6a">${esc(t('focus_'+day.focus))}</div>
+        <div style="font-size:12px;color:#9090b0">${esc(t('focus_'+day.focus))}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">${badge}<span class="day-arrow">›</span></div>
     </div>`;
@@ -1839,8 +1845,8 @@ function viewHome(){
   <div class="hdr">
     <div><div class="logo">RAUTALOKI</div><div class="hdr-sub">${today()}</div></div>
     <div style="text-align:right">
-      <div style="font-size:10px;color:#47ffe8;font-weight:700;letter-spacing:.06em">${t('block_label')} ${block.id}</div>
-      <div style="font-size:10px;color:#4a4a6a;margin-top:1px">${stu} ${stu!==1?t('home_sessions_left'):t('home_session_left')}</div>
+      <div style="font-size:10px;color:#e8c55a;font-weight:700;letter-spacing:.06em">${t('block_label')} ${block.id}</div>
+      <div style="font-size:10px;color:#9090b0;margin-top:1px">${stu} ${stu!==1?t('home_sessions_left'):t('home_session_left')}</div>
     </div>
   </div>
   <div class="page">
@@ -1852,11 +1858,11 @@ function viewHome(){
       <div class="stat-box"><div class="stat-val">${stu}</div><div class="stat-lbl">${t('stat_to_swap')}</div></div>
     </div>
     <div class="acard">
-      <div style="font-size:11px;color:#e8ff47;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
+      <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
         ${t('home_up_next')} · ${t('block_label')} ${block.id} · ${t('home_day')} ${nextDay.id}
       </div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:2px">${nextDay.emoji} ${esc(t('day_'+nextDay.label))}</div>
-      <div style="font-size:13px;color:#4a4a6a;margin-bottom:14px">${esc(t('focus_'+nextDay.focus))}</div>
+      <div style="font-size:13px;color:#9090b0;margin-bottom:14px">${esc(t('focus_'+nextDay.focus))}</div>
       <div style="display:flex;flex-wrap:wrap;margin-bottom:16px">${pillsHTML}</div>
       <button class="btn-primary" onclick="startWorkout('${A.activeDayId}')">${t('home_start')}</button>
     </div>
@@ -1879,7 +1885,7 @@ function viewWorkout(){
       <div class="logo">RAUTALOKI</div>
       <div id="elapsed-txt" class="hdr-sub">${t('block_label')} ${(BLOCKS[A.blockIdx]||{id:'?'}).id} · ${t('home_day')} ${A.activeDayId} · ${fmtTime(A.elapsed)}</div>
     </div>
-    <button style="background:none;border:1px solid #1c1c2e;color:#e8ff47;font-weight:700;font-size:18px;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center" onclick="cancelWorkout()">✕</button>
+    <button style="background:none;border:1px solid #1c1c2e;color:#d4a846;font-weight:700;font-size:18px;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center" onclick="cancelWorkout()">✕</button>
   </div>
   <div class="page">
     <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:${pct}%"></div></div>
@@ -1888,12 +1894,12 @@ function viewWorkout(){
     <button id="finish-btn" class="btn-primary" onclick="finishWorkout()" ${isDone?'':'disabled'}>
       ${isDone?t('workout_finish'):`${done} / ${total} ${t('workout_sets_done')}`}
     </button>
-    ${isDone?'':`<div style="text-align:center;font-size:12px;color:#4a4a6a;margin-top:8px">${t('workout_complete_all')}</div>`}
-    ${someStarted?`<button class="btn-ghost" style="margin-top:10px;color:#4a4a6a;border-color:#1c1c2e" onclick="quitWithoutCompleting()">${t('workout_quit')}</button>`:''}
+    ${isDone?'':`<div style="text-align:center;font-size:12px;color:#9090b0;margin-top:8px">${t('workout_complete_all')}</div>`}
+    ${someStarted?`<button class="btn-ghost" style="margin-top:10px;color:#9090b0;border-color:#1c1c2e" onclick="quitWithoutCompleting()">${t('workout_quit')}</button>`:''}
   </div>
   <div id="rest-bar" class="rest-bar">
-    <div id="rest-time" class="rest-pulse" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#e8ff47">${t('workout_rest')} · 1:30</div>
-    <button class="btn-tiny" style="color:#e8ff47;border-color:#e8ff47" onclick="skipRest()">${t('workout_skip')}</button>
+    <div id="rest-time" class="rest-pulse" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#d4a846">${t('workout_rest')} · 1:30</div>
+    <button class="btn-tiny" style="color:#d4a846;border-color:#d4a846" onclick="skipRest()">${t('workout_skip')}</button>
   </div>`;
 }
 
@@ -1906,7 +1912,7 @@ function viewComplete(){
   const blockSwapped=curBlock&&curBlock.id!==s.blockId;
   const swapNote=blockSwapped?`
     <div class="scard" style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:#47ffe8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em">🔄 ${t('complete_switch')}</div>
+      <div style="font-size:12px;font-weight:700;color:#e8c55a;margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em">🔄 ${t('complete_switch')}</div>
       <div style="font-size:14px;color:#f2f0ea">${t('complete_now_starting')} <strong>${t('block_label')} ${curBlock.id} — ${t('theme_'+curBlock.theme)}</strong>.</div>
     </div>`:'';
   const dayLabel=s.dayLabel?t('day_'+s.dayLabel)||s.dayLabel:s.dayLabel;
@@ -1914,8 +1920,8 @@ function viewComplete(){
   <div class="page">
     <div class="complete-center">
       <div class="pop-in" style="font-size:72px">🏆</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:#e8ff47;margin-top:12px">${t('complete_done')}</div>
-      <div style="color:#4a4a6a;font-size:14px;margin-top:4px">${esc(dayLabel)} · ${s.duration} ${t('complete_min')}</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:#d4a846;margin-top:12px">${t('complete_done')}</div>
+      <div style="color:#9090b0;font-size:14px;margin-top:4px">${esc(dayLabel)} · ${s.duration} ${t('complete_min')}</div>
     </div>
     <div class="stats-row">
       <div class="stat-box"><div class="stat-val">${s.duration}m</div><div class="stat-lbl">${t('stat_duration')}</div></div>
@@ -1924,9 +1930,9 @@ function viewComplete(){
     </div>
     ${swapNote}
     <div class="card" style="margin-bottom:16px">
-      <div style="font-size:12px;color:#4a4a6a;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">${t('complete_up_next')}</div>
+      <div style="font-size:12px;color:#9090b0;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">${t('complete_up_next')}</div>
       <div style="font-weight:700;font-size:16px">${nd?nd.emoji+' '+esc(t('day_'+nd.label)||nd.label):''}</div>
-      <div style="font-size:13px;color:#4a4a6a;margin-top:2px">${nd?esc(t('focus_'+nd.focus)||nd.focus):''}</div>
+      <div style="font-size:13px;color:#9090b0;margin-top:2px">${nd?esc(t('focus_'+nd.focus)||nd.focus):''}</div>
     </div>
     <button class="btn-primary" onclick="navigate('home')">${t('complete_back')}</button>
   </div>`;
@@ -1936,7 +1942,7 @@ function viewHistory(){
   const hist=[...A.history].reverse();
   let content='';
   if(!hist.length){
-    content=`<div style="color:#4a4a6a;text-align:center;padding-top:40px">${t('history_empty')}</div>`;
+    content=`<div style="color:#9090b0;text-align:center;padding-top:40px">${t('history_empty')}</div>`;
   }else{
     hist.forEach(session=>{
       const vol=(session.exercises||[]).reduce((a,e)=>a+(e.sets||[]).reduce((b,st)=>b+(parseFloat(st.weight)||0)*(parseFloat(st.reps)||0),0),0);
@@ -1947,7 +1953,7 @@ function viewHistory(){
         const maxW=wts.length?Math.max(...wts):0;
         const exName=ex.libId?t(ex.libId):esc(ex.name);
         if(maxW>0)exRows+=`<div style="display:flex;justify-content:space-between;padding-top:5px;border-top:1px solid #1c1c2e;margin-top:5px">
-          <div style="font-size:13px;color:#4a4a6a">${exName}</div>
+          <div style="font-size:13px;color:#9090b0">${exName}</div>
           <div style="font-size:13px;font-weight:700">${maxW}kg</div>
         </div>`;
       });
@@ -1956,11 +1962,11 @@ function viewHistory(){
         <div class="row">
           <div style="font-weight:700;font-size:15px">${esc(sessionDayLabel||'')}</div>
           <div style="text-align:right">
-            <div style="font-size:11px;color:#e8ff47;font-weight:700">${ds}</div>
-            ${session.blockLabel?`<div style="font-size:10px;color:#4a4a6a;margin-top:1px">${t('block_label')} ${session.blockId||''}</div>`:''}
+            <div style="font-size:11px;color:#d4a846;font-weight:700">${ds}</div>
+            ${session.blockLabel?`<div style="font-size:10px;color:#9090b0;margin-top:1px">${t('block_label')} ${session.blockId||''}</div>`:''}
           </div>
         </div>
-        <div style="font-size:12px;color:#4a4a6a;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+        <div style="font-size:12px;color:#9090b0;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
           <span class="tag">${session.duration} ${t('complete_min')}</span>
           <span class="tag">${(session.exercises||[]).length} ${t('history_ex')}</span>
           ${vol>0?`<span class="tag">${Math.round(vol)}kg ${t('history_vol')}</span>`:''}
@@ -1990,7 +1996,7 @@ function viewProgram(){
     const isPreview=i===A.previewBlockIdx;
     const isActive=i===A.blockIdx;
     return`<button class="block-tab"
-      style="background:${isPreview?'#e8ff47':'#1c1c30'};color:${isPreview?'#080810':'#4a4a6a'};border-color:${isActive?'#e8ff47':'transparent'}"
+      style="background:${isPreview?'#d4a846':'#1c1c30'};color:${isPreview?'#080810':'#9090b0'};border-color:${isActive?'#d4a846':'transparent'}"
       onclick="setPreviewBlock(${i})">${t('block_label')} ${b.id}${isActive?' ✓':''}</button>`;
   }).join('');
 
@@ -2001,16 +2007,16 @@ function viewProgram(){
       exRows+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid #1c1c2e">
         <div>
           <div style="font-size:13px;font-weight:600">${esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
-          <div style="font-size:11px;color:#4a4a6a">${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}</div>
+          <div style="font-size:11px;color:#9090b0">${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}</div>
         </div>
-        ${lw?`<div style="font-size:13px;font-weight:700;color:#e8ff47">${lw}kg</div>`:''}
+        ${lw?`<div style="font-size:13px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}
       </div>`;
     });
     return`<div class="card" style="margin-bottom:10px">
       <div class="row" style="margin-bottom:10px">
         <div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${day.emoji} ${esc(t('day_'+day.label))}</div>
-          <div style="font-size:11px;color:#4a4a6a">${esc(t('focus_'+day.focus))}</div>
+          <div style="font-size:11px;color:#9090b0">${esc(t('focus_'+day.focus))}</div>
         </div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#1c1c2e">${day.id}</div>
       </div>
@@ -2024,21 +2030,21 @@ function viewProgram(){
   <div class="page">
     <div class="h2">${t('program_title')}</div>
     <div class="acard" style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:#e8ff47;letter-spacing:.1em;margin-bottom:6px">${freq<=3?t('program_full_body'):t('program_split')} · ${freq}${t('program_per_week')} · ${BLOCKS.length} ${t('program_blocks')}</div>
-      <div style="font-size:13px;color:#4a4a6a;line-height:1.6">
+      <div style="font-size:12px;font-weight:700;color:#d4a846;letter-spacing:.1em;margin-bottom:6px">${freq<=3?t('program_full_body'):t('program_split')} · ${freq}${t('program_per_week')} · ${BLOCKS.length} ${t('program_blocks')}</div>
+      <div style="font-size:13px;color:#9090b0;line-height:1.6">
         ${BLOCKS.length} ${t('program_desc_1')} ${sessionsPerBlock()} ${t('program_desc_2')}
         ${t('program_desc_swap')}
       </div>
     </div>
     <div class="scard" style="margin-bottom:16px;display:flex;align-items:center;gap:14px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:#47ffe8;line-height:1">${stu}</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:#e8c55a;line-height:1">${stu}</div>
       <div>
-        <div style="font-size:13px;font-weight:700;color:#47ffe8">${stu!==1?t('program_sessions_until'):t('program_session_until')} ${t('block_label')} ${nextB.id}</div>
-        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${esc(t('theme_'+nextB.theme))}</div>
+        <div style="font-size:13px;font-weight:700;color:#e8c55a">${stu!==1?t('program_sessions_until'):t('program_session_until')} ${t('block_label')} ${nextB.id}</div>
+        <div style="font-size:12px;color:#9090b0;margin-top:2px">${esc(t('theme_'+nextB.theme))}</div>
       </div>
     </div>
     <div class="block-grid">${tabsHTML}</div>
-    <div style="font-size:12px;color:#47ffe8;font-weight:700;margin-bottom:12px">
+    <div style="font-size:12px;color:#e8c55a;font-weight:700;margin-bottom:12px">
       ${esc(t('theme_'+pb.theme))}${A.blockIdx===A.previewBlockIdx?` · ${t('program_active')}`:''}
     </div>
     ${daysHTML}
@@ -2050,7 +2056,7 @@ function viewOnboarding(){
   return`
   <div class="ob-page">
     <div class="ob-title">RAUTALOKI</div>
-    <div style="font-size:14px;color:#4a4a6a;margin-bottom:8px">${t('ob_tagline')}</div>
+    <div style="font-size:14px;color:#9090b0;margin-bottom:8px">${t('ob_tagline')}</div>
     <div class="ob-sub">${t('ob_subtitle')}</div>
 
     <div class="ob-section">
@@ -2074,7 +2080,7 @@ function viewOnboarding(){
     <button class="btn-primary ob-start" id="ob-start-btn" onclick="obFinish()" disabled>
       ${t('ob_start')}
     </button>
-    <div style="font-size:11px;color:#4a4a6a;margin-top:12px">${t('ob_change_later')}</div>
+    <div style="font-size:11px;color:#9090b0;margin-top:12px">${t('ob_change_later')}</div>
   </div>`;
 }
 
@@ -2116,12 +2122,13 @@ function resetProfile(){
 function viewSettings(){
   const s=getSettings();
   const rest=s.restSeconds!==undefined?s.restSeconds:90;
+  const restEnabled=rest>0;
   const profile=getProfile();
-  const restOptions=[0,30,45,60,90,120,150,180];
+  const restOptions=[30,45,60,90,120,150,180];
 
   const restBtns=restOptions.map(sec=>{
     const active=sec===rest;
-    const label=sec===0?t('settings_rest_off'):(sec<60?`${sec}s`:`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`);
+    const label=sec<60?`${sec}s`:`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
     return`<button class="ob-opt${active?' selected':''}" style="min-width:52px;flex:0 0 auto;padding:10px 6px"
       onclick="setRestTimer(${sec})">${label}</button>`;
   }).join('');
@@ -2134,7 +2141,7 @@ function viewSettings(){
   const howToUse=`
     <div class="card" style="margin-top:16px">
       <div style="font-weight:700;font-size:15px;margin-bottom:10px">${t('settings_how_to')}</div>
-      <div style="font-size:13px;color:#4a4a6a;line-height:1.7">
+      <div style="font-size:13px;color:#9090b0;line-height:1.7">
         <strong style="color:#f2f0ea">${t('settings_how_1')}</strong> ${t('settings_how_1b')}<br><br>
         <strong style="color:#f2f0ea">${t('settings_how_2')}</strong> ${t('settings_how_2b')}<br><br>
         <strong style="color:#f2f0ea">${t('settings_how_3')}</strong> ${t('settings_how_3b')}<br><br>
@@ -2155,9 +2162,12 @@ function viewSettings(){
       <div style="display:flex;gap:6px;flex-wrap:wrap">${langBtns}</div>
     </div>
 
-    <div class="sec-title" style="margin-top:20px">${t('settings_rest')}</div>
-    <div class="card">
-      <div style="font-size:13px;color:#4a4a6a;margin-bottom:10px">${t('settings_rest_desc')}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+      <div class="sec-title" style="margin:0">${t('settings_rest')}</div>
+      <label class="toggle"><input type="checkbox" ${restEnabled?'checked':''} onchange="toggleRestTimer(this.checked)"><span class="slider"></span></label>
+    </div>
+    <div class="card" ${restEnabled?'':`style="opacity:0.4;pointer-events:none"`}>
+      <div style="font-size:13px;color:#9090b0;margin-bottom:10px">${t('settings_rest_desc')}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${restBtns}</div>
     </div>
 
@@ -2165,9 +2175,9 @@ function viewSettings(){
     <div class="card" style="display:flex;justify-content:space-between;align-items:center">
       <div>
         <div style="font-size:14px;font-weight:700">${profile?profile.freq:'3'}× ${t('settings_per_week')} · ${profile&&profile.sex==='female'?t('settings_female'):t('settings_male')}</div>
-        <div style="font-size:12px;color:#4a4a6a;margin-top:2px">${profile&&profile.freq<=3?t('settings_full_body'):t('settings_split')} ${t('settings_program')}</div>
+        <div style="font-size:12px;color:#9090b0;margin-top:2px">${profile&&profile.freq<=3?t('settings_full_body'):t('settings_split')} ${t('settings_program')}</div>
       </div>
-      <button class="btn-tiny" style="color:#e8ff47;border-color:#e8ff47" onclick="resetProfile()">${t('settings_change')}</button>
+      <button class="btn-tiny" style="color:#d4a846;border-color:#d4a846" onclick="resetProfile()">${t('settings_change')}</button>
     </div>
 
     ${howToUse}
@@ -2175,7 +2185,7 @@ function viewSettings(){
     <div class="sec-title" style="margin-top:20px">${t('settings_data')}</div>
     <div class="card">
       <button class="btn-ghost" style="color:#ff4455;border-color:#ff445533;margin-bottom:8px" onclick="clearAllData()">${t('settings_reset')}</button>
-      <div style="font-size:11px;color:#4a4a6a">${t('settings_reset_warn')}</div>
+      <div style="font-size:11px;color:#9090b0">${t('settings_reset_warn')}</div>
     </div>
   </div>
   ${navHTML("settings")}`;
@@ -2183,6 +2193,18 @@ function viewSettings(){
 
 function setRestTimer(sec){
   saveSetting('restSeconds',sec);
+  render();
+}
+function toggleRestTimer(on){
+  if(on){
+    const s=getSettings();
+    const prev=s._lastRestSeconds||90;
+    saveSetting('restSeconds',prev);
+  }else{
+    const s=getSettings();
+    if(s.restSeconds>0)saveSetting('_lastRestSeconds',s.restSeconds);
+    saveSetting('restSeconds',0);
+  }
   render();
 }
 
@@ -2270,8 +2292,8 @@ function quitWithoutCompleting(){
     <div class="modal-sheet" style="padding:28px 24px 36px;text-align:center">
       <div style="font-size:48px;margin-bottom:12px">🏳️</div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#f2f0ea;margin-bottom:8px">${t('quit_title')}</div>
-      <div style="font-size:14px;color:#4a4a6a;margin-bottom:24px;line-height:1.5">${esc(line)}</div>
-      <div style="font-size:12px;color:#4a4a6a;margin-bottom:20px">${t('quit_save_info')}</div>
+      <div style="font-size:14px;color:#9090b0;margin-bottom:24px;line-height:1.5">${esc(line)}</div>
+      <div style="font-size:12px;color:#9090b0;margin-bottom:20px">${t('quit_save_info')}</div>
       <button class="btn-primary" style="background:#ff4455;margin-bottom:10px" onclick="confirmQuit()">${t('quit_confirm')}</button>
       <button class="btn-ghost" onclick="closeQuit()">${t('quit_keep')}</button>
     </div>`;
