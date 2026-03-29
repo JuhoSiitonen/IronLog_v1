@@ -12,6 +12,7 @@ function viewHome(){
   const weekS=A.history.filter(h=>isThisISOWeek(h.date)).length;
 
   const pillsHTML=nextDay.exercises.map(ex=>{
+    if(ex.type==='time')return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span><span style="font-size:12px;color:#9090b0">${ex.holdSec}${t('workout_sec')}</span></span>`;
     const lw=getLastWeight(ex.libId)??getLastWeight(ex.id);
     const bump=shouldIncrease(ex.id,ex.repRange[1],ex.libId);
     return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span>${lw?`<span style="font-size:12px;font-weight:700;color:${bump?'#d4a846':'#9090b0'}">${bump?'↑':''}${lw}kg</span>`:''}</span>`;
@@ -160,13 +161,22 @@ function viewHistory(){
       const ds=fmtDate(session.date);
       let exRows='';
       (session.exercises||[]).forEach(ex=>{
-        const wts=(ex.sets||[]).map(st=>parseFloat(st.weight)||0).filter(w=>w>0);
-        const maxW=wts.length?Math.max(...wts):0;
         const exName=ex.libId?t(ex.libId):esc(ex.name);
-        if(maxW>0)exRows+=`<div style="display:flex;justify-content:space-between;padding-top:5px;border-top:1px solid #1c1c2e;margin-top:5px">
-          <div style="font-size:13px;color:#9090b0">${exName}</div>
-          <div style="font-size:13px;font-weight:700">${maxW}kg</div>
-        </div>`;
+        const isTimed=(ex.sets||[]).some(st=>st.secs!==undefined);
+        if(isTimed){
+          const maxSecs=Math.max(...(ex.sets||[]).map(st=>parseInt(st.secs)||0));
+          if(maxSecs>0)exRows+=`<div style="display:flex;justify-content:space-between;padding-top:5px;border-top:1px solid #1c1c2e;margin-top:5px">
+            <div style="font-size:13px;color:#9090b0">${exName}</div>
+            <div style="font-size:13px;font-weight:700">${maxSecs}${t('workout_sec')}</div>
+          </div>`;
+        }else{
+          const wts=(ex.sets||[]).map(st=>parseFloat(st.weight)||0).filter(w=>w>0);
+          const maxW=wts.length?Math.max(...wts):0;
+          if(maxW>0)exRows+=`<div style="display:flex;justify-content:space-between;padding-top:5px;border-top:1px solid #1c1c2e;margin-top:5px">
+            <div style="font-size:13px;color:#9090b0">${exName}</div>
+            <div style="font-size:13px;font-weight:700">${maxW}kg</div>
+          </div>`;
+        }
       });
       const sessionDayLabel=session.dayLabel?t('day_'+session.dayLabel)||session.dayLabel:session.dayLabel;
       content+=`<div class="card" style="cursor:pointer" onclick="toggleSession(${si})">

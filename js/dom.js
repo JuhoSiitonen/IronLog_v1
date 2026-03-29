@@ -4,16 +4,35 @@
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function buildSetRowHTML(ex,si,set){
-  const repLabel=set.reps?set.reps:(ex.repRange[0]===ex.repRange[1]?`${ex.repRange[0]}`:`${ex.repRange[0]}–${ex.repRange[1]}`);
-  const isPlaceholder=!set.reps;
   const isEditing=set.editing===true;
-
-  // Set number cell
   const numCell=set.done&&!isEditing
     ?`<div class="set-num done">✓</div>`
     :`<div class="set-num">${si+1}</div>`;
 
-  // Reps cell
+  // ── Time-based (isometric hold) ──────────────────────────────────
+  if(ex.type==='time'){
+    let timeCell;
+    if(!set.done||isEditing){
+      const cls='kg-inp'+(isEditing?' editing':'');
+      timeCell=`<input id="sec-inp-${ex.id}-${si}" class="${cls}" type="number" placeholder="${t('workout_sec')}" value="${esc(set.secs)}" oninput="updateSecs('${ex.id}',${si},this.value)">`;
+    }else{
+      timeCell=`<div class="kg-display">${esc(set.secs)}${t('workout_sec')}</div>`;
+    }
+    let actionCell;
+    if(isEditing){
+      actionCell=`<button id="chk-btn-${ex.id}-${si}" class="btn-check" onclick="saveEdit('${ex.id}',${si})">✓</button>`;
+    }else if(!set.done){
+      actionCell=`<button id="chk-btn-${ex.id}-${si}" class="btn-check" onclick="markSetDone('${ex.id}',${si})">✓</button>`;
+    }else{
+      actionCell=`<button class="btn-emoji" id="emoji-btn-${ex.id}-${si}" onclick="handleEmojiTap('${ex.id}',${si})">💪🏻</button>`;
+    }
+    return`${numCell}${timeCell}${actionCell}`;
+  }
+
+  // ── Regular (reps + weight) ──────────────────────────────────────
+  const repLabel=set.reps?set.reps:(ex.repRange[0]===ex.repRange[1]?`${ex.repRange[0]}`:`${ex.repRange[0]}–${ex.repRange[1]}`);
+  const isPlaceholder=!set.reps;
+
   let repsCell;
   if(!set.done||isEditing){
     const cls='rep-btn'+(isPlaceholder?'':' has-val')+(isEditing?' editing':'');
@@ -22,7 +41,6 @@ function buildSetRowHTML(ex,si,set){
     repsCell=`<div class="rep-display">${esc(set.reps)}</div>`;
   }
 
-  // KG cell
   let kgCell;
   if(!set.done||isEditing){
     const cls='kg-inp'+(isEditing?' editing':'');
@@ -32,7 +50,6 @@ function buildSetRowHTML(ex,si,set){
     kgCell=`<div class="kg-display">${esc(set.weight)}kg</div>`;
   }
 
-  // Action cell
   let actionCell;
   if(isEditing){
     const dim=set.reps?'':'dim';
@@ -41,8 +58,6 @@ function buildSetRowHTML(ex,si,set){
     const dim=set.reps?'':'dim';
     actionCell=`<button id="chk-btn-${ex.id}-${si}" class="btn-check ${dim}" onclick="markSetDone('${ex.id}',${si})" ${set.reps?'':'disabled'}>✓</button>`;
   }else{
-    // Done — double-tap emoji to enter edit mode
-    // Use a tap counter approach for mobile double-tap
     actionCell=`<button class="btn-emoji" id="emoji-btn-${ex.id}-${si}" onclick="handleEmojiTap('${ex.id}',${si})">💪🏻</button>`;
   }
 
@@ -80,17 +95,25 @@ function buildExerciseCard(ex,ei){
   const lastW=wts.length?Math.max(...wts):0;
   const lastR=lastS&&lastS.sets.length?Math.round(lastS.sets.reduce((a,s)=>a+(parseInt(s.reps)||0),0)/lastS.sets.length):0;
 
-  const bumpBadge=bump&&!exDone?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('workout_load')}</span>`:'';
+  const isTime=ex.type==='time';
+  const bumpBadge=!isTime&&bump&&!exDone?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('workout_load')}</span>`:'';
   const swapBtn=exDone?'':`<button class="btn-swap" onclick="openSwap('${ex.id}','${ex.muscle}')">${t('workout_swap')}</button>`;
   const doneIcon=exDone?'<span style="color:#d4a846">✓ </span>':'';
   const cueText=t('cue_'+(ex.libId||''))||esc(ex.cues);
-  const lastInfo=lastW>0
+  const lastInfo=!isTime&&lastW>0
     ?`<div class="last-info">${t('workout_last')} <span style="color:#f2f0ea;font-weight:600">${lastW}kg × ~${lastR} ${t('workout_reps')}</span>${bump?` <span style="color:#d4a846;font-weight:700">${t('workout_try')} ${Math.round(lastW*1.025*2)/2}kg</span>`:''}</div>`
     :'';
+  const metaLine=isTime
+    ?`${ex.sets} ${t('workout_sets')} · ${ex.holdSec}${t('workout_sec')} ${t('workout_col_time').toLowerCase()}`
+    :`${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}`;
+  const gridClass=isTime?'set-grid-time':'set-grid';
+  const colHdr=isTime
+    ?`<div class="set-col-hdr-time"><span>${t('workout_col_set')}</span><span>${t('workout_col_time')}</span><span></span></div>`
+    :`<div class="set-col-hdr"><span>${t('workout_col_set')}</span><span>${t('workout_col_reps')}</span><span>${t('workout_col_kg')}</span><span></span></div>`;
 
   let setsHTML='';
   sets.forEach((set,si)=>{
-    setsHTML+=`<div id="set-row-${ex.id}-${si}" class="set-grid">${buildSetRowHTML(ex,si,set)}</div>`;
+    setsHTML+=`<div id="set-row-${ex.id}-${si}" class="${gridClass}">${buildSetRowHTML(ex,si,set)}</div>`;
   });
 
   return`
@@ -98,13 +121,13 @@ function buildExerciseCard(ex,ei){
     <div class="ex-header">
       <div class="ex-title-area">
         <div class="ex-title">${doneIcon}${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.libId||ex.name))} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
-        <div class="ex-meta">${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}</div>
+        <div class="ex-meta">${metaLine}</div>
       </div>
       <div class="ex-actions">${bumpBadge}${swapBtn}</div>
     </div>
     <div class="cue-box">💡 ${cueText}</div>
     ${lastInfo}
-    <div class="set-col-hdr"><span>${t('workout_col_set')}</span><span>${t('workout_col_reps')}</span><span>${t('workout_col_kg')}</span><span></span></div>
+    ${colHdr}
     <div class="hint-text">${t('workout_hint_edit')}</div>
     ${setsHTML}
   </div>`;

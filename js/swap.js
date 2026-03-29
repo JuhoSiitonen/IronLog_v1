@@ -12,7 +12,7 @@ function openSwap(exId,muscle){
   alts.forEach(alt=>{
     const isActive=alt.id===currentLibId;
     const inUse=!isActive&&currentIds.includes(alt.id);
-    const lw=getLastWeight(alt.id);
+    const lw=alt.type==='time'?null:getLastWeight(alt.id);
     const cls='swap-item'+(isActive?' active':inUse?' in-use':' available');
     const click=inUse||isActive?'':`onclick="doSwap('${esc(exId)}','${esc(muscle)}','${esc(alt.id)}')"`;
     const altName=t(alt.id)||esc(alt.name);
@@ -20,11 +20,14 @@ function openSwap(exId,muscle){
     const status=isActive?`<div style="font-size:10px;color:#9090b0">${t('workout_current')}</div>`:inUse?`<div style="font-size:10px;color:#9090b0">${t('workout_in_use')}</div>`:'';
     const altCue=t('cue_'+alt.id)||esc(alt.cues);
     const cueRow=(!inUse&&!isActive)?`<div class="swap-cue">💡 ${altCue}</div>`:'';
+    const metaLine=alt.type==='time'
+      ?`${alt.sets} ${t('workout_sets')} · ${alt.holdSec}${t('workout_sec')} ${t('workout_col_time').toLowerCase()}`
+      :`${alt.sets} ${t('workout_sets')} · ${alt.repRange[0]}–${alt.repRange[1]} ${t('workout_reps')}`;
     items+=`<div class="${cls}" ${click}>
       <div class="swap-row">
         <div>
           <div style="font-weight:700;font-size:14px;color:${isActive?'#d4a846':'#f2f0ea'}">${label}</div>
-          <div style="font-size:11px;color:#9090b0;margin-top:2px">${alt.sets} ${t('workout_sets')} · ${alt.repRange[0]}–${alt.repRange[1]} ${t('workout_reps')}</div>
+          <div style="font-size:11px;color:#9090b0;margin-top:2px">${metaLine}</div>
         </div>
         <div style="text-align:right">${lw?`<div style="font-size:12px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}${status}</div>
       </div>${cueRow}
@@ -60,8 +63,11 @@ function doSwap(oldId,muscle,libId){
     name:libEx.name,
     muscle:muscle,
     sets:libEx.sets,
-    repRange:libEx.repRange,
-    cues:libEx.cues
+    repRange:libEx.repRange||[0,0],
+    type:libEx.type||null,
+    holdSec:libEx.holdSec||null,
+    cues:libEx.cues,
+    ms:libEx.ms||null
   };
   swapExercise(oldId,newEx);
 }

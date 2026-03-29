@@ -4,6 +4,10 @@
 function buildInitialSets(exercises){
   const init={};
   exercises.forEach(ex=>{
+    if(ex.type==='time'){
+      init[ex.id]=Array.from({length:ex.sets},()=>({secs:ex.holdSec,done:false,editing:false}));
+      return;
+    }
     const lw=getLastWeight(ex.libId)??getLastWeight(ex.id);
     const bump=shouldIncrease(ex.id,ex.repRange[1],ex.libId);
     const w=lw?(bump?String(Math.round(lw*1.025*2)/2):String(lw)):"";
@@ -30,10 +34,14 @@ function swapExercise(oldId,newEx){
   closeSwap();
   A.sessionExercises=A.sessionExercises.map(e=>e.id===oldId?{...newEx}:e);
   delete A.sessionSets[oldId];
-  const lw=getLastWeight(newEx.libId)??getLastWeight(newEx.id);
-  const bump=shouldIncrease(newEx.id,newEx.repRange[1],newEx.libId);
-  const w=lw?(bump?String(Math.round(lw*1.025*2)/2):String(lw)):"";
-  A.sessionSets[newEx.id]=Array.from({length:newEx.sets},()=>({reps:"",weight:w,done:false,editing:false}));
+  if(newEx.type==='time'){
+    A.sessionSets[newEx.id]=Array.from({length:newEx.sets},()=>({secs:newEx.holdSec,done:false,editing:false}));
+  }else{
+    const lw=getLastWeight(newEx.libId)??getLastWeight(newEx.id);
+    const bump=shouldIncrease(newEx.id,newEx.repRange[1],newEx.libId);
+    const w=lw?(bump?String(Math.round(lw*1.025*2)/2):String(lw)):"";
+    A.sessionSets[newEx.id]=Array.from({length:newEx.sets},()=>({reps:"",weight:w,done:false,editing:false}));
+  }
   A.swapTarget=null;
   render();
 }
@@ -59,11 +67,12 @@ function cycleReps(exId,idx,repRange){
 
 function markSetDone(exId,idx){
   const sets=A.sessionSets[exId];
-  if(!sets||!sets[idx].reps)return;
-  const w=parseFloat(sets[idx].weight);
+  if(!sets)return;
   const ex=A.sessionExercises.find(e=>e.id===exId);
+  const isTime=ex&&ex.type==='time';
+  if(!isTime&&!sets[idx].reps)return;
   sets[idx]={...sets[idx],done:true,editing:false};
-  if(!isNaN(w)&&w>0)saveWeight(exId,w,ex&&ex.libId);
+  if(!isTime){const w=parseFloat(sets[idx].weight);if(!isNaN(w)&&w>0)saveWeight(exId,w,ex&&ex.libId);}
   startRest(getRestDuration());
   renderSetRow(exId,idx);
   updateProgress();
@@ -78,14 +87,20 @@ function enterEditMode(exId,idx){
 
 function saveEdit(exId,idx){
   const set=A.sessionSets[exId][idx];
-  if(!set.reps)return;
-  const w=parseFloat(set.weight);
   const ex=A.sessionExercises.find(e=>e.id===exId);
-  if(!isNaN(w)&&w>0)saveWeight(exId,w,ex&&ex.libId);
+  const isTime=ex&&ex.type==='time';
+  if(!isTime&&!set.reps)return;
+  if(!isTime){const w=parseFloat(set.weight);if(!isNaN(w)&&w>0)saveWeight(exId,w,ex&&ex.libId);}
   A.sessionSets[exId][idx]={...set,done:true,editing:false};
   renderSetRow(exId,idx);
   updateProgress();
   updateFinishBtn();
+}
+
+function updateSecs(exId,idx,val){
+  const sets=A.sessionSets[exId];
+  if(!sets)return;
+  sets[idx]={...sets[idx],secs:val};
 }
 
 function updateKg(exId,idx,val){
@@ -114,7 +129,7 @@ function finishWorkout(){
     duration:Math.round((Date.now()-A.sessionStart)/60000),
     exercises:A.sessionExercises.map(ex=>({
       id:ex.id,libId:ex.libId,name:ex.name,muscle:ex.muscle,
-      sets:(A.sessionSets[ex.id]||[]).map(s=>({reps:s.reps,weight:s.weight,done:s.done}))
+      sets:(A.sessionSets[ex.id]||[]).map(s=>s.secs!==undefined?{secs:s.secs,done:s.done}:{reps:s.reps,weight:s.weight,done:s.done})
     }))
   };
   A.history=[...A.history,session];

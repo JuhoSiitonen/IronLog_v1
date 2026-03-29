@@ -83,4 +83,14 @@ const LIBRARY={
     {id:"lib_kickback",name:"DB Kickback",sets:3,repRange:[12,15],cues:"Upper arm parallel to floor, full extension",ms:"dumbbell-kickback"},
     {id:"lib_close_bench",name:"Close-Grip Bench Press",sets:3,repRange:[8,12],cues:"Hands shoulder-width, elbows tight",ms:"close-grip-bench-press"},
   ],
+  Core:[
+    {id:"lib_plank",name:"Plank",type:"time",sets:3,holdSec:30,cues:"Neutral spine, squeeze glutes and abs, breathe steadily",ms:"plank"},
+    {id:"lib_side_plank",name:"Side Plank",type:"time",sets:3,holdSec:30,cues:"Stack or stagger feet, keep hips high and forward",ms:"side-plank"},
+    {id:"lib_superman",name:"Superman Hold",type:"time",sets:3,holdSec:20,cues:"Lift arms and legs simultaneously, squeeze glutes at top",ms:"superman"},
+    {id:"lib_hollow_body",name:"Hollow Body Hold",type:"time",sets:3,holdSec:20,cues:"Lower back pressed flat, arms and legs fully extended"},
+    {id:"lib_dead_bug",name:"Dead Bug Hold",type:"time",sets:3,holdSec:30,cues:"Lower back flat against floor, breathe steadily throughout"},
+    {id:"lib_wall_sit",name:"Wall Sit",type:"time",sets:3,holdSec:45,cues:"90° knee angle, back flat against wall, weight through heels",ms:"wall-sit"},
+    {id:"lib_lsit",name:"L-Sit Hold",type:"time",sets:3,holdSec:15,cues:"Depress scapula, legs parallel to floor, point toes"},
+    {id:"lib_copenhagen",name:"Copenhagen Plank",type:"time",sets:3,holdSec:20,cues:"Top leg on bench, keep hips high, body in straight line"},
+  ],
 };

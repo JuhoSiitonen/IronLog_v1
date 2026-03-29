@@ -218,6 +218,20 @@ confirm_clear_1:"This will permanently delete ALL your workout history, saved we
 confirm_clear_2:"Really? This cannot be undone.",
 // Block label
 block_label:"Block",
+// Isometric / core exercises
+lib_plank:"Plank",lib_side_plank:"Side Plank",lib_superman:"Superman Hold",
+lib_hollow_body:"Hollow Body Hold",lib_dead_bug:"Dead Bug Hold",lib_wall_sit:"Wall Sit",
+lib_lsit:"L-Sit Hold",lib_copenhagen:"Copenhagen Plank",
+cue_lib_plank:"Neutral spine, squeeze glutes and abs, breathe steadily",
+cue_lib_side_plank:"Stack or stagger feet, keep hips high and forward",
+cue_lib_superman:"Lift arms and legs simultaneously, squeeze glutes at top",
+cue_lib_hollow_body:"Lower back pressed flat, arms and legs fully extended",
+cue_lib_dead_bug:"Lower back flat against floor, breathe steadily throughout",
+cue_lib_wall_sit:"90° knee angle, back flat against wall, weight through heels",
+cue_lib_lsit:"Depress scapula, legs parallel to floor, point toes",
+cue_lib_copenhagen:"Top leg on bench, keep hips high, body in straight line",
+muscle_Core:"Core",
+workout_sec:"s",workout_col_time:"Time",
 },
 fi:{
 // Exercise names
@@ -437,5 +451,19 @@ confirm_clear_1:"Tämä poistaa pysyvästi KAIKEN treenihistorian, tallennetut p
 confirm_clear_2:"Oikeasti? Tätä ei voi peruuttaa.",
 // Block label
 block_label:"Blokki",
+// Isometric / core exercises
+lib_plank:"Lankku",lib_side_plank:"Sivulankku",lib_superman:"Superman-pito",
+lib_hollow_body:"Hollow body -pito",lib_dead_bug:"Dead bug -pito",lib_wall_sit:"Seinäistunta",
+lib_lsit:"L-istunta",lib_copenhagen:"Kööpenhaminan lankku",
+cue_lib_plank:"Neutraali selkäranka, purista pakarat ja vatsalihakset, hengitä tasaisesti",
+cue_lib_side_plank:"Pinoa tai porrastat jalat, pidä lonkat korkealla ja eteenpäin",
+cue_lib_superman:"Nosta kädet ja jalat samanaikaisesti, purista pakarat ylhäällä",
+cue_lib_hollow_body:"Alaselkä lattiaa vasten, kädet ja jalat suorina",
+cue_lib_dead_bug:"Alaselkä lattiaa vasten, hengitä tasaisesti koko pidon ajan",
+cue_lib_wall_sit:"90° polvinivelkulma, selkä suorana, paino kantapäillä",
+cue_lib_lsit:"Lapaluut alaspain, jalat lattian tasolla, osoita varpaat",
+cue_lib_copenhagen:"Yläjalka penkillä, pidä lonkat korkealla, vartalo suorassa",
+muscle_Core:"Keskivartalo",
+workout_sec:"s",workout_col_time:"Aika",
 }
 };

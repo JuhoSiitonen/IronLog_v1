@@ -17,7 +17,8 @@ function Ex(bn,libId,ov){
   const base=_libFind(libId);if(!base)return null;
   const o=ov||{};
   return{id:`b${bn}_${libId.replace('lib_','')}`,libId:libId,name:base.name,muscle:_muscleOf(libId),
-    sets:o.sets!==undefined?o.sets:base.sets,repRange:o.repRange||base.repRange,cues:o.cues||base.cues,ms:base.ms||null};
+    sets:o.sets!==undefined?o.sets:base.sets,repRange:o.repRange||base.repRange||[0,0],
+    type:base.type||null,holdSec:base.holdSec||null,cues:o.cues||base.cues,ms:base.ms||null};
 }
 
 function generateBlocks(profile){
