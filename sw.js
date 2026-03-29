@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rautaloki-v4';
+const CACHE_NAME = 'rautaloki-v5';
 const ASSETS = [
   '/index.html',
   '/manifest.json',
@@ -13,6 +13,7 @@ const ASSETS = [
   '/js/dom.js',
   '/js/swap.js',
   '/js/views.js',
+  '/js/custom.js',
   '/js/app.js',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',

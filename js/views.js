@@ -2,6 +2,8 @@
 // VIEWS
 // ═══════════════════════════════════════════════════════════════════
 function viewHome(){
+  const prog=getCustomProgram();
+  if(prog&&prog.active&&prog.workouts.length>0)return _viewHomeCustomProgram(prog);
   const block=BLOCKS[A.blockIdx]||BLOCKS[0];
   if(!block)return`<div class="page"><div class="h1">No program</div><button class="btn-primary" onclick="navigate('onboarding')">${t('home_start')}</button></div>`;
   const nextB=BLOCKS[(A.blockIdx+1)%BLOCKS.length];
@@ -69,6 +71,81 @@ function viewHome(){
   ${navHTML("home")}`;
 }
 
+function _viewHomeCustomProgram(prog){
+  const saved=getSavedWorkouts();
+  const curIdx=prog.currentIdx%prog.workouts.length;
+  const curEntry=prog.workouts[curIdx];
+  const workout=saved.find(w=>w.id===curEntry.workoutId);
+  if(!workout){
+    // Saved workout was deleted — deactivate and fall back
+    prog.active=false;saveCustomProgramToLS(prog);
+    return viewHome();
+  }
+  const sessionsLeft=curEntry.sessions-(prog.sessionsDone||0);
+  const nextEntry=prog.workouts[(curIdx+1)%prog.workouts.length];
+  const nextWorkout=saved.find(w=>w.id===(nextEntry||{}).workoutId)||{name:'?'};
+  const totalS=A.history.length;
+  const freq=(getProfile()||{freq:3}).freq;
+  const weekS=A.history.filter(h=>isThisISOWeek(h.date)).length;
+
+  const pillsHTML=workout.exercises.map(ex=>{
+    if(ex.type==='time')return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span><span style="font-size:12px;color:#9090b0">${ex.holdSec}${t('workout_sec')}</span></span>`;
+    const lw=getLastWeight(ex.libId);
+    return`<span class="ex-pill"><span style="font-size:12px;color:#f2f0ea">${esc(t(ex.libId||ex.name))}</span>${lw?`<span style="font-size:12px;color:#9090b0">${lw}kg</span>`:''}</span>`;
+  }).join('');
+
+  const swapAlert=sessionsLeft<=1&&prog.workouts.length>1?`
+    <div class="scard" style="margin-top:4px">
+      <div style="font-size:11px;color:#e8c55a;font-weight:700;letter-spacing:.08em;margin-bottom:3px">🔄 ${t('custom_prog_swap_in')} ${sessionsLeft} ${sessionsLeft!==1?t('home_sessions'):t('home_session')}</div>
+      <div style="font-size:13px;color:#f2f0ea">${t('home_coming_up')} <strong>${esc(nextWorkout.name)}</strong></div>
+    </div>`:'';
+
+  const rotationHTML=prog.workouts.map((e,i)=>{
+    const w=saved.find(w=>w.id===e.workoutId)||{name:'?',exercises:[]};
+    const isCurrent=i===curIdx;
+    return`<div class="card day-card" onclick="startCustomProgramSession()">
+      <div>
+        <div style="font-weight:700;font-size:15px">${esc(w.name)}</div>
+        <div style="font-size:12px;color:#9090b0">${w.exercises.length} ${t('stat_exercises').toLowerCase()} · ${e.sessions} ${t('custom_prog_sessions').toLowerCase()}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        ${isCurrent?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('home_next')}</span>`:''}
+        <span class="day-arrow">›</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  return`
+  <div class="hdr">
+    <div><div class="logo">RAUTALOKI</div><div class="hdr-sub">${today()}</div></div>
+    <div style="text-align:right">
+      <div style="font-size:10px;color:#4a9a5e;font-weight:700;letter-spacing:.06em">${t('custom_prog_active')}</div>
+      <div style="font-size:10px;color:#9090b0;margin-top:1px">${sessionsLeft} ${sessionsLeft!==1?t('home_sessions_left'):t('home_session_left')}</div>
+    </div>
+  </div>
+  <div class="page">
+    <div class="h1">${t('home_ready')}</div>
+    <div class="sub">${t('custom_prog_home_sub')} · ${prog.workouts.length} ${t('stat_exercises').toLowerCase()}</div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-val">${totalS}</div><div class="stat-lbl">${t('stat_sessions')}</div></div>
+      <div class="stat-box"><div class="stat-val">${weekS}<span>/${freq}</span></div><div class="stat-lbl">${t('stat_this_week')}</div></div>
+      <div class="stat-box"><div class="stat-val">${sessionsLeft}</div><div class="stat-lbl">${t('stat_to_swap')}</div></div>
+    </div>
+    <div class="acard">
+      <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
+        ${t('home_up_next')} · ${curIdx+1}/${prog.workouts.length}
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:10px">${esc(workout.name)}</div>
+      <div style="display:flex;flex-wrap:wrap;margin-bottom:16px">${pillsHTML}</div>
+      <button class="btn-primary" onclick="startCustomProgramSession()">${t('home_start')}</button>
+    </div>
+    ${swapAlert}
+    <div class="sec-title" style="margin-top:20px">${t('custom_prog_rotation')}</div>
+    ${rotationHTML}
+  </div>
+  ${navHTML("home")}`;
+}
+
 function viewWorkout(){
   const exercisesHTML=A.sessionExercises.map((ex,ei)=>buildExerciseCard(ex,ei)).join('');
   const done=doneSets(),total=totalSets();
@@ -79,7 +156,7 @@ function viewWorkout(){
   <div id="workout-hdr" class="hdr" style="padding-top:48px">
     <div>
       <div class="logo">RAUTALOKI</div>
-      <div id="elapsed-txt" class="hdr-sub">${t('block_label')} ${(BLOCKS[A.blockIdx]||{id:'?'}).id} · ${t('home_day')} ${A.activeDayId} · ${fmtTime(A.elapsed)}</div>
+      <div id="elapsed-txt" class="hdr-sub">${A.isCustomSession?esc(A.customWorkoutName||t('custom_workout_label')):`${t('block_label')} ${(BLOCKS[A.blockIdx]||{id:'?'}).id} · ${t('home_day')} ${A.activeDayId}`} · ${fmtTime(A.elapsed)}</div>
     </div>
     <button style="background:none;border:1px solid #1c1c2e;color:#d4a846;font-weight:700;font-size:18px;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center" onclick="cancelWorkout()">✕</button>
   </div>
@@ -229,12 +306,15 @@ function viewProgram(){
     let exRows='';
     day.exercises.forEach(ex=>{
       const lw=getLastWeight(ex.id);
+      const exMeta=ex.type==='time'
+        ?`${ex.sets} ${t('workout_sets')} · ${ex.holdSec}${t('workout_sec')}`
+        :`${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}`;
       exRows+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid #1c1c2e">
         <div>
           <div style="font-size:13px;font-weight:600">${esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
-          <div style="font-size:11px;color:#9090b0">${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}</div>
+          <div style="font-size:11px;color:#9090b0">${exMeta}</div>
         </div>
-        ${lw?`<div style="font-size:13px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}
+        ${lw&&ex.type!=='time'?`<div style="font-size:13px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}
       </div>`;
     });
     return`<div class="card" style="margin-bottom:10px">
@@ -287,6 +367,7 @@ function viewOnboarding(){
     <div class="ob-section">
       <div class="ob-label">${t('ob_freq')}</div>
       <div class="ob-options" id="ob-freq">
+        <div class="ob-opt" data-val="1" onclick="obSelect('freq',1)"><div class="ob-opt-big">1</div><div class="ob-opt-sm">${t('ob_full_body')}</div></div>
         <div class="ob-opt" data-val="2" onclick="obSelect('freq',2)"><div class="ob-opt-big">2</div><div class="ob-opt-sm">${t('ob_full_body')}</div></div>
         <div class="ob-opt" data-val="3" onclick="obSelect('freq',3)"><div class="ob-opt-big">3</div><div class="ob-opt-sm">${t('ob_full_body')}</div></div>
         <div class="ob-opt" data-val="4" onclick="obSelect('freq',4)"><div class="ob-opt-big">4</div><div class="ob-opt-sm">${t('ob_upper_lower')}</div></div>
@@ -451,6 +532,7 @@ function clearAllData(){
 function navHTML(active){
   const items=[
     {id:"home",icon:"🏠",labelKey:"nav_home"},
+    {id:"custom",icon:"✏️",labelKey:"nav_custom"},
     {id:"history",icon:"📋",labelKey:"nav_log"},
     {id:"program",icon:"📅",labelKey:"nav_program"},
     {id:"settings",icon:"⚙️",labelKey:"nav_settings"},

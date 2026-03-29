@@ -67,19 +67,24 @@ function closeQuit(){
 }
 function confirmQuit(){
   closeQuit();
-  // Save partial session
-  const block=BLOCKS[A.blockIdx];
-  const day=block.days.find(d=>d.id===A.activeDayId);
+  let blockId,blockLabel,dayId,dayLabel;
+  if(A.isCustomSession){
+    blockId=null;blockLabel=null;dayId='custom';dayLabel=t('custom_workout_label');
+  }else{
+    const block=BLOCKS[A.blockIdx];
+    const day=block?block.days.find(d=>d.id===A.activeDayId):null;
+    blockId=block?block.id:null;blockLabel=block?block.label:null;
+    dayId=A.activeDayId;dayLabel=day?day.label:'';
+  }
   const session={
     id:Date.now(),
     date:new Date().toISOString(),
-    blockId:block.id,blockLabel:block.label,
-    dayId:A.activeDayId,dayLabel:day?day.label:'',
+    blockId,blockLabel,dayId,dayLabel,
     duration:Math.round((Date.now()-A.sessionStart)/60000),
     partial:true,
     exercises:A.sessionExercises.map(ex=>({
       id:ex.id,libId:ex.libId,name:ex.name,muscle:ex.muscle,
-      sets:(A.sessionSets[ex.id]||[]).filter(s=>s.done).map(s=>({reps:s.reps,weight:s.weight,done:s.done}))
+      sets:(A.sessionSets[ex.id]||[]).filter(s=>s.done).map(s=>s.secs!==undefined?{secs:s.secs,done:s.done}:{reps:s.reps,weight:s.weight,done:s.done})
     })).filter(ex=>ex.sets.length>0)
   };
   if(session.exercises.length>0){
@@ -90,6 +95,8 @@ function confirmQuit(){
   clearInterval(A._restInterval);A._restEndTime=null;
   A.restTimer=null;
   A.sessionStart=null;
+  if(A.isCustomSession)A.isCustomSession=false;
+  if(A.isCustomProgramSession)A.isCustomProgramSession=false;
   navigate("home");
 }
 
@@ -105,6 +112,7 @@ function render(){
   else if(A.view==='complete')html=viewComplete();
   else if(A.view==='history')html=viewHistory();
   else if(A.view==='program')html=viewProgram();
+  else if(A.view==='custom')html=viewCustom();
   else if(A.view==='settings')html=viewSettings();
   app.innerHTML=html;
   // After render, bind kg inputs (oninput in HTML attr can't pass complex args)

@@ -161,6 +161,17 @@ button{font-family:'DM Sans',sans-serif;cursor:pointer}
 /* Time-based (isometric) set grid */
 .set-grid-time{display:grid;grid-template-columns:28px 1fr 52px;gap:6px;align-items:center;margin-bottom:6px}
 .set-col-hdr-time{display:grid;grid-template-columns:28px 1fr 52px;gap:6px;margin-bottom:6px}
+/* Custom workout builder */
+.custom-ex-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #1c1c2e}
+.custom-ex-row:last-child{border-bottom:none}
+.custom-ex-row.custom-ex-added{opacity:.5}
+.custom-ex-info{flex:1;min-width:0}
+.custom-add-btn{background:#d4a846;color:#080810;border:none;border-radius:10px;padding:7px 14px;font-weight:800;font-size:12px;white-space:nowrap;flex-shrink:0;margin-left:10px;font-family:'DM Sans',sans-serif}
+.custom-add-btn--added{background:#1c1c2e;color:#9090b0;cursor:default}
+.custom-stepper-group{display:flex;flex-direction:column}
+.custom-stepper{display:flex;align-items:center;gap:0;background:#10101a;border:1px solid #1c1c2e;border-radius:10px;overflow:hidden}
+.custom-stepper button{background:none;border:none;color:#d4a846;font-size:18px;font-weight:700;padding:6px 12px;line-height:1;font-family:'DM Sans',sans-serif}
+.custom-stepper span{min-width:36px;text-align:center;font-size:14px;font-weight:700;color:#f2f0ea}
 /* Exercise name link */
 .ex-name-link{color:inherit;text-decoration:none;border-bottom:1px dotted #9090b055}
 .ex-name-link:hover,.ex-name-link:active{color:#d4a846;border-bottom-color:#d4a846}

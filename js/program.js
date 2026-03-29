@@ -22,13 +22,75 @@ function Ex(bn,libId,ov){
 }
 
 function generateBlocks(profile){
-  const f=profile.freq;  // 2-5
+  const f=profile.freq;  // 1-5
   const isFemale=profile.sex==="female";
 
+  if(f===1) return gen1Day(isFemale);
   if(f===2) return gen2Day(isFemale);
   if(f===3) return gen3Day(isFemale);
   if(f===4) return gen4Day(isFemale);
   return gen5Day(isFemale);
+}
+
+function gen1Day(fem){
+  // 1 day/week: single comprehensive full-body session, 4 blocks
+  const blocks=[];
+  const themes=["Barbell Compounds","Dumbbell & Machine","Strength Focus","Volume & Isolation"];
+  const emojis=["💪","🏋️","⚡","🔥"];
+
+  // Block 1: Barbell Compounds
+  blocks.push({id:1,label:"Block 1",theme:themes[0],days:[
+    {id:"A",label:"Full Body",focus:"Barbell · Full Body",emoji:emojis[0],exercises:fem?[
+      Ex(1,"lib_squat"),Ex(1,"lib_hip_thrust",{sets:4}),Ex(1,"lib_bench"),Ex(1,"lib_cable_row",{sets:4}),
+      Ex(1,"lib_rdl"),Ex(1,"lib_lat_pull"),Ex(1,"lib_glute_bridge"),Ex(1,"lib_lat_raise"),
+      Ex(1,"lib_bb_curl"),Ex(1,"lib_standing_calf")
+    ]:[
+      Ex(1,"lib_squat"),Ex(1,"lib_bench"),Ex(1,"lib_deadlift"),Ex(1,"lib_cable_row",{sets:4}),
+      Ex(1,"lib_lat_pull"),Ex(1,"lib_ohp"),Ex(1,"lib_rdl"),Ex(1,"lib_lat_raise"),
+      Ex(1,"lib_bb_curl"),Ex(1,"lib_skull"),Ex(1,"lib_standing_calf")
+    ]},
+  ]});
+
+  // Block 2: Dumbbell & Machine
+  blocks.push({id:2,label:"Block 2",theme:themes[1],days:[
+    {id:"A",label:"Full Body",focus:"Machine · Full Body",emoji:emojis[1],exercises:fem?[
+      Ex(2,"lib_leg_press"),Ex(2,"lib_hip_thrust",{sets:4}),Ex(2,"lib_db_bench"),Ex(2,"lib_chest_row"),
+      Ex(2,"lib_db_ohp"),Ex(2,"lib_leg_curl"),Ex(2,"lib_cable_fly"),Ex(2,"lib_abduction"),
+      Ex(2,"lib_incline_curl"),Ex(2,"lib_seated_calf")
+    ]:[
+      Ex(2,"lib_leg_press"),Ex(2,"lib_db_bench"),Ex(2,"lib_db_row"),Ex(2,"lib_db_ohp"),
+      Ex(2,"lib_leg_curl"),Ex(2,"lib_cable_fly"),Ex(2,"lib_lat_pull"),Ex(2,"lib_cable_raise"),
+      Ex(2,"lib_hammer"),Ex(2,"lib_pushdown"),Ex(2,"lib_seated_calf")
+    ]},
+  ]});
+
+  // Block 3: Strength Focus
+  blocks.push({id:3,label:"Block 3",theme:themes[2],days:[
+    {id:"A",label:"Full Body",focus:"Strength · Full Body",emoji:emojis[2],exercises:fem?[
+      Ex(3,"lib_squat"),Ex(3,"lib_hip_thrust",{sets:4}),Ex(3,"lib_bench"),Ex(3,"lib_chest_row"),
+      Ex(3,"lib_rdl"),Ex(3,"lib_lat_pull"),Ex(3,"lib_db_ohp"),Ex(3,"lib_rear_delt"),
+      Ex(3,"lib_hammer"),Ex(3,"lib_standing_calf")
+    ]:[
+      Ex(3,"lib_squat"),Ex(3,"lib_bench"),Ex(3,"lib_trap_dl"),Ex(3,"lib_bb_row"),
+      Ex(3,"lib_ohp"),Ex(3,"lib_lat_pull"),Ex(3,"lib_rdl"),Ex(3,"lib_face_pull"),
+      Ex(3,"lib_bb_curl"),Ex(3,"lib_close_bench")
+    ]},
+  ]});
+
+  // Block 4: Volume & Isolation
+  blocks.push({id:4,label:"Block 4",theme:themes[3],days:[
+    {id:"A",label:"Full Body",focus:"Volume · Full Body",emoji:emojis[3],exercises:fem?[
+      Ex(4,"lib_hack_squat"),Ex(4,"lib_hip_thrust",{sets:4}),Ex(4,"lib_incline_db"),Ex(4,"lib_chest_row"),
+      Ex(4,"lib_leg_curl"),Ex(4,"lib_cable_fly"),Ex(4,"lib_lat_pull"),Ex(4,"lib_cable_raise"),
+      Ex(4,"lib_abduction"),Ex(4,"lib_conc_curl"),Ex(4,"lib_seated_calf")
+    ]:[
+      Ex(4,"lib_hack_squat"),Ex(4,"lib_incline_db"),Ex(4,"lib_db_row"),Ex(4,"lib_db_ohp"),
+      Ex(4,"lib_leg_curl"),Ex(4,"lib_pec_deck"),Ex(4,"lib_lat_pull"),Ex(4,"lib_cable_raise"),
+      Ex(4,"lib_incline_curl"),Ex(4,"lib_overhead_tri"),Ex(4,"lib_seated_calf")
+    ]},
+  ]});
+
+  return blocks;
 }
 
 function gen2Day(fem){

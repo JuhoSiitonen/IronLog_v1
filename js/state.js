@@ -33,6 +33,17 @@ function advanceBlockIfNeeded(){
   return initAndGetBlockIdx();
 }
 function getNextDayId(){return ls.get(SK.nextDay)||"A";}
+function advanceCustomProgram(){
+  const prog=getCustomProgram();
+  if(!prog||!prog.workouts.length)return;
+  prog.sessionsDone=(prog.sessionsDone||0)+1;
+  const entry=prog.workouts[prog.currentIdx%prog.workouts.length];
+  if(prog.sessionsDone>=entry.sessions){
+    prog.currentIdx=(prog.currentIdx+1)%prog.workouts.length;
+    prog.sessionsDone=0;
+  }
+  saveCustomProgramToLS(prog);
+}
 function getHistory(){return ls.get(SK.history)||[];}
 function getLastWeight(id){const w=(ls.get(SK.weights)||{})[id];return w!==undefined?w:null;}
 function saveWeight(id,w,libId){const ws=ls.get(SK.weights)||{};ws[id]=w;if(libId)ws[libId]=w;ls.set(SK.weights,ws);}
@@ -156,6 +167,15 @@ const A={
   restTimer:null,
   completedSession:null,
   swapTarget:null,
+  isCustomSession:false,
+  isCustomProgramSession:false,
+  // Custom workout builder
+  customExercises:[],  // [{libId,muscle,sets,repRange,type,holdSec}]
+  customMuscle:null,
+  customTab:'build',
+  customWorkoutName:'',
+  savedWorkouts:getSavedWorkouts(),
+  // History/chart
   chartExercise:null,
   _openSessions:new Set(),
   // Internal timers

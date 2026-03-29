@@ -119,13 +119,18 @@ function updateKg(exId,idx,val){
 
 function finishWorkout(){
   if(!allDone())return;
-  const block=BLOCKS[A.blockIdx];
-  const day=block.days.find(d=>d.id===A.activeDayId);
+  let blockId,blockLabel,dayId,dayLabel;
+  if(A.isCustomSession){
+    blockId=null;blockLabel=null;dayId='custom';dayLabel=t('custom_workout_label');
+  }else{
+    const block=BLOCKS[A.blockIdx];
+    const day=block.days.find(d=>d.id===A.activeDayId);
+    blockId=block.id;blockLabel=block.label;dayId=A.activeDayId;dayLabel=day.label;
+  }
   const session={
     id:Date.now(),
     date:new Date().toISOString(),
-    blockId:block.id,blockLabel:block.label,
-    dayId:A.activeDayId,dayLabel:day.label,
+    blockId,blockLabel,dayId,dayLabel,
     duration:Math.round((Date.now()-A.sessionStart)/60000),
     exercises:A.sessionExercises.map(ex=>({
       id:ex.id,libId:ex.libId,name:ex.name,muscle:ex.muscle,
@@ -134,14 +139,18 @@ function finishWorkout(){
   };
   A.history=[...A.history,session];
   ls.set(SK.history,A.history);
-  advanceDay(A.activeDayId);
   stopElapsed();
   clearInterval(A._restInterval);A._restEndTime=null;
   A.restTimer=null;
-  // Check if block should advance based on session count
-  A.blockIdx=advanceBlockIfNeeded();
-  A.previewBlockIdx=A.blockIdx;
-  A.activeDayId=getNextDayId();
+  if(A.isCustomSession){
+    if(A.isCustomProgramSession){advanceCustomProgram();A.isCustomProgramSession=false;}
+    A.isCustomSession=false;
+  }else{
+    advanceDay(A.activeDayId);
+    A.blockIdx=advanceBlockIfNeeded();
+    A.previewBlockIdx=A.blockIdx;
+    A.activeDayId=getNextDayId();
+  }
   A.completedSession=session;
   navigate("complete");
 }

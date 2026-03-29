@@ -12,6 +12,7 @@ const LIBRARY={
     {id:"lib_lunge",name:"Walking Lunge",sets:3,repRange:[10,14],cues:"Long stride, knee tracks over toes",ms:"walking-lunges"},
     {id:"lib_goblet_squat",name:"Goblet Squat",sets:3,repRange:[12,15],cues:"Elbows inside knees, chest tall",ms:"goblet-squat"},
     {id:"lib_step_up",name:"Step-Up",sets:3,repRange:[10,12],cues:"Drive through heel of front foot",ms:"step-ups"},
+    {id:"lib_zercher_squat",name:"Zercher Squat",sets:4,repRange:[6,10],cues:"Bar in elbow crook, upright torso, full depth",ms:"zercher-squat"},
   ],
   Hamstrings:[
     {id:"lib_deadlift",name:"Deadlift",sets:4,repRange:[5,8],cues:"Lats tight, drive floor away",ms:"barbell-deadlift"},
@@ -92,5 +93,9 @@ const LIBRARY={
     {id:"lib_wall_sit",name:"Wall Sit",type:"time",sets:3,holdSec:45,cues:"90° knee angle, back flat against wall, weight through heels",ms:"wall-sit"},
     {id:"lib_lsit",name:"L-Sit Hold",type:"time",sets:3,holdSec:15,cues:"Depress scapula, legs parallel to floor, point toes"},
     {id:"lib_copenhagen",name:"Copenhagen Plank",type:"time",sets:3,holdSec:20,cues:"Top leg on bench, keep hips high, body in straight line"},
+    {id:"lib_roman_chair",name:"Roman Chair Crunch",sets:3,repRange:[15,20],cues:"Full ROM, control the descent, exhale at top",ms:"roman-chair-sit-up"},
+    {id:"lib_mountain_climbers",name:"Mountain Climbers",type:"time",sets:3,holdSec:30,cues:"Hips level, drive knees fast, core tight",ms:"mountain-climbers"},
+    {id:"lib_hanging_knee",name:"Hanging Knee Lift",sets:3,repRange:[12,15],cues:"Dead hang start, pull knees to chest, control down",ms:"hanging-leg-raise"},
+    {id:"lib_jackknife",name:"Jackknife Sit-Up",sets:3,repRange:[12,15],cues:"Simultaneous leg and torso crunch, touch feet at top",ms:"jackknife-sit-up"},
   ],
 };
