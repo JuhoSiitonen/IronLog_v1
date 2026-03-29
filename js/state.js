@@ -72,25 +72,32 @@ function getExercisesWithHistory(){
 }
 function getProgressData(libId){
   const points=[];
+  let isTime=false;
   A.history.forEach(s=>{
     const ex=(s.exercises||[]).find(e=>e.libId===libId);
     if(!ex)return;
     const wts=(ex.sets||[]).map(st=>parseFloat(st.weight)||0).filter(w=>w>0);
-    if(!wts.length)return;
-    points.push({date:s.date,max:Math.max(...wts)});
+    if(wts.length){
+      points.push({date:s.date,max:Math.max(...wts)});
+      return;
+    }
+    const secs=(ex.sets||[]).map(st=>parseFloat(st.secs)||0).filter(v=>v>0);
+    if(secs.length){isTime=true;points.push({date:s.date,max:Math.max(...secs)});}
   });
+  points.isTime=isTime;
   return points;
 }
 function renderProgressChart(libId){
   const data=getProgressData(libId);
   if(!data.length)return`<div style="text-align:center;color:#9090b0;font-size:13px;padding:20px 0">${t('chart_no_data')}</div>`;
+  const unit=data.isTime?'s':'kg';
   const W=390,H=200,ml=45,mr=15,mt=15,mb=30;
   const pw=W-ml-mr,ph=H-mt-mb;
   if(data.length===1){
     const cx=ml+pw/2,cy=mt+ph/2;
     return`<svg viewBox="0 0 ${W} ${H}" width="100%" height="200" style="display:block">
       <circle cx="${cx}" cy="${cy}" r="5" fill="#d4a846"/>
-      <text x="${cx}" y="${cy-14}" text-anchor="middle" fill="#f2f0ea" font-size="14" font-weight="700">${data[0].max}kg</text>
+      <text x="${cx}" y="${cy-14}" text-anchor="middle" fill="#f2f0ea" font-size="14" font-weight="700">${data[0].max}${unit}</text>
       <text x="${cx}" y="${cy+20}" text-anchor="middle" fill="#9090b0" font-size="10">${fmtDate(data[0].date)}</text>
     </svg>`;
   }
@@ -112,7 +119,7 @@ function renderProgressChart(libId){
     const val=yMin+(yRange*i/tickCount);
     const yy=y(val);
     gridLines+=`<line x1="${ml}" y1="${yy.toFixed(1)}" x2="${W-mr}" y2="${yy.toFixed(1)}" stroke="#1c1c2e" stroke-dasharray="4,4"/>`;
-    yLabels+=`<text x="${ml-6}" y="${(yy+3).toFixed(1)}" text-anchor="end" fill="#9090b0" font-size="10">${Math.round(val)}</text>`;
+    yLabels+=`<text x="${ml-6}" y="${(yy+3).toFixed(1)}" text-anchor="end" fill="#9090b0" font-size="10">${Math.round(val)}${unit}</text>`;
   }
   // X-axis: max 6 labels
   let xLabels='';
