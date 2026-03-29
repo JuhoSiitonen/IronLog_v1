@@ -1,7 +1,19 @@
-const CACHE_NAME = 'rautaloki-v3';
+const CACHE_NAME = 'rautaloki-v4';
 const ASSETS = [
   '/index.html',
   '/manifest.json',
+  '/css/styles.css',
+  '/js/data.js',
+  '/js/storage.js',
+  '/js/i18n.js',
+  '/js/program.js',
+  '/js/state.js',
+  '/js/timer.js',
+  '/js/session.js',
+  '/js/dom.js',
+  '/js/swap.js',
+  '/js/views.js',
+  '/js/app.js',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap'
