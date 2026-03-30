@@ -65,6 +65,13 @@ function viewHome(){
       <button class="btn-primary" onclick="startWorkout('${A.activeDayId}')">${t('home_start')}</button>
     </div>
     ${swapAlert}
+    <div class="card" style="padding:14px;margin-top:4px;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="goToCustomProgram()">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#f2f0ea">${t('home_custom_prog_cta')}</div>
+        <div style="font-size:11px;color:#9090b0;margin-top:2px">${t('home_custom_prog_sub')}</div>
+      </div>
+      <span style="color:#d4a846;font-size:20px">›</span>
+    </div>
     <div class="sec-title" style="margin-top:20px">${t('home_all_days')} ${t('block_label')} ${block.id}</div>
     ${dayListHTML}
   </div>

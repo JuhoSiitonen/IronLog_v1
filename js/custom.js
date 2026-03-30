@@ -70,7 +70,7 @@ function saveCurrentWorkout(){
   A.savedWorkouts=getSavedWorkouts();
   A.customWorkoutName='';
   A.customExercises=[];
-  A.customTab='saved';
+  A.customTab='program';
   render();
 }
 
@@ -206,14 +206,11 @@ function startCustomWorkout(){
 // ═══════════════════════════════════════════════════════════════════
 
 function viewCustom(){
-  const tab=A.customTab||'build';
-  const tabsHTML=['build','saved','program'].map(id=>`
+  const tab=A.customTab==='saved'?'program':(A.customTab||'build');
+  const tabsHTML=['build','program'].map(id=>`
     <button class="chart-pill${tab===id?' active':''}" onclick="customSetTab('${id}')">${t('custom_tab_'+id)}</button>`).join('');
 
-  let content='';
-  if(tab==='build')content=_buildTabHTML();
-  else if(tab==='saved')content=_savedTabHTML();
-  else content=_programTabHTML();
+  const content=tab==='build'?_buildTabHTML():_programTabHTML();
 
   return`
   <div class="hdr"><div class="logo">RAUTALOKI</div></div>
@@ -312,16 +309,70 @@ function _buildTabHTML(){
     </button>`;
 }
 
-function _savedTabHTML(){
-  const saved=getSavedWorkouts();
-  if(!saved.length)return`<div style="text-align:center;color:#9090b0;font-size:14px;padding:40px 0">${t('custom_no_saved')}</div>`;
+function _programTabHTML(){
   const prog=getCustomProgram();
+  const saved=getSavedWorkouts();
+  const isActive=!!(prog&&prog.active&&prog.workouts.length);
+  const curIdx=prog?(prog.currentIdx%Math.max(1,prog.workouts.length)):0;
   const inProgIds=new Set((prog?prog.workouts:[]).map(e=>e.workoutId));
-  return saved.map(w=>`
+
+  // ── Rotation section ──
+  let rotationHTML='';
+  if(!prog||!prog.workouts.length){
+    rotationHTML=`<div style="text-align:center;color:#9090b0;font-size:13px;padding:20px 0">${t('custom_prog_empty')}</div>`;
+  }else{
+    const curEntry=prog.workouts[curIdx];
+    const curWorkout=saved.find(w=>w.id===curEntry.workoutId)||{name:'?'};
+    const activeAlert=isActive?`
+      <div class="scard" style="margin-bottom:12px;border-left:3px solid #4a9a5e">
+        <div style="font-size:11px;color:#4a9a5e;font-weight:700;letter-spacing:.08em;margin-bottom:3px">● ${t('custom_prog_active')}</div>
+        <div style="font-size:13px;color:#f2f0ea">${t('custom_prog_on')} <strong>${esc(curWorkout.name)}</strong></div>
+        <div style="font-size:12px;color:#9090b0;margin-top:2px">${prog.sessionsDone||0} / ${curEntry.sessions} ${t('custom_prog_sessions').toLowerCase()}</div>
+      </div>`:'';
+    const entriesHTML=prog.workouts.map((entry,i)=>{
+      const w=saved.find(w=>w.id===entry.workoutId)||{name:'?',exercises:[]};
+      const isCurrent=isActive&&(i===curIdx);
+      return`
+      <div class="card" style="padding:12px 14px;margin-bottom:8px${isCurrent?';border-color:#4a9a5e':''}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:${isCurrent?'#4a9a5e':'#f2f0ea'}">${isCurrent?'● ':''} ${esc(w.name)}</div>
+            <div style="font-size:11px;color:#9090b0">${w.exercises.length} ${t('stat_exercises').toLowerCase()}</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button onclick="moveProgramEntry(${i},-1)" ${i===0?'disabled':''} style="background:none;border:1px solid #1c1c2e;color:#9090b0;font-size:14px;width:28px;height:28px;border-radius:8px;cursor:pointer">↑</button>
+            <button onclick="moveProgramEntry(${i},1)" ${i===prog.workouts.length-1?'disabled':''} style="background:none;border:1px solid #1c1c2e;color:#9090b0;font-size:14px;width:28px;height:28px;border-radius:8px;cursor:pointer">↓</button>
+            <button onclick="removeFromProgram(${i})" style="background:none;border:none;color:#9090b0;font-size:18px;padding:0;width:28px;height:28px;cursor:pointer">×</button>
+          </div>
+        </div>
+        <div class="custom-stepper-group">
+          <span style="font-size:10px;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px">${t('custom_prog_sessions')}</span>
+          <div class="custom-stepper">
+            <button onclick="adjProgramSessions(${i},-1)">−</button>
+            <span id="prog-sess-${i}">${entry.sessions}</span>
+            <button onclick="adjProgramSessions(${i},1)">+</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    rotationHTML=`
+    ${activeAlert}
+    ${entriesHTML}
+    <div style="height:8px"></div>
+    ${isActive?
+      `<button class="btn-ghost" style="color:#9090b0;border-color:#1c1c2e" onclick="deactivateProgram()">${t('custom_prog_deactivate')}</button>`:
+      `<button class="btn-primary" onclick="activateProgram()">${t('custom_prog_activate')}</button>`
+    }`;
+  }
+
+  // ── Saved workouts section ──
+  const savedHTML=saved.length===0
+    ?`<div style="text-align:center;color:#9090b0;font-size:13px;padding:20px 0">${t('custom_no_saved')}<br><span style="font-size:11px">${t('custom_prog_build_hint')}</span></div>`
+    :saved.map(w=>`
     <div class="card" style="padding:14px;margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
         <div>
-          <div style="font-size:16px;font-weight:700;color:#f2f0ea">${esc(w.name)}</div>
+          <div style="font-size:15px;font-weight:700;color:#f2f0ea">${esc(w.name)}</div>
           <div style="font-size:12px;color:#9090b0;margin-top:2px">${w.exercises.length} ${t('stat_exercises').toLowerCase()}</div>
         </div>
         <button onclick="deleteSavedWorkout(${w.id})" style="background:none;border:none;color:#9090b0;font-size:18px;padding:0;line-height:1">×</button>
@@ -329,70 +380,16 @@ function _savedTabHTML(){
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0" onclick="loadSavedWorkout(${w.id})">${t('custom_load')}</button>
         <button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0;color:#d4a846;border-color:#d4a846" onclick="startSavedWorkout(${w.id})">${t('custom_start_saved')}</button>
-        ${inProgIds.has(w.id)?
-          `<button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0;color:#4a9a5e;border-color:#4a9a5e" disabled>✓ ${t('custom_in_prog')}</button>`:
-          `<button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0" onclick="addToProgram(${w.id})">${t('custom_add_to_prog')}</button>`
+        ${inProgIds.has(w.id)
+          ?`<button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0;color:#4a9a5e;border-color:#4a9a5e" disabled>✓ ${t('custom_in_prog')}</button>`
+          :`<button class="btn-ghost" style="flex:1;font-size:13px;padding:8px 0" onclick="addToProgram(${w.id})">${t('custom_add_to_prog')}</button>`
         }
       </div>
     </div>`).join('');
-}
-
-function _programTabHTML(){
-  const prog=getCustomProgram();
-  const saved=getSavedWorkouts();
-
-  if(!prog||!prog.workouts.length){
-    return`
-    <div style="text-align:center;color:#9090b0;font-size:14px;padding:32px 0 12px">${t('custom_prog_empty')}</div>
-    <div style="text-align:center;font-size:12px;color:#9090b0">${t('custom_prog_add_hint')}</div>`;
-  }
-
-  const isActive=prog.active;
-  const curIdx=prog.currentIdx%prog.workouts.length;
-  const curEntry=prog.workouts[curIdx];
-  const curWorkout=saved.find(w=>w.id===curEntry.workoutId)||{name:'?'};
-
-  const activeAlert=isActive?`
-    <div class="scard" style="margin-bottom:16px;border-left:3px solid #4a9a5e">
-      <div style="font-size:11px;color:#4a9a5e;font-weight:700;letter-spacing:.08em;margin-bottom:3px">● ${t('custom_prog_active')}</div>
-      <div style="font-size:13px;color:#f2f0ea">${t('custom_prog_on')} <strong>${esc(curWorkout.name)}</strong></div>
-      <div style="font-size:12px;color:#9090b0;margin-top:2px">${prog.sessionsDone||0} / ${curEntry.sessions} ${t('custom_prog_sessions').toLowerCase()}</div>
-    </div>`:'';
-
-  const entriesHTML=prog.workouts.map((entry,i)=>{
-    const w=saved.find(w=>w.id===entry.workoutId)||{name:'?',exercises:[]};
-    const isCurrent=isActive&&(i===curIdx);
-    return`
-    <div class="card" style="padding:12px 14px;margin-bottom:8px${isCurrent?';border-color:#4a9a5e':''}">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div>
-          <div style="font-size:14px;font-weight:700;color:${isCurrent?'#4a9a5e':'#f2f0ea'}">${isCurrent?'● ':''} ${esc(w.name)}</div>
-          <div style="font-size:11px;color:#9090b0">${w.exercises.length} ${t('stat_exercises').toLowerCase()}</div>
-        </div>
-        <div style="display:flex;gap:6px;align-items:center">
-          <button onclick="moveProgramEntry(${i},-1)" ${i===0?'disabled':''} style="background:none;border:1px solid #1c1c2e;color:#9090b0;font-size:14px;width:28px;height:28px;border-radius:8px;cursor:pointer">↑</button>
-          <button onclick="moveProgramEntry(${i},1)" ${i===prog.workouts.length-1?'disabled':''} style="background:none;border:1px solid #1c1c2e;color:#9090b0;font-size:14px;width:28px;height:28px;border-radius:8px;cursor:pointer">↓</button>
-          <button onclick="removeFromProgram(${i})" style="background:none;border:none;color:#9090b0;font-size:18px;padding:0;width:28px;height:28px;cursor:pointer">×</button>
-        </div>
-      </div>
-      <div class="custom-stepper-group">
-        <span style="font-size:10px;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px">${t('custom_prog_sessions')}</span>
-        <div class="custom-stepper">
-          <button onclick="adjProgramSessions(${i},-1)">−</button>
-          <span id="prog-sess-${i}">${entry.sessions}</span>
-          <button onclick="adjProgramSessions(${i},1)">+</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
 
   return`
-  ${activeAlert}
-  ${entriesHTML}
-  <div style="height:12px"></div>
-  ${isActive?
-    `<button class="btn-ghost" style="color:#9090b0;border-color:#1c1c2e" onclick="deactivateProgram()">${t('custom_prog_deactivate')}</button>`:
-    `<button class="btn-primary" onclick="activateProgram()">${t('custom_prog_activate')}</button>`
-  }
-  <div style="font-size:11px;color:#9090b0;text-align:center;margin-top:8px">${t('custom_prog_add_hint')}</div>`;
+  <div class="sec-title">${t('custom_prog_rotation')}</div>
+  ${rotationHTML}
+  <div class="sec-title" style="margin-top:20px">${t('custom_prog_workouts')}</div>
+  ${savedHTML}`;
 }

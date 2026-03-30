@@ -100,6 +100,8 @@ function confirmQuit(){
   navigate("home");
 }
 
+function goToCustomProgram(){A.customTab='program';navigate('custom');}
+
 function render(){
   const app=document.getElementById('app');
   if(!app)return;
