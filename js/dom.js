@@ -98,6 +98,7 @@ function buildExerciseCard(ex,ei){
   const isTime=ex.type==='time';
   const bumpBadge=!isTime&&bump&&!exDone?`<span class="badge" style="background:#d4a84622;color:#d4a846">${t('workout_load')}</span>`:'';
   const swapBtn=exDone?'':`<button class="btn-swap" onclick="openSwap('${ex.id}','${ex.muscle}')">${t('workout_swap')}</button>`;
+  const removeBtn=exDone?'':`<button class="btn-swap" style="color:#9090b0;border-color:#1c1c2e" onclick="removeExercise('${ex.id}')">✕</button>`;
   const doneIcon=exDone?'<span style="color:#d4a846">✓ </span>':'';
   const cueText=t('cue_'+(ex.libId||''))||esc(ex.cues);
   const lastInfo=!isTime&&lastW>0
@@ -123,7 +124,7 @@ function buildExerciseCard(ex,ei){
         <div class="ex-title">${doneIcon}${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.libId||ex.name))} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
         <div class="ex-meta">${metaLine}</div>
       </div>
-      <div class="ex-actions">${bumpBadge}${swapBtn}</div>
+      <div class="ex-actions">${bumpBadge}${swapBtn}${removeBtn}</div>
     </div>
     <div class="cue-box">💡 ${cueText}</div>
     ${lastInfo}

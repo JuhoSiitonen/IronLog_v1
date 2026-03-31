@@ -209,6 +209,18 @@ function viewComplete(){
       <div class="stat-box"><div class="stat-val">${vol>0?Math.round(vol/100)/10+'k':'—'}</div><div class="stat-lbl">${t('stat_volume')}</div></div>
     </div>
     ${swapNote}
+    ${(s.newPRs&&s.newPRs.length)?`
+    <div class="card" style="margin-bottom:16px;border-color:#d4a846">
+      <div style="font-size:12px;font-weight:700;color:#d4a846;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">🏅 ${t('pr_new')}</div>
+      ${s.newPRs.map(pr=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:1px solid #1c1c2e;margin-top:6px">
+        <div style="font-size:14px;font-weight:700;color:#f2f0ea">${esc(t(pr.libId)||pr.name)}</div>
+        <div style="text-align:right">
+          <div style="font-size:16px;font-weight:900;color:#d4a846">${pr.value}${pr.unit}</div>
+          <div style="font-size:10px;color:#9090b0">${t('pr_prev')} ${pr.prev}${pr.unit}</div>
+        </div>
+      </div>`).join('')}
+    </div>`:''}
     <div class="card" style="margin-bottom:16px">
       <div style="font-size:12px;color:#9090b0;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:700">${t('complete_up_next')}</div>
       <div style="font-weight:700;font-size:16px">${nd?nd.emoji+' '+esc(t('day_'+nd.label)||nd.label):''}</div>
@@ -284,10 +296,34 @@ function viewHistory(){
       </div>`;
     });
   }
+  // PR board
+  const prs=getPRs();
+  const prEntries=Object.entries(prs).filter(([,v])=>v&&(v.weight||v.secs));
+  let prSection='';
+  if(prEntries.length){
+    const rows=prEntries.map(([libId,v])=>{
+      const isTimed=v.secs!==undefined;
+      const val=isTimed?v.secs:v.weight;
+      const unit=isTimed?t('workout_sec'):'kg';
+      return`<div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:1px solid #1c1c2e;margin-top:6px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#f2f0ea">${esc(t(libId))}</div>
+          <div style="font-size:10px;color:#9090b0">${fmtDate(v.date)}</div>
+        </div>
+        <div style="font-size:16px;font-weight:900;color:#d4a846">${val}${unit}</div>
+      </div>`;
+    }).join('');
+    prSection=`<div class="card" style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:#d4a846;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">🏅 ${t('pr_board')}</div>
+      ${rows}
+    </div>`;
+  }
+
   return`
   <div class="hdr"><div class="logo">RAUTALOKI</div></div>
   <div class="page">
     <div class="h2">${t('history_title')}</div>
+    ${prSection}
     ${chartSection}
     ${content}
   </div>

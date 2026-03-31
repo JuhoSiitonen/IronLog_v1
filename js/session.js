@@ -103,6 +103,15 @@ function updateSecs(exId,idx,val){
   sets[idx]={...sets[idx],secs:val};
 }
 
+function removeExercise(exId){
+  A.sessionExercises=A.sessionExercises.filter(e=>e.id!==exId);
+  delete A.sessionSets[exId];
+  const card=document.getElementById(`ex-card-${exId}`);
+  if(card)card.remove();
+  updateProgress();
+  updateFinishBtn();
+}
+
 function updateKg(exId,idx,val){
   const sets=A.sessionSets[exId];
   if(!sets)return;
@@ -137,6 +146,46 @@ function finishWorkout(){
       sets:(A.sessionSets[ex.id]||[]).map(s=>s.secs!==undefined?{secs:s.secs,done:s.done}:{reps:s.reps,weight:s.weight,done:s.done})
     }))
   };
+  // ── Detect new PRs (A.history doesn't include current session yet) ──
+  const prs=getPRs();
+  const newPRs=[];
+  session.exercises.forEach(ex=>{
+    if(!ex.libId)return;
+    const isTimed=(ex.sets||[]).some(s=>s.secs!==undefined);
+    const currentMax=isTimed
+      ?Math.max(...(ex.sets||[]).map(s=>parseInt(s.secs)||0))
+      :Math.max(...(ex.sets||[]).map(s=>parseFloat(s.weight)||0));
+    if(!(currentMax>0))return;
+    let prevBest=null;
+    if(prs[ex.libId]!=null){
+      prevBest=isTimed?(prs[ex.libId].secs||0):(prs[ex.libId].weight||0);
+    }else{
+      // Seed from existing history so existing users don't get false PRs
+      let best=0;
+      A.history.forEach(hs=>{
+        const hx=(hs.exercises||[]).find(e=>e.libId===ex.libId);
+        if(!hx)return;
+        const m=isTimed
+          ?Math.max(...(hx.sets||[]).map(s=>parseInt(s.secs)||0))
+          :Math.max(...(hx.sets||[]).map(s=>parseFloat(s.weight)||0));
+        if(m>best)best=m;
+      });
+      prevBest=best>0?best:null;
+    }
+    // Update store if new best (>= to refresh date on ties)
+    if(prevBest===null||currentMax>=prevBest){
+      if(isTimed)prs[ex.libId]={secs:currentMax,date:session.date};
+      else prs[ex.libId]={weight:currentMax,date:session.date};
+    }
+    // Only announce genuine improvements over a real previous best
+    if(prevBest!==null&&currentMax>prevBest){
+      newPRs.push({libId:ex.libId,name:ex.name,value:currentMax,unit:isTimed?'s':'kg',prev:prevBest});
+    }
+  });
+  ls.set(SK.prs,prs);
+  session.newPRs=newPRs;
+  // ────────────────────────────────────────────────────────────────────
+
   A.history=[...A.history,session];
   ls.set(SK.history,A.history);
   stopElapsed();
