@@ -58,7 +58,7 @@ function viewHome(){
     ${renderMuscleHeatmap()}
     <div class="acard">
       <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
-        ${t('home_up_next')} · ${t('block_label')} ${block.id} · ${t('home_day')} ${nextDay.id}
+        ${t('home_up_next')} · ${t('block_label')} ${block.id} · ${t('home_day')} ${nextDay.id}${getSettings().progressive?` · <span style="color:${getCurrentBlockPhase()===0?'#4a9a5e':getCurrentBlockPhase()===2?'#e8504a':'#d4a846'}">${t(PHASE_NAMES[getCurrentBlockPhase()])}</span>`:''}
       </div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:2px">${nextDay.emoji} ${esc(t('day_'+nextDay.label))}</div>
       <div style="font-size:13px;color:#9090b0;margin-bottom:14px">${esc(t('focus_'+nextDay.focus))}</div>
@@ -142,7 +142,7 @@ function _viewHomeCustomProgram(prog){
     ${renderMuscleHeatmap()}
     <div class="acard">
       <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
-        ${t('home_up_next')} · ${curIdx+1}/${prog.workouts.length}
+        ${t('home_up_next')} · ${curIdx+1}/${prog.workouts.length}${getSettings().progressive?` · <span style="color:${getCurrentCustomPhase()===0?'#4a9a5e':getCurrentCustomPhase()===2?'#e8504a':'#d4a846'}">${t(PHASE_NAMES[getCurrentCustomPhase()])}</span>`:''}
       </div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;margin-bottom:10px">${esc(workout.name)}</div>
       <div style="display:flex;flex-wrap:wrap;margin-bottom:16px">${pillsHTML}</div>
@@ -165,7 +165,7 @@ function viewWorkout(){
   <div id="workout-hdr" class="hdr" style="padding-top:48px">
     <div>
       <div class="logo">RAUTALOKI</div>
-      <div id="elapsed-txt" class="hdr-sub">${A.isCustomSession?esc(A.customWorkoutName||t('custom_workout_label')):`${t('block_label')} ${(BLOCKS[A.blockIdx]||{id:'?'}).id} · ${t('home_day')} ${A.activeDayId}`} · ${fmtTime(A.elapsed)}</div>
+      <div id="elapsed-txt" class="hdr-sub">${A.isCustomSession?esc(A.customWorkoutName||t('custom_workout_label')):`${t('block_label')} ${(BLOCKS[A.blockIdx]||{id:'?'}).id} · ${t('home_day')} ${A.activeDayId}`}${getSettings().progressive?` · <span style="color:${A.sessionPhase===0?'#4a9a5e':A.sessionPhase===2?'#e8504a':'#d4a846'}">${t(PHASE_NAMES[A.sessionPhase])}</span>`:''} · ${fmtTime(A.elapsed)}</div>
     </div>
     <button style="background:none;border:1px solid #1c1c2e;color:#d4a846;font-weight:700;font-size:18px;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center" onclick="cancelWorkout()">✕</button>
   </div>
@@ -524,6 +524,24 @@ function viewSettings(){
       <div style="display:flex;gap:6px;flex-wrap:wrap">${restBtns}</div>
     </div>
 
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+      <div class="sec-title" style="margin:0">${t('settings_progressive')}</div>
+      <label class="toggle"><input type="checkbox" ${s.progressive?'checked':''} onchange="toggleProgressive(this.checked)"><span class="slider"></span></label>
+    </div>
+    <div class="card" ${s.progressive?'':`style="opacity:0.4;pointer-events:none"`}>
+      <div style="font-size:13px;color:#9090b0;margin-bottom:12px;line-height:1.5">${t('settings_progressive_desc')}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+        ${[0,1,2].map(ph=>`<div style="background:#0e0e1a;border-radius:10px;padding:8px 10px;border-top:3px solid ${ph===0?'#4a9a5e':ph===1?'#d4a846':'#e8504a'}">
+          <div style="font-size:10px;font-weight:700;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">${t(PHASE_NAMES[ph])}</div>
+          <div style="font-size:11px;color:#9090b0">${ph===0?t('phase_desc_0'):ph===1?t('phase_desc_1'):t('phase_desc_2')}</div>
+        </div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:#9090b0;margin-bottom:8px">${t('settings_phase_size')} <strong style="color:#f2f0ea">${s.customPhaseSize||4}</strong> ${t('settings_phase_size_unit')}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${[2,3,4,6,8].map(n=>`<button class="ob-opt${(s.customPhaseSize||4)===n?' selected':''}" style="min-width:44px;flex:0 0 auto;padding:10px 6px" onclick="setPhaseSize(${n})">${n}</button>`).join('')}
+      </div>
+    </div>
+
     <div class="sec-title" style="margin-top:20px">${t('settings_setup')}</div>
     <div class="card" style="display:flex;justify-content:space-between;align-items:center">
       <div>
@@ -560,6 +578,9 @@ function toggleRestTimer(on){
   }
   render();
 }
+
+function toggleProgressive(on){saveSetting('progressive',on);render();}
+function setPhaseSize(n){saveSetting('customPhaseSize',n);render();}
 
 function clearAllData(){
   if(!confirm(t('confirm_clear_1')))return;

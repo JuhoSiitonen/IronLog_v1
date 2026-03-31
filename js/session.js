@@ -20,7 +20,9 @@ function startWorkout(dayId,block){
   block=block||BLOCKS[A.blockIdx];
   const day=block.days.find(d=>d.id===dayId);
   A.activeDayId=dayId;
-  A.sessionExercises=day.exercises.map(e=>({...e}));
+  const phase=getCurrentBlockPhase();
+  A.sessionPhase=phase;
+  A.sessionExercises=day.exercises.map(e=>applyPhaseToEx({...e},phase));
   A.sessionSets=buildInitialSets(A.sessionExercises);
   A.sessionStart=Date.now();
   A.elapsed=0;

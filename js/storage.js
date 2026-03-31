@@ -12,7 +12,7 @@ const ls={
 // ═══════════════════════════════════════════════════════════════════
 function getProfile(){return ls.get("il_profile")||null;}
 function saveProfile(p){ls.set("il_profile",p);}
-function getSettings(){return ls.get("il_settings")||{restSeconds:90};}
+function getSettings(){const d={restSeconds:90,progressive:false,customPhaseSize:4};return Object.assign(d,ls.get("il_settings")||{});}
 function saveSetting(key,val){const s=getSettings();s[key]=val;ls.set("il_settings",s);}
 function getRestDuration(){const s=getSettings();return s.restSeconds!==undefined?s.restSeconds:90;}
 function getSavedWorkouts(){return ls.get(SK.savedWorkouts)||[];}

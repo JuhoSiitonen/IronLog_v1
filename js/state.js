@@ -33,10 +33,40 @@ function advanceBlockIfNeeded(){
   return initAndGetBlockIdx();
 }
 function getNextDayId(){return ls.get(SK.nextDay)||"A";}
+
+// ── Periodization ────────────────────────────────────────────────────
+// Phase 0 = Accumulation, 1 = Development (base), 2 = Intensification
+const PHASE_NAMES=['phase_accumulation','phase_development','phase_intensification'];
+function applyPhaseToEx(ex,phase){
+  if(phase===1||ex.type==='time')return{...ex};
+  const setsOffset=phase===0?-1:1;
+  const repOffset=phase===0?4:-3;
+  const sets=Math.max(1,Math.min(8,ex.sets+setsOffset));
+  const lo=Math.max(1,ex.repRange[0]+repOffset);
+  const hi=Math.max(lo+1,ex.repRange[1]+repOffset);
+  return{...ex,sets,repRange:[lo,hi]};
+}
+function getCurrentBlockPhase(){
+  if(!getSettings().progressive)return 1;
+  const spb=sessionsPerBlock();
+  const size=Math.max(1,Math.floor(spb/3));
+  return Math.min(2,Math.floor(getBlockSessionCount()/size));
+}
+function getCurrentCustomPhase(){
+  const s=getSettings();
+  if(!s.progressive)return 1;
+  const prog=getCustomProgram();
+  if(!prog)return 1;
+  const size=Math.max(1,s.customPhaseSize||4);
+  return Math.min(2,Math.floor((prog.totalSessionsDone||0)/size));
+}
+// ─────────────────────────────────────────────────────────────────────
+
 function advanceCustomProgram(){
   const prog=getCustomProgram();
   if(!prog||!prog.workouts.length)return;
   prog.sessionsDone=(prog.sessionsDone||0)+1;
+  prog.totalSessionsDone=(prog.totalSessionsDone||0)+1;
   const entry=prog.workouts[prog.currentIdx%prog.workouts.length];
   if(prog.sessionsDone>=entry.sessions){
     prog.currentIdx=(prog.currentIdx+1)%prog.workouts.length;
@@ -221,6 +251,7 @@ const A={
   restTimer:null,
   completedSession:null,
   swapTarget:null,
+  sessionPhase:1,
   _addExMuscle:null,
   isCustomSession:false,
   isCustomProgramSession:false,

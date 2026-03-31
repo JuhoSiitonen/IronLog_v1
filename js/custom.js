@@ -179,16 +179,19 @@ function startCustomProgramSession(){
 // ── Start an ad-hoc custom session ──
 function startCustomWorkout(){
   if(!A.customExercises.length)return;
+  const phase=getCurrentCustomPhase();
+  A.sessionPhase=phase;
   const sessionExercises=A.customExercises.map((ex,i)=>{
     const lo=ex.type==='time'?0:Math.max(1,(ex.repTarget!=null?ex.repTarget:ex.repRange[1])-2);
     const hi=ex.type==='time'?0:(ex.repTarget!=null?ex.repTarget:ex.repRange[1]);
-    return{
+    const base={
       id:`cx_${i}_${ex.libId.replace('lib_','')}`,
       libId:ex.libId,name:ex.name,muscle:ex.muscle,
       sets:ex.sets,repRange:[lo,hi],
       type:ex.type,holdSec:ex.holdSec,
       cues:ex.cues,ms:ex.ms,
     };
+    return applyPhaseToEx(base,phase);
   });
   A.isCustomSession=true;
   A.sessionExercises=sessionExercises;
