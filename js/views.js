@@ -55,6 +55,7 @@ function viewHome(){
       <div class="stat-box"><div class="stat-val">${weekS}<span>/${freq}</span></div><div class="stat-lbl">${t('stat_this_week')}</div></div>
       <div class="stat-box"><div class="stat-val">${stu}</div><div class="stat-lbl">${t('stat_to_swap')}</div></div>
     </div>
+    ${renderMuscleHeatmap()}
     <div class="acard">
       <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
         ${t('home_up_next')} · ${t('block_label')} ${block.id} · ${t('home_day')} ${nextDay.id}
@@ -138,6 +139,7 @@ function _viewHomeCustomProgram(prog){
       <div class="stat-box"><div class="stat-val">${weekS}<span>/${freq}</span></div><div class="stat-lbl">${t('stat_this_week')}</div></div>
       <div class="stat-box"><div class="stat-val">${sessionsLeft}</div><div class="stat-lbl">${t('stat_to_swap')}</div></div>
     </div>
+    ${renderMuscleHeatmap()}
     <div class="acard">
       <div style="font-size:11px;color:#d4a846;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">
         ${t('home_up_next')} · ${curIdx+1}/${prog.workouts.length}

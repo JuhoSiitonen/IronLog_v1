@@ -212,6 +212,7 @@ settings_how_5:"⇄ Swap",settings_how_5b:"lets you swap any exercise for anothe
 settings_how_6:"↑ LOAD",settings_how_6b:"means you hit top reps last time — try adding 2.5% weight.",
 settings_how_7:"Quit without completing",settings_how_7b:"saves your done sets to history.",
 chart_title:"Progress",chart_no_data:"Not enough data yet",
+heatmap_title:"Muscle frequency",heatmap_today:"Today",heatmap_yesterday:"Yesterday",heatmap_days_ago:"d ago",
 pr_new:"New Personal Record",pr_prev:"Previous:",pr_board:"Personal Records",
 // Onboarding view
 ob_tagline:"Your gym. Your rules.",ob_subtitle:"Set up your training plan in 2 taps.",
@@ -483,6 +484,7 @@ settings_how_5:"⇄ Vaihda",settings_how_5b:"vaihtaa liikkeen toiseen samasta li
 settings_how_6:"↑ NOSTA",settings_how_6b:"tarkoittaa, että teit maksimireppit viimeksi — kokeile 2.5% lisäpainoa.",
 settings_how_7:"Lopeta kesken",settings_how_7b:"tallentaa tehdyt sarjat historiaan.",
 chart_title:"Kehitys",chart_no_data:"Ei vielä tarpeeksi dataa",
+heatmap_title:"Lihasryhmätaajuus",heatmap_today:"Tänään",heatmap_yesterday:"Eilen",heatmap_days_ago:"pv sitten",
 pr_new:"Uusi henkilökohtainen ennätys",pr_prev:"Edellinen:",pr_board:"Henkilökohtaiset ennätykset",
 // Onboarding view
 ob_tagline:"Sinun salisi. Sinun sääntösi.",ob_subtitle:"Aseta treeniohjelma kahdella napautuksella.",

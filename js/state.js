@@ -87,6 +87,53 @@ function getProgressData(libId){
   points.isTime=isTime;
   return points;
 }
+function getMuscleRecency(){
+  const map={};
+  Object.keys(LIBRARY).forEach(m=>map[m]=null);
+  const todayMs=new Date().setHours(0,0,0,0);
+  A.history.forEach(s=>{
+    const dMs=new Date(s.date).setHours(0,0,0,0);
+    const days=Math.round((todayMs-dMs)/864e5);
+    (s.exercises||[]).forEach(ex=>{
+      if(!(ex.muscle in map))return;
+      if(map[ex.muscle]===null||days<map[ex.muscle])map[ex.muscle]=days;
+    });
+  });
+  return map;
+}
+
+function renderMuscleHeatmap(){
+  const rec=getMuscleRecency();
+  const muscles=Object.keys(LIBRARY);
+  // Color scale: 0=today, 1, 2-3, 4-6, 7+/never
+  function heatColor(d){
+    if(d===null||d>=7)return{bar:'#252535',text:'#484868'};
+    if(d>=4)return{bar:'#3a2c18',text:'#7a6030'};
+    if(d>=2)return{bar:'#5a3e1a',text:'#b07828'};
+    if(d===1)return{bar:'#7a5220',text:'#d4a040'};
+    return{bar:'#d4a846',text:'#d4a846'};
+  }
+  function dayLabel(d){
+    if(d===null)return'—';
+    if(d===0)return t('heatmap_today');
+    if(d===1)return t('heatmap_yesterday');
+    if(d<7)return`${d}${t('heatmap_days_ago')}`;
+    return`7+${t('heatmap_days_ago')}`;
+  }
+  const tiles=muscles.map(m=>{
+    const d=rec[m];
+    const{bar,text}=heatColor(d);
+    return`<div style="background:#0e0e1a;border-radius:10px;padding:9px 12px;border-top:3px solid ${bar}">
+      <div style="font-size:10px;font-weight:700;color:#9090b0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">${esc(t('muscle_'+m))}</div>
+      <div style="font-size:12px;font-weight:700;color:${text}">${dayLabel(d)}</div>
+    </div>`;
+  }).join('');
+  return`<div class="card" style="margin-bottom:12px">
+    <div style="font-size:11px;font-weight:700;color:#9090b0;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">${t('heatmap_title')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${tiles}</div>
+  </div>`;
+}
+
 function renderProgressChart(libId){
   const data=getProgressData(libId);
   if(!data.length)return`<div style="text-align:center;color:#9090b0;font-size:13px;padding:20px 0">${t('chart_no_data')}</div>`;
