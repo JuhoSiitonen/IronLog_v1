@@ -181,6 +181,7 @@ workout_sets_done:"SETS DONE",workout_finish:"✓ FINISH WORKOUT",workout_comple
 workout_quit:"Quit without completing",workout_rest:"REST",workout_skip:"SKIP",workout_load:"↑ LOAD",
 workout_swap:"⇄ Swap",workout_sets:"sets",workout_reps:"reps",workout_last:"Last:",workout_try:"→ try",
 workout_col_reps:"Reps ↕",workout_col_set:"#",workout_col_kg:"kg",
+workout_set:"Set",workout_add_ex:"Add Exercise",workout_add_ex_title:"Add Exercise",
 workout_hint_edit:"Double-tap 💪🏻 to edit a set",workout_swap_title:"Swap Exercise",
 workout_muscle:"Muscle:",workout_current:"current",workout_in_use:"in use",workout_cancel:"Cancel workout?",
 // Complete view
@@ -451,6 +452,7 @@ workout_sets_done:"SARJAA TEHTY",workout_finish:"✓ LOPETA TREENI",workout_comp
 workout_quit:"Lopeta kesken",workout_rest:"LEPO",workout_skip:"OHITA",workout_load:"↑ NOSTA",
 workout_swap:"⇄ Vaihda",workout_sets:"sarjaa",workout_reps:"toistoa",workout_last:"Edellinen:",workout_try:"→ kokeile",
 workout_col_reps:"Toistot ↕",workout_col_set:"#",workout_col_kg:"kg",
+workout_set:"Sarja",workout_add_ex:"Lisää liike",workout_add_ex_title:"Lisää liike",
 workout_hint_edit:"Tuplanapauta 💪🏻 muokataksesi sarjaa",workout_swap_title:"Vaihda liike",
 workout_muscle:"Lihasryhmä:",workout_current:"nykyinen",workout_in_use:"käytössä",workout_cancel:"Peruuta treeni?",
 // Complete view

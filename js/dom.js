@@ -117,6 +117,13 @@ function buildExerciseCard(ex,ei){
     setsHTML+=`<div id="set-row-${ex.id}-${si}" class="${gridClass}">${buildSetRowHTML(ex,si,set)}</div>`;
   });
 
+  const canRemoveSet=!exDone&&sets.length>1&&!sets[sets.length-1].done;
+  const setControls=exDone?'':
+    `<div id="set-controls-${ex.id}" style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn-ghost" style="flex:1;font-size:12px;padding:6px 0;color:#9090b0;border-color:#1c1c2e" onclick="removeSet('${ex.id}')" ${canRemoveSet?'':'disabled'}>− ${t('workout_set')}</button>
+      <button class="btn-ghost" style="flex:1;font-size:12px;padding:6px 0;color:#d4a846;border-color:#d4a84644" onclick="addSet('${ex.id}')">+ ${t('workout_set')}</button>
+    </div>`;
+
   return`
   <div class="card ex-card" style="animation-delay:${ei*0.04}s;opacity:${exDone?0.45:1}" id="ex-card-${ex.id}">
     <div class="ex-header">
@@ -130,6 +137,7 @@ function buildExerciseCard(ex,ei){
     ${lastInfo}
     ${colHdr}
     <div class="hint-text">${t('workout_hint_edit')}</div>
-    ${setsHTML}
+    <div id="sets-container-${ex.id}">${setsHTML}</div>
+    ${setControls}
   </div>`;
 }

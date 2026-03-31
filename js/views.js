@@ -170,12 +170,14 @@ function viewWorkout(){
   <div class="page">
     <div class="progress-track"><div id="progress-fill" class="progress-fill" style="width:${pct}%"></div></div>
     ${exercisesHTML}
-    <div style="height:12px"></div>
+    <div id="workout-footer">
+    <button class="btn-ghost" style="width:100%;margin-bottom:12px;color:#d4a846;border-color:#d4a84644" onclick="openAddExercise()">+ ${t('workout_add_ex')}</button>
     <button id="finish-btn" class="btn-primary" onclick="finishWorkout()" ${isDone?'':'disabled'}>
       ${isDone?t('workout_finish'):`${done} / ${total} ${t('workout_sets_done')}`}
     </button>
     ${isDone?'':`<div style="text-align:center;font-size:12px;color:#9090b0;margin-top:8px">${t('workout_complete_all')}</div>`}
     ${someStarted?`<button class="btn-ghost" style="margin-top:10px;color:#9090b0;border-color:#1c1c2e" onclick="quitWithoutCompleting()">${t('workout_quit')}</button>`:''}
+    </div>
   </div>
   <div id="rest-bar" class="rest-bar">
     <div id="rest-time" class="rest-pulse" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#d4a846">${t('workout_rest')} · 1:30</div>

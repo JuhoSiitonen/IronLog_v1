@@ -76,3 +76,66 @@ function closeSwap(){
   if(m)m.remove();
   A.swapTarget=null;
 }
+
+// ═══════════════════════════════════════════════════════════════════
+// ADD EXERCISE MODAL
+// ═══════════════════════════════════════════════════════════════════
+function openAddExercise(){
+  const muscles=Object.keys(LIBRARY);
+  if(!A._addExMuscle||!LIBRARY[A._addExMuscle])A._addExMuscle=muscles[0];
+  const modal=document.createElement('div');
+  modal.className='modal-overlay';
+  modal.id='add-ex-modal';
+  modal.innerHTML=`
+    <div class="modal-sheet">
+      <div class="modal-hdr">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px">${t('workout_add_ex_title')}</div>
+        <button class="btn-back" style="width:44px;height:44px;font-size:20px;display:flex;align-items:center;justify-content:center" onclick="closeAddExercise()">✕</button>
+      </div>
+      <div id="add-ex-body">${_renderAddExBody()}</div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function _renderAddExBody(){
+  const muscles=Object.keys(LIBRARY);
+  const muscle=A._addExMuscle||muscles[0];
+  const currentIds=new Set(A.sessionExercises.map(e=>e.libId||e.id));
+  const tabsHTML=muscles.map(m=>
+    `<button class="chart-pill${muscle===m?' active':''}" onclick="_switchAddExMuscle('${m}')">${esc(t('muscle_'+m))}</button>`
+  ).join('');
+  const items=(LIBRARY[muscle]||[]).map(ex=>{
+    const inUse=currentIds.has(ex.id);
+    const lw=ex.type==='time'?null:getLastWeight(ex.id);
+    const meta=ex.type==='time'
+      ?`${ex.sets} ${t('workout_sets')} · ${ex.holdSec}${t('workout_sec')} ${t('workout_col_time').toLowerCase()}`
+      :`${ex.sets} ${t('workout_sets')} · ${ex.repRange[0]}–${ex.repRange[1]} ${t('workout_reps')}`;
+    const cue=t('cue_'+ex.id)||esc(ex.cues);
+    return`<div class="swap-item${inUse?' in-use':' available'}" ${inUse?'':` onclick="addExerciseToSession('${esc(ex.id)}')"` }>
+      <div class="swap-row">
+        <div>
+          <div style="font-weight:700;font-size:14px;color:#f2f0ea">${esc(t(ex.id)||ex.name)}</div>
+          <div style="font-size:11px;color:#9090b0;margin-top:2px">${meta}</div>
+        </div>
+        <div style="text-align:right">
+          ${lw?`<div style="font-size:12px;font-weight:700;color:#d4a846">${lw}kg</div>`:''}
+          ${inUse?`<div style="font-size:10px;color:#9090b0">${t('workout_in_use')}</div>`:''}
+        </div>
+      </div>
+      ${!inUse?`<div class="swap-cue">💡 ${cue}</div>`:''}
+    </div>`;
+  }).join('');
+  return`<div class="chart-pills" style="margin:0 16px 12px">${tabsHTML}</div>
+    <div class="modal-body">${items}</div>`;
+}
+
+function _switchAddExMuscle(muscle){
+  A._addExMuscle=muscle;
+  const body=document.getElementById('add-ex-body');
+  if(body)body.innerHTML=_renderAddExBody();
+}
+
+function closeAddExercise(){
+  const m=document.getElementById('add-ex-modal');
+  if(m)m.remove();
+}

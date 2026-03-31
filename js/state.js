@@ -174,6 +174,7 @@ const A={
   restTimer:null,
   completedSession:null,
   swapTarget:null,
+  _addExMuscle:null,
   isCustomSession:false,
   isCustomProgramSession:false,
   // Custom workout builder

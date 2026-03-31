@@ -112,6 +112,88 @@ function removeExercise(exId){
   updateFinishBtn();
 }
 
+function addSet(exId){
+  const ex=A.sessionExercises.find(e=>e.id===exId);
+  const sets=A.sessionSets[exId];
+  if(!ex||!sets)return;
+  const isTime=ex.type==='time';
+  const prev=sets[sets.length-1];
+  const newSet=isTime
+    ?{secs:prev?prev.secs:ex.holdSec,done:false,editing:false}
+    :{reps:'',weight:prev?prev.weight:'',done:false,editing:false};
+  sets.push(newSet);
+  const idx=sets.length-1;
+  const gridClass=isTime?'set-grid-time':'set-grid';
+  const container=document.getElementById(`sets-container-${exId}`);
+  if(container){
+    const row=document.createElement('div');
+    row.id=`set-row-${exId}-${idx}`;
+    row.className=gridClass;
+    row.innerHTML=buildSetRowHTML(ex,idx,newSet);
+    container.appendChild(row);
+    bindSetRowEvents(ex,idx);
+  }
+  _refreshSetControls(exId);
+  updateProgress();
+  updateFinishBtn();
+}
+
+function removeSet(exId){
+  const sets=A.sessionSets[exId];
+  if(!sets||sets.length<=1)return;
+  const last=sets[sets.length-1];
+  if(last.done)return;
+  sets.pop();
+  const idx=sets.length;
+  const row=document.getElementById(`set-row-${exId}-${idx}`);
+  if(row)row.remove();
+  _refreshSetControls(exId);
+  updateProgress();
+  updateFinishBtn();
+}
+
+function _refreshSetControls(exId){
+  const ctrl=document.getElementById(`set-controls-${exId}`);
+  if(!ctrl)return;
+  const sets=A.sessionSets[exId]||[];
+  const canRemove=sets.length>1&&!sets[sets.length-1].done;
+  const minusBtn=ctrl.querySelector('button:first-child');
+  if(minusBtn)minusBtn.disabled=!canRemove;
+}
+
+function addExerciseToSession(libId){
+  closeAddExercise();
+  const muscle=_muscleOf(libId);
+  const libEx=muscle?(LIBRARY[muscle]||[]).find(x=>x.id===libId):null;
+  if(!libEx)return;
+  const sessionId=`cx_add_${Date.now()}_${libId.replace('lib_','')}`;
+  const lo=libEx.type==='time'?0:Math.max(1,libEx.repRange[1]-2);
+  const hi=libEx.type==='time'?0:libEx.repRange[1];
+  const ex={id:sessionId,libId,name:libEx.name,muscle,sets:libEx.sets,repRange:[lo,hi],type:libEx.type||null,holdSec:libEx.holdSec||null,cues:libEx.cues,ms:libEx.ms||null};
+  A.sessionExercises.push(ex);
+  const lw=getLastWeight(libId);
+  const bump=shouldIncrease(sessionId,hi,libId);
+  const w=lw?(bump?String(Math.round(lw*1.025*2)/2):String(lw)):'';
+  A.sessionSets[sessionId]=libEx.type==='time'
+    ?Array.from({length:libEx.sets},()=>({secs:libEx.holdSec,done:false,editing:false}))
+    :Array.from({length:libEx.sets},()=>({reps:'',weight:w,done:false,editing:false}));
+  const ei=A.sessionExercises.length-1;
+  const cardHTML=buildExerciseCard(ex,ei);
+  const anchor=document.getElementById('workout-footer');
+  if(anchor){
+    const div=document.createElement('div');
+    div.innerHTML=cardHTML;
+    const card=div.firstElementChild;
+    anchor.parentNode.insertBefore(card,anchor);
+    // bind kg inputs for new card
+    (A.sessionSets[sessionId]||[]).forEach((_,idx)=>{
+      bindSetRowEvents(ex,idx);
+    });
+  }
+  updateProgress();
+  updateFinishBtn();
+}
+
 function updateKg(exId,idx,val){
   const sets=A.sessionSets[exId];
   if(!sets)return;
