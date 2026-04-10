@@ -236,6 +236,13 @@ function viewComplete(){
 
 function selectChartExercise(libId){A.chartExercise=libId;render();}
 function toggleSession(i){if(A._openSessions.has(i))A._openSessions.delete(i);else A._openSessions.add(i);render();}
+function deleteSession(id){
+  if(!confirm(t('history_delete_confirm')))return;
+  A.history=A.history.filter(s=>s.id!==id);
+  ls.set(SK.history,A.history);
+  A._openSessions.clear();
+  render();
+}
 function viewHistory(){
   const hist=[...A.history].reverse();
   // Progress chart
@@ -296,7 +303,8 @@ function viewHistory(){
           ${vol>0?`<span class="tag">${Math.round(vol)}kg ${t('history_vol')}</span>`:''}
           ${session.partial?`<span class="tag" style="color:#ff4455;border:1px solid #ff445533">${t('history_partial')}</span>`:''}
         </div>
-        ${A._openSessions&&A._openSessions.has(si)?`<div style="margin-top:6px">${exRows}</div>`:''}
+        ${A._openSessions&&A._openSessions.has(si)?`<div style="margin-top:6px">${exRows}</div>
+        <button onclick="event.stopPropagation();deleteSession(${session.id})" style="margin-top:10px;width:100%;background:none;border:1px solid #ff445533;color:#ff4455;border-radius:10px;padding:8px;font-size:12px;cursor:pointer">${t('history_delete')}</button>`:''}
       </div>`;
     });
   }
@@ -555,9 +563,15 @@ function viewSettings(){
 
     <div class="sec-title" style="margin-top:20px">${t('settings_data')}</div>
     <div class="card">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="btn-ghost" style="flex:1;color:#d4a846;border-color:#d4a84644" onclick="exportData()">${t('data_export')}</button>
+        <button class="btn-ghost" style="flex:1" onclick="triggerImport()">${t('data_import')}</button>
+      </div>
+      <div style="font-size:11px;color:#9090b0;margin-bottom:16px">${t('data_backup_desc')}</div>
       <button class="btn-ghost" style="color:#ff4455;border-color:#ff445533;margin-bottom:8px" onclick="clearAllData()">${t('settings_reset')}</button>
       <div style="font-size:11px;color:#9090b0">${t('settings_reset_warn')}</div>
     </div>
+    <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="importData(this)">
   </div>
   ${navHTML("settings")}`;
 }
@@ -581,6 +595,70 @@ function toggleRestTimer(on){
 
 function toggleProgressive(on){saveSetting('progressive',on);render();}
 function setPhaseSize(n){saveSetting('customPhaseSize',n);render();}
+
+function exportData(){
+  const payload={
+    version:1,
+    exportedAt:new Date().toISOString(),
+    data:{
+      il_profile:ls.get("il_profile"),
+      il_settings:ls.get("il_settings"),
+      [SK.history]:ls.get(SK.history),
+      [SK.weights]:ls.get(SK.weights),
+      [SK.nextDay]:ls.get(SK.nextDay),
+      [SK.blockIdx]:ls.get(SK.blockIdx),
+      [SK.blockStart]:ls.get(SK.blockStart),
+      [SK.savedWorkouts]:ls.get(SK.savedWorkouts),
+      [SK.customProgram]:ls.get(SK.customProgram),
+      [SK.prs]:ls.get(SK.prs),
+    }
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`ironlog-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function triggerImport(){
+  document.getElementById('import-file-input').click();
+}
+
+function importData(input){
+  const file=input.files&&input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let payload;
+    try{payload=JSON.parse(e.target.result);}
+    catch{alert(t('data_import_invalid'));input.value='';return;}
+    if(!payload||!payload.data||!Array.isArray(payload.data[SK.history])){
+      alert(t('data_import_invalid'));input.value='';return;
+    }
+    if(!confirm(t('data_import_confirm')))return;
+    const d=payload.data;
+    if(d.il_profile)ls.set("il_profile",d.il_profile);
+    if(d.il_settings)ls.set("il_settings",d.il_settings);
+    Object.keys(SK).forEach(k=>{
+      const key=SK[k];
+      if(d[key]!==undefined&&d[key]!==null)ls.set(key,d[key]);
+    });
+    // Sync in-memory state
+    A.history=getHistory();
+    A.blockIdx=initAndGetBlockIdx();
+    A.previewBlockIdx=A.blockIdx;
+    A.activeDayId=getNextDayId();
+    A.savedWorkouts=getSavedWorkouts();
+    reloadBlocks();
+    input.value='';
+    navigate('home');
+  };
+  reader.readAsText(file);
+}
 
 function clearAllData(){
   if(!confirm(t('confirm_clear_1')))return;
