@@ -253,6 +253,7 @@ const A={
   swapTarget:null,
   sessionPhase:1,
   _addExMuscle:null,
+  _freeformName:'',_freeformMins:30,_freeformNotes:'',
   isCustomSession:false,
   isCustomProgramSession:false,
   // Custom workout builder
@@ -269,3 +270,12 @@ const A={
   _restInterval:null,
   _restEndTime:null,
 };
+
+// Inject user-created exercises into LIBRARY + register translations at boot
+(function(){
+  getCustomExLibrary().forEach(ex=>{
+    if(!LIBRARY[ex.muscle])return;
+    if(!LIBRARY[ex.muscle].find(e=>e.id===ex.id))LIBRARY[ex.muscle].push(ex);
+    Object.values(T).forEach(lang=>{lang[ex.id]=ex.name;if(ex.cues)lang['cue_'+ex.id]=ex.cues;});
+  });
+})();

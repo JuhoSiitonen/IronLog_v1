@@ -115,6 +115,7 @@ function render(){
   else if(A.view==='history')html=viewHistory();
   else if(A.view==='program')html=viewProgram();
   else if(A.view==='custom')html=viewCustom();
+  else if(A.view==='freeform')html=viewFreeform();
   else if(A.view==='settings')html=viewSettings();
   app.innerHTML=html;
   // After render, bind kg inputs (oninput in HTML attr can't pass complex args)

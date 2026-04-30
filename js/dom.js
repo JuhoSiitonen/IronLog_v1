@@ -128,7 +128,7 @@ function buildExerciseCard(ex,ei){
   <div class="card ex-card" style="animation-delay:${ei*0.04}s;opacity:${exDone?0.45:1}" id="ex-card-${ex.id}">
     <div class="ex-header">
       <div class="ex-title-area">
-        <div class="ex-title">${doneIcon}${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.libId||ex.name))} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
+        <div class="ex-title">${doneIcon}${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.libId||ex.name))} <span class="ex-video-icon">▶</span></a>`:ex.url?`<a href="${esc(ex.url)}" target="_blank" rel="noopener" class="ex-name-link">${esc(ex.name)} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.libId||ex.name))}<span class="mtag">${esc(t('muscle_'+ex.muscle))}</span></div>
         <div class="ex-meta">${metaLine}</div>
       </div>
       <div class="ex-actions">${bumpBadge}${swapBtn}${removeBtn}</div>

@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════
 // STORAGE (must be first — everything else depends on ls)
 // ═══════════════════════════════════════════════════════════════════
-const SK={weights:"il_weights",history:"il_history",nextDay:"il_nextDay",blockStart:"il_blockStart",blockIdx:"il_blockIdx",savedWorkouts:"il_saved_workouts",customProgram:"il_custom_program",prs:"il_prs"};
+const SK={weights:"il_weights",history:"il_history",nextDay:"il_nextDay",blockStart:"il_blockStart",blockIdx:"il_blockIdx",savedWorkouts:"il_saved_workouts",customProgram:"il_custom_program",prs:"il_prs",customExLib:"il_custom_ex_lib"};
 const ls={
   get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
@@ -19,3 +19,5 @@ function getSavedWorkouts(){return ls.get(SK.savedWorkouts)||[];}
 function getCustomProgram(){return ls.get(SK.customProgram)||null;}
 function saveCustomProgramToLS(prog){ls.set(SK.customProgram,prog);}
 function getPRs(){return ls.get(SK.prs)||{};}
+function getCustomExLibrary(){return ls.get(SK.customExLib)||[];}
+function saveCustomExLibrary(arr){ls.set(SK.customExLib,arr);}

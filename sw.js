@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rautaloki-v5';
+const CACHE_NAME = 'rautaloki-v6';
 const ASSETS = [
   './index.html',
   './manifest.json',

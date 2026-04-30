@@ -230,6 +230,13 @@ function viewComplete(){
       <div style="font-weight:700;font-size:16px">${nd?nd.emoji+' '+esc(t('day_'+nd.label)||nd.label):''}</div>
       <div style="font-size:13px;color:#9090b0;margin-top:2px">${nd?esc(t('focus_'+nd.focus)||nd.focus):''}</div>
     </div>
+    <div class="card" style="margin-top:16px;padding:14px">
+      <div style="font-size:11px;font-weight:700;color:#9090b0;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">${t('session_notes_label')}</div>
+      <textarea placeholder="${t('session_notes_placeholder')}"
+        oninput="saveSessionNote(this.value)"
+        style="width:100%;box-sizing:border-box;background:transparent;border:none;color:#f2f0ea;font-size:14px;outline:none;resize:none;min-height:72px;font-family:inherit;line-height:1.5;padding:0">${esc(s.notes||'')}</textarea>
+    </div>
+    <div style="height:12px"></div>
     <button class="btn-primary" onclick="navigate('home')">${t('complete_back')}</button>
   </div>`;
 }
@@ -242,6 +249,81 @@ function deleteSession(id){
   ls.set(SK.history,A.history);
   A._openSessions.clear();
   render();
+}
+
+function saveSessionNote(note){
+  if(!A.completedSession)return;
+  A.completedSession.notes=note;
+  const idx=A.history.findIndex(s=>s.id===A.completedSession.id);
+  if(idx!==-1){A.history[idx]={...A.history[idx],notes:note};ls.set(SK.history,A.history);}
+}
+
+function logFreeformSession(){
+  const name=(A._freeformName||'').trim();
+  const mins=A._freeformMins||0;
+  if(!name||mins<=0)return;
+  const session={
+    id:Date.now(),date:new Date().toISOString(),
+    type:'freeform',dayId:'freeform',dayLabel:name,
+    blockId:null,blockLabel:null,
+    duration:mins,
+    notes:(A._freeformNotes||'').trim(),
+    exercises:[]
+  };
+  A.history=[...A.history,session];
+  ls.set(SK.history,A.history);
+  A._freeformName='';A._freeformMins=30;A._freeformNotes='';
+  navigate('history');
+}
+
+function _freeformAdjMins(delta){
+  A._freeformMins=Math.max(5,Math.min(300,(A._freeformMins||30)+delta));
+  const el=document.getElementById('freeform-dur');
+  if(el)el.textContent=_fmtDur(A._freeformMins);
+  else render();
+}
+
+function _fmtDur(mins){
+  const h=Math.floor(mins/60),m=mins%60;
+  return h>0?(m>0?`${h}h ${m}min`:`${h}h`):`${m}min`;
+}
+
+function viewFreeform(){
+  const name=A._freeformName||'';
+  const mins=A._freeformMins||30;
+  const notes=A._freeformNotes||'';
+  const canLog=name.trim().length>0&&mins>0;
+  return`
+  <div class="hdr">
+    <div><div class="logo">RAUTALOKI</div><div class="hdr-sub">${t('freeform_title')}</div></div>
+    <button style="background:none;border:1px solid #1c1c2e;color:#9090b0;font-size:18px;width:44px;height:44px;border-radius:12px" onclick="navigate('history')">✕</button>
+  </div>
+  <div class="page">
+    <div class="sec-title">${t('freeform_activity')}</div>
+    <div class="card" style="padding:14px">
+      <input type="text" placeholder="${t('freeform_activity_placeholder')}" value="${esc(name)}"
+        oninput="A._freeformName=this.value"
+        style="width:100%;box-sizing:border-box;background:transparent;border:none;color:#f2f0ea;font-size:16px;font-weight:700;outline:none;font-family:inherit">
+    </div>
+    <div class="sec-title" style="margin-top:16px">${t('freeform_duration')}</div>
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;padding:14px">
+      <button onclick="_freeformAdjMins(-5)" class="btn-ghost" style="width:44px;height:44px;font-size:20px;padding:0;flex-shrink:0">−</button>
+      <div style="text-align:center">
+        <div id="freeform-dur" style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:#d4a846">${_fmtDur(mins)}</div>
+        <div style="font-size:10px;color:#9090b0;margin-top:2px">${t('freeform_duration_hint')}</div>
+      </div>
+      <button onclick="_freeformAdjMins(5)" class="btn-ghost" style="width:44px;height:44px;font-size:20px;padding:0;flex-shrink:0">+</button>
+    </div>
+    <div class="sec-title" style="margin-top:16px">${t('freeform_notes_label')}</div>
+    <div class="card" style="padding:14px">
+      <textarea placeholder="${t('freeform_notes_placeholder')}"
+        oninput="A._freeformNotes=this.value"
+        style="width:100%;box-sizing:border-box;background:transparent;border:none;color:#f2f0ea;font-size:14px;outline:none;resize:none;min-height:80px;font-family:inherit;line-height:1.5;padding:0">${esc(notes)}</textarea>
+    </div>
+    <div style="height:16px"></div>
+    <button class="btn-primary" onclick="logFreeformSession()" ${canLog?'':'disabled'}>${t('freeform_log')}</button>
+  </div>
+  ${navHTML('history')}`;
 }
 function viewHistory(){
   const hist=[...A.history].reverse();
@@ -259,11 +341,13 @@ function viewHistory(){
       ${renderProgressChart(A.chartExercise)}
     </div>`;
   }
+  const logBtn=`<button class="btn-ghost" style="width:100%;margin-bottom:12px;color:#d4a846;border-color:#d4a84644" onclick="navigate('freeform')">+ ${t('freeform_log_btn')}</button>`;
   let content='';
   if(!hist.length){
     content=`<div style="color:#9090b0;text-align:center;padding-top:40px">${t('history_empty')}</div>`;
   }else{
     hist.forEach((session,si)=>{
+      const isFreeform=session.type==='freeform';
       const vol=(session.exercises||[]).reduce((a,e)=>a+(e.sets||[]).reduce((b,st)=>b+(parseFloat(st.weight)||0)*(parseFloat(st.reps)||0),0),0);
       const ds=fmtDate(session.date);
       let exRows='';
@@ -286,24 +370,26 @@ function viewHistory(){
         }
       });
       const sessionDayLabel=session.dayLabel?t('day_'+session.dayLabel)||session.dayLabel:session.dayLabel;
+      const notesRow=session.notes?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid #1c1c2e;font-size:13px;color:#9090b0;line-height:1.5;white-space:pre-wrap">${esc(session.notes)}</div>`:'';
       content+=`<div class="card" style="cursor:pointer" onclick="toggleSession(${si})">
         <div class="row">
-          <div style="font-weight:700;font-size:15px">${esc(sessionDayLabel||'')}</div>
+          <div style="font-weight:700;font-size:15px">${esc(sessionDayLabel||'')}${isFreeform?`<span class="mtag" style="color:#9090b0">${t('freeform_badge')}</span>`:''}</div>
           <div style="display:flex;align-items:center;gap:8px">
             <div style="text-align:right">
               <div style="font-size:11px;color:#d4a846;font-weight:700">${ds}</div>
-              ${session.blockLabel?`<div style="font-size:10px;color:#9090b0;margin-top:1px">${t('block_label')} ${session.blockId||''}</div>`:''}
+              ${!isFreeform&&session.blockLabel?`<div style="font-size:10px;color:#9090b0;margin-top:1px">${t('block_label')} ${session.blockId||''}</div>`:''}
             </div>
             <div style="font-size:12px;color:#9090b0;transition:transform .2s;transform:rotate(${A._openSessions&&A._openSessions.has(si)?'180':'0'}deg)">▼</div>
           </div>
         </div>
         <div style="font-size:12px;color:#9090b0;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
-          <span class="tag">${session.duration} ${t('complete_min')}</span>
-          <span class="tag">${(session.exercises||[]).length} ${t('history_ex')}</span>
+          <span class="tag">${isFreeform?_fmtDur(session.duration):session.duration+' '+t('complete_min')}</span>
+          ${!isFreeform?`<span class="tag">${(session.exercises||[]).length} ${t('history_ex')}</span>`:''}
           ${vol>0?`<span class="tag">${Math.round(vol)}kg ${t('history_vol')}</span>`:''}
           ${session.partial?`<span class="tag" style="color:#ff4455;border:1px solid #ff445533">${t('history_partial')}</span>`:''}
+          ${session.notes?`<span class="tag" style="color:#9090b0">📝</span>`:''}
         </div>
-        ${A._openSessions&&A._openSessions.has(si)?`<div style="margin-top:6px">${exRows}</div>
+        ${A._openSessions&&A._openSessions.has(si)?`<div style="margin-top:6px">${exRows}${notesRow}</div>
         <button onclick="event.stopPropagation();deleteSession(${session.id})" style="margin-top:10px;width:100%;background:none;border:1px solid #ff445533;color:#ff4455;border-radius:10px;padding:8px;font-size:12px;cursor:pointer">${t('history_delete')}</button>`:''}
       </div>`;
     });
@@ -335,6 +421,7 @@ function viewHistory(){
   <div class="hdr"><div class="logo">RAUTALOKI</div></div>
   <div class="page">
     <div class="h2">${t('history_title')}</div>
+    ${logBtn}
     ${prSection}
     ${chartSection}
     ${content}
@@ -561,6 +648,23 @@ function viewSettings(){
 
     ${howToUse}
 
+    <div class="sec-title" style="margin-top:20px">${t('custom_ex_section')}</div>
+    ${(()=>{
+      const list=getCustomExLibrary();
+      const rows=list.map(ex=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1c1c2e">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#f2f0ea">${esc(ex.name)}</div>
+            <div style="font-size:11px;color:#9090b0;margin-top:2px">${esc(t('muscle_'+ex.muscle))} · ${ex.type==='time'?`${ex.sets}×${ex.holdSec}${t('workout_sec')}`:`${ex.sets}×${ex.repRange[0]}–${ex.repRange[1]}`}</div>
+          </div>
+          <button class="btn-tiny" style="color:#ff4455;border-color:#ff445533" onclick="deleteCustomExercise('${esc(ex.id)}')">✕</button>
+        </div>`).join('');
+      return`<div class="card">
+        ${rows||`<div style="font-size:13px;color:#9090b0;padding:6px 0">${t('custom_ex_empty')}</div>`}
+        <button class="btn-ghost" style="margin-top:${list.length?'12':'0'}px;width:100%;color:#d4a846;border-color:#d4a84644" onclick="openCreateExercise()">+ ${t('custom_ex_create')}</button>
+      </div>`;
+    })()}
+
     <div class="sec-title" style="margin-top:20px">${t('settings_data')}</div>
     <div class="card">
       <div style="display:flex;gap:8px;margin-bottom:12px">
@@ -611,6 +715,7 @@ function exportData(){
       [SK.savedWorkouts]:ls.get(SK.savedWorkouts),
       [SK.customProgram]:ls.get(SK.customProgram),
       [SK.prs]:ls.get(SK.prs),
+      [SK.customExLib]:ls.get(SK.customExLib),
     }
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
@@ -654,6 +759,14 @@ function importData(input){
     A.activeDayId=getNextDayId();
     A.savedWorkouts=getSavedWorkouts();
     reloadBlocks();
+    // Re-inject custom exercises into LIBRARY
+    Object.keys(LIBRARY).forEach(m=>{LIBRARY[m]=LIBRARY[m].filter(e=>!e.custom);});
+    getCustomExLibrary().forEach(ex=>{
+      if(LIBRARY[ex.muscle]&&!LIBRARY[ex.muscle].find(e=>e.id===ex.id)){
+        LIBRARY[ex.muscle].push(ex);
+        Object.values(T).forEach(lang=>{lang[ex.id]=ex.name;if(ex.cues)lang['cue_'+ex.id]=ex.cues;});
+      }
+    });
     input.value='';
     navigate('home');
   };

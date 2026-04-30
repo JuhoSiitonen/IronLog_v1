@@ -244,7 +244,7 @@ function _buildTabHTML(){
     return`
     <div class="custom-ex-row${isAdded?' custom-ex-added':''}">
       <div class="custom-ex-info">
-        <div style="font-size:14px;font-weight:700;color:${isAdded?'#d4a846':'#f2f0ea'}">${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.id||ex.name))} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.id||ex.name))}</div>
+        <div style="font-size:14px;font-weight:700;color:${isAdded?'#d4a846':'#f2f0ea'}">${ex.ms?`<a href="https://www.muscleandstrength.com/exercises/${ex.ms}.html" target="_blank" rel="noopener" class="ex-name-link">${esc(t(ex.id||ex.name))} <span class="ex-video-icon">▶</span></a>`:ex.url?`<a href="${esc(ex.url)}" target="_blank" rel="noopener" class="ex-name-link">${esc(ex.name)} <span class="ex-video-icon">▶</span></a>`:esc(t(ex.id||ex.name))}</div>
         <div style="font-size:11px;color:#9090b0;margin-top:2px">${meta}${lw?` · <span style="color:#d4a846;font-weight:700">${lw}kg</span>`:''}</div>
       </div>
       <button class="custom-add-btn${isAdded?' custom-add-btn--added':''}" onclick="${isAdded?'':'customAdd(\''+esc(ex.id)+'\')'}" ${isAdded?'disabled':''}>
@@ -294,7 +294,8 @@ function _buildTabHTML(){
   return`
     <div class="sec-title">${t('custom_muscles')}</div>
     <div class="chart-pills" style="margin-bottom:12px">${pillsHTML}</div>
-    <div class="card" style="padding:8px 0;margin-bottom:20px">${exRowsHTML}</div>
+    <div class="card" style="padding:8px 0;margin-bottom:8px">${exRowsHTML}</div>
+    <button class="btn-ghost" style="width:100%;margin-bottom:20px;color:#d4a846;border-color:#d4a84644" onclick="openCreateExercise()">+ ${t('custom_ex_create')}</button>
     <div class="sec-title">${t('custom_selected')} · ${A.customExercises.length}</div>
     ${listHTML}
     ${canStart?`
